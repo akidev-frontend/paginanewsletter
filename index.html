@@ -64,9 +64,11 @@
     .social-link:hover::before { opacity:1; }
 
     /* SECTIONS */
-    .section { position:relative; background:rgba(255,255,255,.04); backdrop-filter:blur(12px); border-radius:var(--border-radius); padding:3rem; margin-bottom:1.5rem; border:1px solid rgba(255,255,255,.07); transition:all .4s cubic-bezier(.23,1,.32,1); overflow:hidden; }
-    .section::after { content:''; position:absolute; top:0; right:0; width:80px; height:80px; background:radial-gradient(circle at top right,rgba(74,144,226,.07),transparent 70%); border-radius:0 var(--border-radius) 0 0; pointer-events:none; }
-    .section:hover { background:rgba(255,255,255,.07); transform:translateY(-4px); box-shadow:0 20px 60px rgba(0,0,0,.3),0 0 0 1px rgba(74,144,226,.1); }
+    .section { position:relative; background:rgba(255,255,255,.04); backdrop-filter:blur(12px); border-radius:var(--border-radius); padding:3rem; margin-bottom:1.5rem; border:1px solid rgba(255,255,255,.07); transition:background 1.2s ease, transform 1.2s cubic-bezier(.23,1,.32,1), box-shadow 1.2s ease, border-color 1.2s ease; overflow:hidden; }
+    .section::before { content:''; position:absolute; top:0; right:0; width:100%; height:100%; background:radial-gradient(ellipse at top right, rgba(74,144,226,.12) 0%, transparent 65%); pointer-events:none; opacity:0; transition:opacity 1.2s ease; z-index:0; }
+    .section > * { position:relative; z-index:1; }
+    .section:hover { background:rgba(255,255,255,.07); transform:translateY(-4px); box-shadow:0 20px 60px rgba(0,0,0,.3), 0 0 60px rgba(74,144,226,.15), 0 0 120px rgba(74,144,226,.07); border-color:rgba(74,144,226,.25); }
+    .section:hover::before { opacity:1; }
     .section-number { font-family:'JetBrains Mono',monospace; font-size:.72rem; color:rgba(74,144,226,.55); letter-spacing:.15em; text-transform:uppercase; display:block; margin-bottom:.6rem; }
 
     /* TIPOGRAFÍA VÍVIDA */
@@ -617,6 +619,12 @@
 
     /* Crea y envía un form nativo hacia Listmonk */
     function submitToListmonk(email, name) {
+      console.log('[AkiDev] submitToListmonk() llamado');
+      console.log('[AkiDev] → email:', email);
+      console.log('[AkiDev] → name:', name || '(vacío)');
+      console.log('[AkiDev] → endpoint:', LISTMONK_URL);
+      console.log('[AkiDev] → lista UUID:', LIST_UUID);
+
       const form = document.createElement('form');
       form.method  = 'post';
       form.action  = LISTMONK_URL;
@@ -634,24 +642,32 @@
       listEl.type = 'hidden'; listEl.name = 'l'; listEl.value = LIST_UUID;
       form.appendChild(listEl);
 
+      console.log('[AkiDev] Form creado, haciendo submit nativo ahora…');
       document.body.appendChild(form);
-      form.submit(); // navegación nativa — Listmonk redirige a su página de confirmación
+      form.submit();
     }
 
     /* Mini CTAs (0-4) */
     function submitMiniCta(idx) {
+      console.log(`[AkiDev] Mini CTA #${idx} pulsado`);
+
       const input  = document.querySelector(`[data-cta="${idx}"]`);
       const msgEl  = document.getElementById(`mini-msg-${idx}`);
       const btn    = input.nextElementSibling;
       const email  = input.value.trim();
 
+      console.log(`[AkiDev] Mini CTA #${idx} → email introducido: "${email}"`);
+
       if (!isEmail(email)) {
+        console.warn(`[AkiDev] Mini CTA #${idx} → email inválido, abortando`);
         msgEl.textContent = 'Introduce un correo válido.';
         msgEl.className   = 'mini-cta-msg error';
         msgEl.style.display = 'block';
         input.focus();
         return;
       }
+
+      console.log(`[AkiDev] Mini CTA #${idx} → email válido, enviando a Listmonk…`);
 
       // Feedback visual antes de navegar
       btn.disabled      = true;
@@ -665,6 +681,7 @@
 
     /* Formulario principal */
     document.getElementById('mainNewsletterForm').addEventListener('submit', function(e) {
+      console.log('[AkiDev] Formulario principal — submit disparado');
       e.preventDefault();
 
       const form    = e.target;
@@ -675,13 +692,19 @@
       const btnText = btn.querySelector('.btn-text');
       const spinner = btn.querySelector('.loading');
 
+      console.log('[AkiDev] Formulario principal → email:', email);
+      console.log('[AkiDev] Formulario principal → name:', name || '(vacío)');
+
       if (!isEmail(email)) {
+        console.warn('[AkiDev] Formulario principal → email inválido, abortando');
         msgEl.textContent   = 'Por favor, introduce un correo electrónico válido.';
         msgEl.className     = 'message error';
         msgEl.style.display = 'block';
         msgEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
         return;
       }
+
+      console.log('[AkiDev] Formulario principal → email válido, enviando a Listmonk…');
 
       // Feedback visual
       btn.disabled         = true;
