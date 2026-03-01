@@ -370,7 +370,7 @@
 
       <p class="text-impact">Internet está lleno de <span class="hl">iluminados</span> que nunca han desplegado nada en producción.</p>
 
-      <p class="section-text">Yo llevo años currando en esto. <br> Me he comido los mocos con servidores que no respondían,<br>  con deploys que petaban un viernes a las 8, <br> con código que funcionaba en local, <br>  y en producción ardía Troya.</p>
+      <p class="section-text">Yo llevo años currando en esto. Me he comido los mocos con servidores que no respondían, con deploys que petaban un viernes a las 8, con código que funcionaba en local y en producción ardía Troya.</p>
 
       <p class="text-callout">El 90% de lo que enseñan por ahí no sirve para el mundo real.</p>
 
@@ -394,7 +394,7 @@
       <h2 class="section-title">¿Te pasa esto?</h2>
       <div class="divider"><div class="divider-line"></div><div class="divider-dot"></div><div class="divider-line"></div></div>
 
-      <p class="section-text">Sabes maquetar. <br> Controlas lo básico de JavaScript. <br> Pero luego llega el momento de <em>subir la página</em> y se te hiela el culo.</p>
+      <p class="section-text">Sabes maquetar. Controlas lo básico de JavaScript. Pero luego llega el momento de <em>subir la página</em> y se te hiela el culo.</p>
 
       <div class="dialog-list">
         <div class="dialog-item">❓ ¿Qué hostias es un servidor?</div>
@@ -405,8 +405,8 @@
 
       <div class="para-break"></div>
       <p class="text-impact"><span class="hl">Y ahora encima con la IA…</span></p>
-      <p class="section-text">Todo el mundo dice que te va a quitar el trabajo. <br> Que si ChatGPT hace código solo. <br> Que si ya no hace falta aprender.</p>
-      <p class="section-text">Son las 11 de la noche, <br> llevas 3 horas peleándote con la terminal, <br> le preguntas a ChatGPT, <br> te suelta una mierda que no funciona, <br> y te preguntas si esto es para ti.</p>
+      <p class="section-text">Todo el mundo dice que te va a quitar el trabajo. Que si ChatGPT hace código solo. Que si ya no hace falta aprender.</p>
+      <p class="section-text">Son las 11 de la noche, llevas 3 horas peleándote con la terminal, le preguntas a ChatGPT, te suelta una mierda que no funciona, y te preguntas si esto es para ti.</p>
 
       <p class="text-callout">El problema no eres tú.<br>Es que te han enseñado la mitad del camino.<br>Y encima no te han enseñado a usar la puta IA.</p>
     </section>
@@ -476,10 +476,10 @@
 
       <div class="para-break"></div>
       <p class="text-impact">Si lo lees y piensas <span class="hl">"obvio, siguiente"</span>…</p>
-      <p class="section-text">Joder, qué bien. <br>Estás en tu casa.</p>
+      <p class="section-text">Joder, qué bien. Estás en tu casa.</p>
       <div class="para-break"></div>
       <p class="text-impact">Si piensas <span class="hl">"¿de qué habla este tío?"</span>…</p>
-      <p class="text-callout">Mejor. <br>Justo para eso estoy aquí. <br>Para que dentro de unos meses leas eso y te parezca una chorrada.</p>
+      <p class="text-callout">Mejor. Justo para eso estoy aquí. Para que dentro de unos meses leas eso y te parezca una chorrada.</p>
     </section>
 
     <!-- MINI CTA 4 -->
@@ -505,9 +505,9 @@
         <div class="stat-card"><span class="stat-number" data-target="5" data-prefix="~" data-suffix="min">~0min</span><span class="stat-label">Por semana</span></div>
       </div>
 
-      <p class="section-text">Subí un vídeo sobre Git sin muchas expectativas. <br> Solo quería ayudar con algo que a mí me costó horrores.</p>
+      <p class="section-text">Subí un vídeo sobre Git sin muchas expectativas. Solo quería ayudar con algo que a mí me costó horrores.</p>
       <p class="text-impact"><span class="hl">15.500 visitas</span> y un montón de gente dándome las gracias.</p>
-      <p class="section-text">Y pensé: <br>si esto le sirve a tanta gente, igual merece la pena seguir. <br>  Por eso escribo esta newsletter. <br> Porque no soy el único harto de tutoriales de mierda.</p>
+      <p class="section-text">Y pensé: si esto le sirve a tanta gente, igual merece la pena seguir. Por eso escribo esta newsletter. Porque no soy el único harto de tutoriales de mierda.</p>
 
       <div class="para-break"></div>
       <p class="text-impact">¿Qué vas a hacer?</p>
@@ -548,16 +548,11 @@
 
   <footer class="footer">
     <p>Página creada por AkiDev mientras debuggeaba un contenedor a las 2 de la mañana.</p>
-    <p style="margin-top:.5rem"><a href="https://github.com/akidev-frontend/paginanewsletter">→ Link al repositorio</a></p>
+    <p style="margin-top:.5rem"><a href="https://github.com/Electrum10/LinkTree-Casero-AkiDev">→ Link al repositorio</a></p>
     <p id="fecha" style="margin-top:.5rem;opacity:.4;font-family:'JetBrains Mono',monospace;font-size:.72rem"></p>
   </footer>
 
   <script>
-    const CONFIG = {
-      listmonkUrl:"https://listmonk.akidojo.dev",
-      redirectDelay:1000,
-      forms:{main:{redirectUrl:"https://links.akidojo.dev/NewsletterEnviada/normal.html",webhookUrl:"https://n8n.bichear.com/webhook/main-newsletter",webhookType:"main_newsletter_subscription"}}
-    };
 
     /* CURSOR */
     const cursor=document.getElementById('cursor'),cf=document.getElementById('cursorFollower');
@@ -610,59 +605,94 @@
     const ftObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.querySelectorAll('.feature-item').forEach((it,i)=>setTimeout(()=>it.classList.add('visible'),i*110));ftObs.unobserve(e.target);}});},{threshold:.1});
     document.querySelectorAll('.feature-list').forEach(el=>ftObs.observe(el));
 
-    /* UTILS */
-    const isEmail=e=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
+    /* ===== FORMULARIOS =====
+       Listmonk requiere un POST nativo (form submit estándar).
+       Los mini-CTAs crean un <form> oculto y lo envían directamente
+       al endpoint del proveedor, igual que el formulario completo.
+    */
 
-    async function postToListmonk(email,name){
-      const fd=new FormData();fd.append('email',email);fd.append('name',name||'');fd.append('l','b4f01952-65a2-4460-92e7-c058ae2775de');
-      try{const r=await fetch(`${CONFIG.listmonkUrl}/subscription/form`,{method:'POST',body:fd});if(r.ok)return true;}catch(e){}
-      try{await fetch(`${CONFIG.listmonkUrl}/subscription/form`,{method:'POST',mode:'no-cors',body:fd});return true;}catch(e){return false;}
-    }
+    const LISTMONK_URL  = 'https://listmonk.akidojo.dev/subscription/form';
+    const LIST_UUID     = 'b4f01952-65a2-4460-92e7-c058ae2775de';
+    const isEmail = e => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
 
-    async function sendWebhook(email,name){
-      try{await fetch(CONFIG.forms.main.webhookUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,name:name||'',type:CONFIG.forms.main.webhookType,timestamp:new Date().toISOString(),source:'akidev_website'})});}catch(e){}
-    }
+    /* Crea y envía un form nativo hacia Listmonk */
+    function submitToListmonk(email, name) {
+      const form = document.createElement('form');
+      form.method  = 'post';
+      form.action  = LISTMONK_URL;
+      form.style.display = 'none';
 
-    /* MINI CTAs */
-    async function submitMiniCta(idx){
-      const input=document.querySelector(`[data-cta="${idx}"]`);
-      const msgEl=document.getElementById(`mini-msg-${idx}`);
-      const btn=input.nextElementSibling;
-      const email=input.value.trim();
-      if(!isEmail(email)){showMiniMsg(msgEl,'Correo inválido.','error');return;}
-      btn.disabled=true;btn.textContent='Enviando…';
-      const ok=await postToListmonk(email,'');
-      if(ok){
-        showMiniMsg(msgEl,'¡Dentro! Revisa tu correo para confirmar. 🎉','success');
-        await sendWebhook(email,'');
-        input.value='';btn.textContent='¡Hecho! ✓';
-        setTimeout(()=>{window.location.href=CONFIG.forms.main.redirectUrl;},CONFIG.redirectDelay);
-      } else {
-        showMiniMsg(msgEl,'Error al suscribir. Inténtalo de nuevo.','error');
-        btn.disabled=false;btn.textContent='Reintentar →';
+      const fields = { email, name: name || '', nonce: '' };
+      for (const [k, v] of Object.entries(fields)) {
+        const el = document.createElement('input');
+        el.type = 'hidden'; el.name = k; el.value = v;
+        form.appendChild(el);
       }
-    }
-    function showMiniMsg(el,text,type){el.textContent=text;el.className=`mini-cta-msg ${type}`;el.style.display='block';}
 
-    /* FORMULARIO PRINCIPAL */
-    document.getElementById('mainNewsletterForm').addEventListener('submit',async e=>{
+      // Campo lista (l)
+      const listEl = document.createElement('input');
+      listEl.type = 'hidden'; listEl.name = 'l'; listEl.value = LIST_UUID;
+      form.appendChild(listEl);
+
+      document.body.appendChild(form);
+      form.submit(); // navegación nativa — Listmonk redirige a su página de confirmación
+    }
+
+    /* Mini CTAs (0-4) */
+    function submitMiniCta(idx) {
+      const input  = document.querySelector(`[data-cta="${idx}"]`);
+      const msgEl  = document.getElementById(`mini-msg-${idx}`);
+      const btn    = input.nextElementSibling;
+      const email  = input.value.trim();
+
+      if (!isEmail(email)) {
+        msgEl.textContent = 'Introduce un correo válido.';
+        msgEl.className   = 'mini-cta-msg error';
+        msgEl.style.display = 'block';
+        input.focus();
+        return;
+      }
+
+      // Feedback visual antes de navegar
+      btn.disabled      = true;
+      btn.textContent   = 'Enviando…';
+      msgEl.textContent = 'Redirigiendo a Listmonk…';
+      msgEl.className   = 'mini-cta-msg success';
+      msgEl.style.display = 'block';
+
+      submitToListmonk(email, '');
+    }
+
+    /* Formulario principal */
+    document.getElementById('mainNewsletterForm').addEventListener('submit', function(e) {
       e.preventDefault();
-      const form=e.target,email=form.querySelector('[name=email]').value,name=form.querySelector('[name=name]').value||'';
-      const msgEl=document.getElementById('message-main'),btn=form.querySelector('button[type=submit]');
-      const btnText=btn.querySelector('.btn-text'),spinner=btn.querySelector('.loading');
-      if(!isEmail(email)){showMsg(msgEl,'Por favor, ingresa un correo electrónico válido.','error');return;}
-      btn.disabled=true;btnText.style.opacity='0';spinner.style.display='block';msgEl.style.display='none';
-      const ok=await postToListmonk(email,name);
-      if(ok){
-        showMsg(msgEl,'¡Perfecto! Te has suscrito correctamente. Redirigiendo…','success');
-        await sendWebhook(email,name);
-        setTimeout(()=>{window.location.href=CONFIG.forms.main.redirectUrl;},CONFIG.redirectDelay);
-      } else {
-        showMsg(msgEl,'Ha ocurrido un error. Por favor, inténtalo de nuevo.','error');
-        btn.disabled=false;btnText.style.opacity='1';spinner.style.display='none';
+
+      const form    = e.target;
+      const email   = form.querySelector('[name=email]').value.trim();
+      const name    = form.querySelector('[name=name]').value.trim();
+      const msgEl   = document.getElementById('message-main');
+      const btn     = form.querySelector('button[type=submit]');
+      const btnText = btn.querySelector('.btn-text');
+      const spinner = btn.querySelector('.loading');
+
+      if (!isEmail(email)) {
+        msgEl.textContent   = 'Por favor, introduce un correo electrónico válido.';
+        msgEl.className     = 'message error';
+        msgEl.style.display = 'block';
+        msgEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
       }
+
+      // Feedback visual
+      btn.disabled         = true;
+      btnText.style.opacity = '0';
+      spinner.style.display = 'block';
+      msgEl.textContent    = 'Enviando… redirigiendo a confirmación.';
+      msgEl.className      = 'message success';
+      msgEl.style.display  = 'block';
+
+      submitToListmonk(email, name);
     });
-    function showMsg(el,text,type){el.textContent=text;el.className=`message ${type}`;el.style.display='block';el.scrollIntoView({behavior:'smooth',block:'center'});}
 
     /* SMOOTH SCROLL */
     document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(a.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'});}));
