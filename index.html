@@ -136,13 +136,12 @@
     .mini-cta::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,transparent,var(--accent-color),transparent); animation:shimmer 3s linear infinite; background-size:200% auto; }
     .mini-cta-label { font-size:.7rem; font-family:'JetBrains Mono',monospace; color:rgba(74,144,226,.7); text-transform:uppercase; letter-spacing:.15em; margin-bottom:.6rem; display:block; }
     .mini-cta-title { font-size:clamp(.98rem,2.4vw,1.18rem); font-weight:700; color:var(--text-light); margin-bottom:1rem; line-height:1.4; }
-    .mini-cta-form { display:flex; flex-direction:column; gap:.7rem; }
-    @media (min-width:480px) { .mini-cta-form { flex-direction:row; flex-wrap:wrap; } }
+    .mini-cta-fields { display:flex; flex-direction:column; gap:.55rem; margin-bottom:.7rem; }
+    @media (min-width:480px) { .mini-cta-fields { flex-direction:column; } }
     .mini-cta-input { flex:1; min-width:0; width:100%; padding:.72rem 1rem; background:rgba(255,255,255,.07); border:1.5px solid rgba(255,255,255,.12); border-radius:10px; color:var(--text-light); font-family:'Inter',sans-serif; font-size:.9rem; transition:all .3s ease; }
     .mini-cta-input:focus { outline:none; border-color:var(--accent-color); background:rgba(74,144,226,.1); box-shadow:0 0 0 3px rgba(74,144,226,.15); }
     .mini-cta-input::placeholder { color:var(--text-gray); opacity:.7; }
-    .mini-cta-btn { width:100%; background:linear-gradient(135deg,var(--accent-color),#6bb6ff); color:var(--white); border:none; border-radius:10px; padding:.72rem 1.3rem; font-family:'Inter',sans-serif; font-weight:700; font-size:.84rem; cursor:pointer; letter-spacing:.04em; text-transform:uppercase; transition:all .3s cubic-bezier(.34,1.56,.64,1); white-space:nowrap; position:relative; overflow:hidden; }
-    @media (min-width:480px) { .mini-cta-btn { width:auto; } }
+    .mini-cta-btn { width:100%; background:linear-gradient(135deg,var(--accent-color),#6bb6ff); color:var(--white); border:none; border-radius:10px; padding:.82rem 1.3rem; font-family:'Inter',sans-serif; font-weight:700; font-size:.88rem; cursor:pointer; letter-spacing:.04em; text-transform:uppercase; transition:all .3s cubic-bezier(.34,1.56,.64,1); position:relative; overflow:hidden; margin-bottom:.5rem; }
     .mini-cta-btn:hover { transform:translateY(-2px) scale(1.04); box-shadow:0 8px 20px rgba(74,144,226,.4); }
     .mini-cta-note { font-size:.73rem; color:rgba(160,180,192,.5); margin-top:.6rem; font-family:'JetBrains Mono',monospace; }
     .mini-cta-msg { display:none; margin-top:.8rem; padding:.65rem 1rem; border-radius:8px; font-size:.84rem; font-weight:600; text-align:center; }
@@ -159,11 +158,6 @@
     .form-input { width:100%; padding:.95rem 1.1rem; background:rgba(255,255,255,.06); border:1.5px solid rgba(255,255,255,.12); border-radius:10px; color:var(--text-light); font-size:1rem; font-family:'Inter',sans-serif; transition:all .3s ease; }
     .form-input:focus { outline:none; border-color:var(--accent-color); background:rgba(74,144,226,.08); box-shadow:0 0 0 3px rgba(74,144,226,.15); transform:translateY(-1px); }
     .form-input::placeholder { color:var(--text-gray); opacity:.7; }
-    .checkbox-group { display:flex; align-items:flex-start; gap:.75rem; margin-bottom:1.4rem; padding:.9rem 1rem; background:rgba(255,255,255,.03); border-radius:10px; border:1px solid rgba(255,255,255,.05); }
-    .form-checkbox { width:18px; height:18px; margin-top:3px; accent-color:var(--accent-color); cursor:pointer; flex-shrink:0; }
-    .checkbox-content { flex:1; }
-    .checkbox-label { color:var(--text-light); font-weight:600; font-size:.92rem; cursor:pointer; display:block; margin-bottom:.3rem; }
-    .checkbox-description { color:var(--text-gray); font-size:.82rem; line-height:1.5; }
     .form-submit { width:100%; background:linear-gradient(135deg,var(--accent-color),#6bb6ff); color:var(--white); padding:1.1rem; border:none; border-radius:var(--border-radius); font-weight:800; font-size:.92rem; font-family:'Inter',sans-serif; cursor:pointer; letter-spacing:.07em; text-transform:uppercase; position:relative; overflow:hidden; transition:all .3s cubic-bezier(.34,1.56,.64,1); animation:glow 3s ease-in-out infinite; }
     .form-submit::before { content:''; position:absolute; top:50%; left:50%; width:0; height:0; background:rgba(255,255,255,.15); border-radius:50%; transform:translate(-50%,-50%); transition:width .6s,height .6s; }
     .form-submit:hover::before { width:400px; height:400px; }
@@ -297,9 +291,6 @@
       .newsletter-form-title { font-size:1.2rem; margin-bottom:1.3rem; }
       .form-input { padding:.85rem .95rem; font-size:.92rem; }
       .form-submit { font-size:.82rem; padding:1rem; letter-spacing:.05em; }
-      .checkbox-group { padding:.75rem .85rem; }
-      .checkbox-label { font-size:.88rem; }
-      .checkbox-description { font-size:.78rem; }
       .spam-note { font-size:.72rem; }
 
       /* Divider menos margen */
@@ -354,10 +345,11 @@
     <div class="mini-cta fade-in">
       <span class="mini-cta-label">// empieza aquí</span>
       <p class="mini-cta-title">5 minutos a la semana. Gratis. Sin bullshit.</p>
-      <div class="mini-cta-form">
+      <div class="mini-cta-fields">
+        <input type="text"  class="mini-cta-input" placeholder="Tu nombre (opcional)" data-name="0" />
         <input type="email" class="mini-cta-input" placeholder="tu@correo.com" data-cta="0" />
-        <button class="mini-cta-btn" onclick="submitMiniCta(0)">Apúntame →</button>
       </div>
+      <button class="mini-cta-btn" onclick="submitMiniCta(0)">Apúntame →</button>
       <div class="mini-cta-msg" id="mini-msg-0"></div>
       <p class="mini-cta-note">// ya están dentro más de 100 devs como tú</p>
     </div>
@@ -383,10 +375,11 @@
     <div class="mini-cta fade-in">
       <span class="mini-cta-label">// suena bien, ¿no?</span>
       <p class="mini-cta-title">Aprende de alguien que lo ha vivido de verdad. <span style="color:var(--accent-color)">Únete gratis.</span></p>
-      <div class="mini-cta-form">
+      <div class="mini-cta-fields">
+        <input type="text"  class="mini-cta-input" placeholder="Tu nombre (opcional)" data-name="1" />
         <input type="email" class="mini-cta-input" placeholder="tu@correo.com" data-cta="1" />
-        <button class="mini-cta-btn" onclick="submitMiniCta(1)">Entrar →</button>
       </div>
+      <button class="mini-cta-btn" onclick="submitMiniCta(1)">Entrar →</button>
       <div class="mini-cta-msg" id="mini-msg-1"></div>
     </div>
 
@@ -417,10 +410,11 @@
     <div class="mini-cta fade-in">
       <span class="mini-cta-label">// aquí termina esa frustración</span>
       <p class="mini-cta-title">Cada semana te cuento la otra mitad del camino.</p>
-      <div class="mini-cta-form">
+      <div class="mini-cta-fields">
+        <input type="text"  class="mini-cta-input" placeholder="Tu nombre (opcional)" data-name="2" />
         <input type="email" class="mini-cta-input" placeholder="tu@correo.com" data-cta="2" />
-        <button class="mini-cta-btn" onclick="submitMiniCta(2)">Quiero saber →</button>
       </div>
+      <button class="mini-cta-btn" onclick="submitMiniCta(2)">Quiero saber →</button>
       <div class="mini-cta-msg" id="mini-msg-2"></div>
     </div>
 
@@ -458,10 +452,11 @@
     <div class="mini-cta fade-in">
       <span class="mini-cta-label">// sé el que sabe usarla</span>
       <p class="mini-cta-title">Aprende a usar la IA <span style="color:var(--accent-color)">como herramienta</span>, no como muleta.</p>
-      <div class="mini-cta-form">
+      <div class="mini-cta-fields">
+        <input type="text"  class="mini-cta-input" placeholder="Tu nombre (opcional)" data-name="3" />
         <input type="email" class="mini-cta-input" placeholder="tu@correo.com" data-cta="3" />
-        <button class="mini-cta-btn" onclick="submitMiniCta(3)">Me apunto →</button>
       </div>
+      <button class="mini-cta-btn" onclick="submitMiniCta(3)">Me apunto →</button>
       <div class="mini-cta-msg" id="mini-msg-3"></div>
     </div>
 
@@ -488,10 +483,11 @@
     <div class="mini-cta fade-in">
       <span class="mini-cta-label">// convierte eso en obvio</span>
       <p class="mini-cta-title">En unos meses vas a leer eso y te va a parecer básico. <span style="color:var(--accent-color)">Empieza hoy.</span></p>
-      <div class="mini-cta-form">
+      <div class="mini-cta-fields">
+        <input type="text"  class="mini-cta-input" placeholder="Tu nombre (opcional)" data-name="4" />
         <input type="email" class="mini-cta-input" placeholder="tu@correo.com" data-cta="4" />
-        <button class="mini-cta-btn" onclick="submitMiniCta(4)">Quiero aprenderlo →</button>
       </div>
+      <button class="mini-cta-btn" onclick="submitMiniCta(4)">Quiero aprenderlo →</button>
       <div class="mini-cta-msg" id="mini-msg-4"></div>
     </div>
 
@@ -530,13 +526,7 @@
           <input type="hidden" name="nonce" />
           <div class="form-group"><input type="email" name="email" required placeholder="tu@correo.com" class="form-input" /></div>
           <div class="form-group"><input type="text" name="name" placeholder="Nombre (opcional)" class="form-input" /></div>
-          <div class="checkbox-group">
-            <input id="newsletter-main" type="checkbox" name="l" checked value="b4f01952-65a2-4460-92e7-c058ae2775de" class="form-checkbox" />
-            <div class="checkbox-content">
-              <label for="newsletter-main" class="checkbox-label">📬 Newsletter semanal</label>
-              <span class="checkbox-description">Frontend, servidores, IA aplicada y problemas reales</span>
-            </div>
-          </div>
+
           <button type="submit" class="form-submit">
             <span class="btn-text">UNIRME A LA NEWSLETTER DE AKIDEV</span>
             <div class="loading"><div class="loading-spinner"></div></div>
@@ -651,32 +641,33 @@
     function submitMiniCta(idx) {
       console.log(`[AkiDev] Mini CTA #${idx} pulsado`);
 
-      const input  = document.querySelector(`[data-cta="${idx}"]`);
+      const nameInput = document.querySelector(`[data-name="${idx}"]`);
+      const emailInput = document.querySelector(`[data-cta="${idx}"]`);
       const msgEl  = document.getElementById(`mini-msg-${idx}`);
-      const btn    = input.nextElementSibling;
-      const email  = input.value.trim();
+      const btn    = emailInput.closest('.mini-cta').querySelector('.mini-cta-btn');
+      const email  = emailInput.value.trim();
+      const name   = nameInput ? nameInput.value.trim() : '';
 
-      console.log(`[AkiDev] Mini CTA #${idx} → email introducido: "${email}"`);
+      console.log(`[AkiDev] Mini CTA #${idx} → email: "${email}", name: "${name}"`);
 
       if (!isEmail(email)) {
         console.warn(`[AkiDev] Mini CTA #${idx} → email inválido, abortando`);
         msgEl.textContent = 'Introduce un correo válido.';
         msgEl.className   = 'mini-cta-msg error';
         msgEl.style.display = 'block';
-        input.focus();
+        emailInput.focus();
         return;
       }
 
       console.log(`[AkiDev] Mini CTA #${idx} → email válido, enviando a Listmonk…`);
 
-      // Feedback visual antes de navegar
       btn.disabled      = true;
       btn.textContent   = 'Enviando…';
       msgEl.textContent = 'Redirigiendo a Listmonk…';
       msgEl.className   = 'mini-cta-msg success';
       msgEl.style.display = 'block';
 
-      submitToListmonk(email, '');
+      submitToListmonk(email, name);
     }
 
     /* Formulario principal */
