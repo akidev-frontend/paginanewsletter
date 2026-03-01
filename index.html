@@ -1,1145 +1,673 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AkiDev - Web Developer (Frontend + Servidores)</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      /* ===== RESET Y VARIABLES ===== */
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      :root {
-        --primary-color: #192a34;
-        --secondary-color: #2a3f4d;
-        --accent-color: #4a90e2;
-        --text-light: #e8f4fd;
-        --text-gray: #a0b4c0;
-        --white: #ffffff;
-        --gradient: linear-gradient(135deg, #192a34 0%, #2a3f4d 100%);
-        --shadow: 0 10px 40px rgba(25, 42, 52, 0.3);
-        --border-radius: 16px;
-      }
-
-      html {
-        scroll-behavior: smooth;
-      }
-
-      body {
-        font-family: "Inter", sans-serif;
-        background: var(--gradient);
-        color: var(--text-light);
-        line-height: 1.6;
-        min-height: 100vh;
-        overflow-x: hidden;
-        position: relative;
-      }
-
-      /* ===== ANIMACIONES ===== */
-      @keyframes fadeInUp {
-        from {
-          opacity: 0;
-          transform: translateY(30px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      @keyframes slideInLeft {
-        from {
-          opacity: 0;
-          transform: translateX(-50px);
-        }
-        to {
-          opacity: 1;
-          transform: translateX(0);
-        }
-      }
-
-      @keyframes scaleIn {
-        from {
-          opacity: 0;
-          transform: scale(0.9);
-        }
-        to {
-          opacity: 1;
-          transform: scale(1);
-        }
-      }
-
-      @keyframes float {
-        0%, 100% {
-          transform: translateY(0px);
-        }
-        50% {
-          transform: translateY(-10px);
-        }
-      }
-
-      @keyframes glow {
-        0%, 100% {
-          box-shadow: 0 0 20px rgba(74, 144, 226, 0.3);
-        }
-        50% {
-          box-shadow: 0 0 30px rgba(74, 144, 226, 0.6);
-        }
-      }
-
-      @keyframes float-geometric {
-        0% {
-          transform: translateY(100vh) translateX(-100px) rotate(0deg);
-          opacity: 0;
-        }
-        10% {
-          opacity: 0.3;
-        }
-        90% {
-          opacity: 0.3;
-        }
-        100% {
-          transform: translateY(-100px) translateX(100px) rotate(360deg);
-          opacity: 0;
-        }
-      }
-
-      @keyframes float-geometric-reverse {
-        0% {
-          transform: translateY(-100px) translateX(100px) rotate(0deg);
-          opacity: 0;
-        }
-        10% {
-          opacity: 0.25;
-        }
-        90% {
-          opacity: 0.25;
-        }
-        100% {
-          transform: translateY(100vh) translateX(-100px) rotate(-360deg);
-          opacity: 0;
-        }
-      }
-
-      @keyframes pulse-gentle {
-        0%, 100% {
-          transform: scale(1);
-          opacity: 0.2;
-        }
-        50% {
-          transform: scale(1.1);
-          opacity: 0.4;
-        }
-      }
-
-      @keyframes spin {
-        0% {
-          transform: rotate(0deg);
-        }
-        100% {
-          transform: rotate(360deg);
-        }
-      }
-
-      /* ===== FONDO ANIMADO ===== */
-      .animated-background {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -1;
-        overflow: hidden;
-      }
-
-      .geometric-shape {
-        position: absolute;
-        opacity: 0.3;
-        animation: float-geometric 20s infinite linear;
-      }
-
-      .shape-circle {
-        border-radius: 50%;
-        background: linear-gradient(45deg, var(--accent-color), transparent);
-      }
-
-      .shape-square {
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent);
-        transform: rotate(45deg);
-      }
-
-      .shape-triangle {
-        width: 0;
-        height: 0;
-        background: transparent;
-        border-left: 25px solid transparent;
-        border-right: 25px solid transparent;
-        border-bottom: 43px solid rgba(74, 144, 226, 0.1);
-      }
-
-      .shape-hexagon {
-        width: 60px;
-        height: 34.64px;
-        background: rgba(255, 255, 255, 0.05);
-        position: relative;
-        margin: 17.32px 0;
-      }
-
-      .shape-hexagon:before,
-      .shape-hexagon:after {
-        content: "";
-        position: absolute;
-        width: 0;
-        border-left: 30px solid transparent;
-        border-right: 30px solid transparent;
-      }
-
-      .shape-hexagon:before {
-        bottom: 100%;
-        border-bottom: 17.32px solid rgba(255, 255, 255, 0.05);
-      }
-
-      .shape-hexagon:after {
-        top: 100%;
-        border-top: 17.32px solid rgba(255, 255, 255, 0.05);
-      }
-
-      /* ===== LAYOUT PRINCIPAL ===== */
-      .container {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 2rem 1rem;
-      }
-
-      /* ===== HEADER ===== */
-      .header {
-        text-align: center;
-        padding: 4rem 0;
-        animation: fadeInUp 1s ease-out;
-      }
-
-      .logo {
-        width: 120px;
-        height: 120px;
-        border-radius: 50%;
-        margin: 0 auto 2rem;
-        background: linear-gradient(135deg, var(--accent-color), #6bb6ff);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-        animation: scaleIn 0.8s ease-out 0.3s both, float 3s ease-in-out infinite 2s;
-        box-shadow: var(--shadow);
-      }
-
-      .logo img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: 50%;
-        display: block;
-      }
-
-      .main-title {
-        font-size: clamp(2.5rem, 5vw, 4rem);
-        font-weight: 700;
-        margin-bottom: 1rem;
-        background: linear-gradient(135deg, var(--text-light), var(--accent-color));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        animation: slideInLeft 1s ease-out 0.5s both;
-      }
-
-      .subtitle {
-        font-size: clamp(1.2rem, 3vw, 1.5rem);
-        color: var(--text-gray);
-        font-weight: 400;
-        margin-bottom: 3rem;
-        animation: fadeInUp 1s ease-out 0.7s both;
-      }
-
-      /* ===== ENLACES SOCIALES ===== */
-      .social-links {
-        display: flex;
-        justify-content: center;
-        gap: 1.5rem;
-        margin-bottom: 4rem;
-        animation: fadeInUp 1s ease-out 0.9s both;
-      }
-
-      .social-link {
-        width: 60px;
-        height: 60px;
-        background: var(--secondary-color);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-decoration: none;
-        color: var(--text-light);
-        font-size: 1.5rem;
-        transition: all 0.3s ease;
-        border: 2px solid transparent;
-      }
-
-      .social-link:hover {
-        background: var(--accent-color);
-        transform: translateY(-5px) scale(1.1);
-        animation: glow 2s infinite;
-      }
-
-      /* ===== SECCIONES ===== */
-      .section {
-        background: rgba(255, 255, 255, 0.05);
-        backdrop-filter: blur(10px);
-        border-radius: var(--border-radius);
-        padding: 3rem;
-        margin-bottom: 3rem;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        transition: all 0.3s ease;
-        animation: fadeInUp 1s ease-out;
-      }
-
-      .section:hover {
-        background: rgba(255, 255, 255, 0.08);
-        transform: translateY(-5px);
-        box-shadow: var(--shadow);
-      }
-
-      .section-title {
-        font-size: clamp(1.8rem, 4vw, 2.5rem);
-        font-weight: 600;
-        margin-bottom: 1.5rem;
-        color: var(--text-light);
-      }
-
-      .section-text {
-        font-size: clamp(1.1rem, 2.8vw, 1.4rem);
-        color: var(--text-gray);
-        margin-bottom: 1.5rem;
-        line-height: 1.7;
-      }
-
-      .highlight {
-        color: var(--accent-color);
-        font-weight: 600;
-      }
-
-      .code-block {
-        background: var(--primary-color);
-        border-radius: 12px;
-        padding: 1.5rem;
-        margin: 1.5rem 0;
-        font-family: "Courier New", monospace;
-        font-size: 0.9rem;
-        color: var(--text-light);
-        border-left: 4px solid var(--accent-color);
-        overflow-x: auto;
-      }
-
-      /* ===== FORMULARIOS ===== */
-      .listmonk-form {
-        margin-top: 2rem;
-      }
-
-      .newsletter-form-container {
-        background: rgba(255, 255, 255, 0.08);
-        backdrop-filter: blur(15px);
-        border-radius: var(--border-radius);
-        padding: 2.5rem;
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        transition: all 0.3s ease;
-      }
-
-      .newsletter-form-container:hover {
-        background: rgba(255, 255, 255, 0.12);
-        transform: translateY(-3px);
-        box-shadow: 0 8px 30px rgba(74, 144, 226, 0.2);
-      }
-
-      .newsletter-form-title {
-        font-size: clamp(1.5rem, 3.5vw, 2rem);
-        font-weight: 600;
-        color: var(--text-light);
-        margin-bottom: 1.5rem;
-        text-align: center;
-        background: linear-gradient(135deg, var(--text-light), var(--accent-color));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
-
-      .form-group {
-        margin-bottom: 1.5rem;
-      }
-
-      .form-input {
-        width: 100%;
-        padding: 1rem 1.2rem;
-        background: rgba(255, 255, 255, 0.1);
-        border: 2px solid rgba(255, 255, 255, 0.2);
-        border-radius: 12px;
-        color: var(--text-light);
-        font-size: clamp(1rem, 2.5vw, 1.1rem);
-        font-family: "Inter", sans-serif;
-        transition: all 0.3s ease;
-        backdrop-filter: blur(10px);
-      }
-
-      .form-input:focus {
-        outline: none;
-        border-color: var(--accent-color);
-        background: rgba(255, 255, 255, 0.15);
-        box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
-        transform: translateY(-2px);
-      }
-
-      .form-input::placeholder {
-        color: var(--text-gray);
-        opacity: 0.8;
-      }
-
-      .checkbox-group {
-        display: flex;
-        align-items: flex-start;
-        gap: 0.75rem;
-        margin-bottom: 1.5rem;
-      }
-
-      .form-checkbox {
-        width: 20px;
-        height: 20px;
-        margin-top: 2px;
-        accent-color: var(--accent-color);
-        cursor: pointer;
-      }
-
-      .checkbox-content {
-        flex: 1;
-      }
-
-      .checkbox-label {
-        color: var(--text-light);
-        font-weight: 500;
-        font-size: clamp(1rem, 2.5vw, 1.1rem);
-        cursor: pointer;
-        display: block;
-        margin-bottom: 0.5rem;
-      }
-
-      .checkbox-description {
-        color: var(--text-gray);
-        font-size: clamp(0.9rem, 2.2vw, 1rem);
-        line-height: 1.5;
-      }
-
-      /* ===== BOTONES ===== */
-      .form-submit,
-      .cta-button {
-        display: inline-block;
-        background: linear-gradient(135deg, var(--accent-color), #6bb6ff);
-        color: var(--white);
-        padding: 1.2rem 2rem;
-        border: none;
-        border-radius: var(--border-radius);
-        font-weight: 600;
-        font-size: clamp(1.1rem, 2.8vw, 1.3rem);
-        font-family: "Inter", sans-serif;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
-        text-decoration: none;
-      }
-
-      .form-submit {
-        width: 100%;
-        position: relative;
-      }
-
-      .cta-button {
-        padding: 1rem 2.5rem;
-        margin-top: 1rem;
-      }
-
-      .form-submit:hover,
-      .cta-button:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 25px rgba(74, 144, 226, 0.4);
-        animation: glow 2s infinite;
-      }
-
-      .form-submit:active,
-      .cta-button:active {
-        transform: translateY(-1px);
-      }
-
-      /* ===== MENSAJES Y ESTADOS ===== */
-      .message {
-        display: none;
-        padding: 15px;
-        border-radius: 12px;
-        margin-bottom: 20px;
-        font-weight: 600;
-        text-align: center;
-      }
-
-      .message.success {
-        background-color: #d4edda;
-        color: #155724;
-        border: 1px solid #c3e6cb;
-      }
-
-      .message.error {
-        background-color: #f8d7da;
-        color: #721c24;
-        border: 1px solid #f5c6cb;
-      }
-
-      .loading {
-        display: none;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-      }
-
-      .loading-spinner {
-        width: 20px;
-        height: 20px;
-        border: 2px solid #ffffff;
-        border-top: 2px solid transparent;
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-      }
-
-      /* ===== FOOTER ===== */
-      .footer {
-        text-align: center;
-        padding: 3rem 0 2rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-        margin-top: 4rem;
-        color: var(--text-gray);
-        font-size: 0.9rem;
-      }
-
-      .footer a {
-        color: var(--accent-color);
-        text-decoration: none;
-        transition: color 0.3s ease;
-      }
-
-      .footer a:hover {
-        color: var(--text-light);
-      }
-
-      /* ===== ANIMACIONES DE INTERSECTION OBSERVER ===== */
-      .fade-in {
-        opacity: 0;
-        transform: translateY(30px);
-        transition: all 0.8s ease;
-      }
-
-      .fade-in.visible {
-        opacity: 1;
-        transform: translateY(0);
-      }
-
-      /* ===== RESPONSIVE DESIGN ===== */
-      @media (max-width: 768px) {
-        .container {
-          padding: 1rem 0.5rem;
-        }
-
-        .header {
-          padding: 2rem 0;
-        }
-
-        .section {
-          padding: 2rem;
-          margin-bottom: 2rem;
-        }
-
-        .newsletter-form-container {
-          padding: 2rem;
-        }
-
-        .social-links {
-          gap: 1rem;
-        }
-
-        .social-link {
-          width: 50px;
-          height: 50px;
-          font-size: 1.2rem;
-        }
-      }
-
-      @media (max-width: 480px) {
-        .section {
-          padding: 1.5rem;
-        }
-
-        .newsletter-form-container {
-          padding: 1.5rem;
-        }
-
-        .cta-button {
-          width: 100%;
-          text-align: center;
-        }
-
-        .checkbox-group {
-          flex-direction: column;
-          gap: 0.5rem;
-        }
-      }
-    </style>
-  </head>
-
-  <body>
-    <!-- Fondo animado -->
-    <div class="animated-background" id="animatedBg"></div>
-
-    <div class="container">
-      <!-- Header -->
-      <header class="header">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AkiDev - Web Developer (Frontend + Servidores)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,900;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    :root {
+      --primary-color:#192a34; --secondary-color:#2a3f4d;
+      --accent-color:#4a90e2; --text-light:#e8f4fd; --text-gray:#a0b4c0;
+      --white:#ffffff; --gradient:linear-gradient(135deg,#192a34 0%,#2a3f4d 100%);
+      --shadow:0 10px 40px rgba(25,42,52,.3); --border-radius:16px;
+    }
+    html { scroll-behavior:smooth; }
+    body { font-family:"Inter",sans-serif; background:var(--gradient); color:var(--text-light); line-height:1.6; min-height:100vh; overflow-x:hidden; cursor:none; }
+
+    /* CURSOR */
+    .cursor { position:fixed; width:8px; height:8px; background:var(--accent-color); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); }
+    .cursor-follower { position:fixed; width:32px; height:32px; border:1.5px solid rgba(74,144,226,.5); border-radius:50%; pointer-events:none; z-index:9998; transition:width .3s,height .3s,border-color .3s; transform:translate(-50%,-50%); }
+    .cursor-follower.hover { width:52px; height:52px; border-color:rgba(74,144,226,.8); background:rgba(74,144,226,.05); }
+
+    /* KEYFRAMES */
+    @keyframes fadeInUp { from{opacity:0;transform:translateY(40px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+    @keyframes glow { 0%,100%{box-shadow:0 0 20px rgba(74,144,226,.3)} 50%{box-shadow:0 0 40px rgba(74,144,226,.7),0 0 80px rgba(74,144,226,.2)} }
+    @keyframes spin { to{transform:rotate(360deg)} }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+    @keyframes pulse-ring { 0%{transform:scale(.8);opacity:1} 100%{transform:scale(2.2);opacity:0} }
+    @keyframes shimmer { 0%{background-position:-200% center} 100%{background-position:200% center} }
+    @keyframes float-p { 0%{transform:translateY(100vh) rotate(0);opacity:0} 10%{opacity:.5} 90%{opacity:.5} 100%{transform:translateY(-120px) translateX(60px) rotate(360deg);opacity:0} }
+    @keyframes float-pr { 0%{transform:translateY(-120px) rotate(0);opacity:0} 10%{opacity:.4} 90%{opacity:.4} 100%{transform:translateY(100vh) translateX(-60px) rotate(-360deg);opacity:0} }
+    @keyframes scanline { 0%{transform:translateY(-100%)} 100%{transform:translateY(100vh)} }
+
+    /* BG */
+    .animated-background { position:fixed; inset:0; z-index:-1; overflow:hidden; }
+    .grid-overlay { position:fixed; inset:0; z-index:-1; background-image:linear-gradient(rgba(74,144,226,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(74,144,226,.025) 1px,transparent 1px); background-size:60px 60px; pointer-events:none; }
+    .scanline { position:fixed; top:0; left:0; width:100%; height:3px; background:linear-gradient(90deg,transparent,rgba(74,144,226,.1),transparent); z-index:1; pointer-events:none; animation:scanline 10s linear infinite; }
+    .particle { position:absolute; pointer-events:none; }
+
+    /* LAYOUT */
+    .container { max-width:800px; margin:0 auto; padding:2rem 1rem; }
+
+    /* HEADER */
+    .header { text-align:center; padding:5rem 0 3rem; animation:fadeInUp 1s ease-out; }
+    .logo-wrapper { position:relative; width:130px; height:130px; margin:0 auto 2.5rem; }
+    .logo-ring { position:absolute; inset:-8px; border-radius:50%; background:conic-gradient(var(--accent-color),transparent,var(--accent-color),transparent,var(--accent-color)); animation:spin 6s linear infinite; opacity:.6; }
+    .logo-ring::after { content:''; position:absolute; inset:3px; border-radius:50%; background:var(--primary-color); }
+    .logo { position:relative; z-index:1; width:130px; height:130px; border-radius:50%; background:linear-gradient(135deg,var(--accent-color),#6bb6ff); display:flex; align-items:center; justify-content:center; overflow:hidden; animation:float 4s ease-in-out infinite 2s; box-shadow:0 0 40px rgba(74,144,226,.3); }
+    .logo img { width:100%; height:100%; object-fit:cover; border-radius:50%; display:block; }
+    .pulse-ring { position:absolute; inset:0; border-radius:50%; border:2px solid rgba(74,144,226,.4); animation:pulse-ring 3s ease-out infinite; }
+    .pulse-ring:nth-child(2){animation-delay:1s} .pulse-ring:nth-child(3){animation-delay:2s}
+    .main-title { font-size:clamp(2rem,4.5vw,3.2rem); font-weight:900; margin-bottom:1rem; line-height:1.25; background:linear-gradient(135deg,var(--text-light) 0%,var(--accent-color) 55%,#6bb6ff 100%); background-size:200% auto; -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; animation:fadeInUp 1s ease-out .3s both,shimmer 5s linear 2s infinite; }
+    .subtitle { font-size:clamp(1rem,2.5vw,1.3rem); color:var(--text-gray); font-weight:400; font-style:italic; margin-bottom:3rem; animation:fadeInUp 1s ease-out .6s both; }
+
+    /* SOCIAL */
+    .social-links { display:flex; justify-content:center; gap:1.5rem; margin-bottom:4rem; animation:fadeInUp 1s ease-out .8s both; }
+    .social-link { width:54px; height:54px; background:var(--secondary-color); border-radius:50%; display:flex; align-items:center; justify-content:center; text-decoration:none; color:var(--text-light); font-size:1.3rem; transition:all .3s cubic-bezier(.34,1.56,.64,1); border:2px solid rgba(255,255,255,.07); position:relative; }
+    .social-link::before { content:''; position:absolute; inset:-2px; border-radius:50%; background:linear-gradient(135deg,var(--accent-color),#6bb6ff); z-index:-1; opacity:0; transition:opacity .3s; }
+    .social-link:hover { transform:translateY(-6px) scale(1.15); color:var(--white); border-color:transparent; }
+    .social-link:hover::before { opacity:1; }
+
+    /* SECTIONS */
+    .section { position:relative; background:rgba(255,255,255,.04); backdrop-filter:blur(12px); border-radius:var(--border-radius); padding:3rem; margin-bottom:1.5rem; border:1px solid rgba(255,255,255,.07); transition:all .4s cubic-bezier(.23,1,.32,1); overflow:hidden; }
+    .section::after { content:''; position:absolute; top:0; right:0; width:80px; height:80px; background:radial-gradient(circle at top right,rgba(74,144,226,.07),transparent 70%); border-radius:0 var(--border-radius) 0 0; pointer-events:none; }
+    .section:hover { background:rgba(255,255,255,.07); transform:translateY(-4px); box-shadow:0 20px 60px rgba(0,0,0,.3),0 0 0 1px rgba(74,144,226,.1); }
+    .section-number { font-family:'JetBrains Mono',monospace; font-size:.72rem; color:rgba(74,144,226,.55); letter-spacing:.15em; text-transform:uppercase; display:block; margin-bottom:.6rem; }
+
+    /* TIPOGRAFÍA VÍVIDA */
+    .section-title { font-size:clamp(1.7rem,3.8vw,2.4rem); font-weight:800; margin-bottom:.5rem; color:var(--text-light); line-height:1.2; }
+
+    /* Frase de impacto: grande, brutal */
+    .text-impact { font-size:clamp(1.6rem,4vw,2.5rem); font-weight:900; line-height:1.15; color:var(--text-light); margin:1.8rem 0 1rem; letter-spacing:-.02em; }
+
+    /* Callout: borde izquierdo accent */
+    .text-callout { font-size:clamp(1.05rem,2.6vw,1.35rem); font-weight:700; color:var(--accent-color); line-height:1.5; margin:1.2rem 0; padding:.8rem 1.1rem; border-left:3px solid var(--accent-color); background:rgba(74,144,226,.06); border-radius:0 8px 8px 0; }
+
+    /* Texto cuerpo normal */
+    .section-text { font-size:clamp(.95rem,2.2vw,1.1rem); color:var(--text-gray); margin-bottom:1rem; line-height:1.85; font-weight:400; }
+    .section-text:last-of-type { margin-bottom:0; }
+
+    /* Texto pequeño / nota */
+    .text-small { font-size:.82rem; color:rgba(160,180,192,.55); font-family:'JetBrains Mono',monospace; margin:.4rem 0; }
+
+    /* Inline highlights */
+    .hl { color:var(--accent-color); font-weight:700; }
+    .hl-white { color:var(--text-light); font-weight:700; }
+
+    /* Separador */
+    .divider { display:flex; align-items:center; gap:1rem; margin:.8rem 0 2rem; opacity:.35; }
+    .divider-line { flex:1; height:1px; background:linear-gradient(90deg,transparent,var(--accent-color),transparent); }
+    .divider-dot { width:4px; height:4px; border-radius:50%; background:var(--accent-color); }
+
+    .para-break { height:1.4rem; }
+
+    /* Lista tipo diálogo */
+    .dialog-list { margin:1.2rem 0; display:flex; flex-direction:column; gap:.55rem; }
+    .dialog-item { font-size:clamp(.95rem,2.2vw,1.1rem); color:var(--text-gray); padding:.65rem 1rem; background:rgba(255,255,255,.03); border-radius:8px; border-left:2px solid rgba(74,144,226,.25); transition:all .2s ease; }
+    .dialog-item:hover { background:rgba(74,144,226,.06); border-left-color:rgba(74,144,226,.6); color:var(--text-light); }
+
+    /* CODE BLOCKS */
+    .code-block { background:rgba(10,20,28,.85); border-radius:12px; padding:0; margin:1.1rem 0; font-family:'JetBrains Mono',monospace; font-size:.84rem; color:var(--text-light); border:1px solid rgba(74,144,226,.18); overflow:hidden; position:relative; transition:all .3s ease; }
+    .code-block:hover { border-color:rgba(74,144,226,.45); box-shadow:0 0 20px rgba(74,144,226,.08); }
+    .code-header { display:flex; align-items:center; gap:6px; padding:9px 14px; background:rgba(255,255,255,.03); border-bottom:1px solid rgba(255,255,255,.04); }
+    .code-dot { width:9px; height:9px; border-radius:50%; }
+    .code-dot-red{background:#ff5f57} .code-dot-yellow{background:#febc2e} .code-dot-green{background:#28c840}
+    .code-body { padding:1.1rem 1.4rem; line-height:1.7; color:#b8d4e8; overflow-x:auto; word-break:break-word; white-space:pre-wrap; }
+    .code-body::before { content:'> '; color:var(--accent-color); opacity:.6; font-weight:700; }
+    .typed-text::after { content:'|'; color:var(--accent-color); animation:blink 1s step-end infinite; display:inline-block; margin-left:1px; }
+    .typed-text.done::after { display:none; }
+
+    /* FEATURES */
+    .feature-list { display:flex; flex-direction:column; gap:1rem; margin:1.5rem 0; }
+    .feature-item { display:flex; gap:1rem; align-items:flex-start; padding:1.1rem; background:rgba(255,255,255,.03); border-radius:12px; border:1px solid rgba(255,255,255,.05); transition:all .3s ease; cursor:default; opacity:0; transform:translateX(-20px); }
+    .feature-item.visible { opacity:1; transform:translateX(0); }
+    .feature-item:hover { background:rgba(74,144,226,.07); border-color:rgba(74,144,226,.22); transform:translateX(5px)!important; }
+    .feature-icon { font-size:1.3rem; width:38px; height:38px; display:flex; align-items:center; justify-content:center; background:rgba(74,144,226,.1); border-radius:8px; border:1px solid rgba(74,144,226,.15); flex-shrink:0; }
+    .feature-title { color:var(--text-light); font-weight:700; font-size:.94rem; margin-bottom:.25rem; }
+    .feature-desc { color:var(--text-gray); font-size:.87rem; line-height:1.6; }
+
+    /* STATS */
+    .stats-row { display:flex; gap:1.2rem; margin:1.8rem 0; flex-wrap:wrap; }
+    .stat-card { flex:1; min-width:120px; background:rgba(74,144,226,.07); border:1px solid rgba(74,144,226,.2); border-radius:12px; padding:1.1rem; text-align:center; transition:all .3s ease; }
+    .stat-card:hover { border-color:rgba(74,144,226,.5); transform:translateY(-3px); }
+    .stat-number { font-family:'JetBrains Mono',monospace; font-size:1.9rem; font-weight:700; color:var(--accent-color); display:block; line-height:1; margin-bottom:.35rem; }
+    .stat-label { font-size:.74rem; color:var(--text-gray); text-transform:uppercase; letter-spacing:.08em; }
+
+    /* MINI CTA */
+    .mini-cta { background:rgba(74,144,226,.07); border:1px solid rgba(74,144,226,.25); border-radius:var(--border-radius); padding:1.6rem 2rem; margin-bottom:1.5rem; position:relative; overflow:hidden; opacity:0; transform:translateY(20px); transition:opacity .7s ease,transform .7s ease; }
+    .mini-cta.visible { opacity:1; transform:translateY(0); }
+    .mini-cta::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,transparent,var(--accent-color),transparent); animation:shimmer 3s linear infinite; background-size:200% auto; }
+    .mini-cta-label { font-size:.7rem; font-family:'JetBrains Mono',monospace; color:rgba(74,144,226,.7); text-transform:uppercase; letter-spacing:.15em; margin-bottom:.6rem; display:block; }
+    .mini-cta-title { font-size:clamp(.98rem,2.4vw,1.18rem); font-weight:700; color:var(--text-light); margin-bottom:1rem; line-height:1.4; }
+    .mini-cta-form { display:flex; flex-direction:column; gap:.7rem; }
+    @media (min-width:480px) { .mini-cta-form { flex-direction:row; flex-wrap:wrap; } }
+    .mini-cta-input { flex:1; min-width:0; width:100%; padding:.72rem 1rem; background:rgba(255,255,255,.07); border:1.5px solid rgba(255,255,255,.12); border-radius:10px; color:var(--text-light); font-family:'Inter',sans-serif; font-size:.9rem; transition:all .3s ease; }
+    .mini-cta-input:focus { outline:none; border-color:var(--accent-color); background:rgba(74,144,226,.1); box-shadow:0 0 0 3px rgba(74,144,226,.15); }
+    .mini-cta-input::placeholder { color:var(--text-gray); opacity:.7; }
+    .mini-cta-btn { width:100%; background:linear-gradient(135deg,var(--accent-color),#6bb6ff); color:var(--white); border:none; border-radius:10px; padding:.72rem 1.3rem; font-family:'Inter',sans-serif; font-weight:700; font-size:.84rem; cursor:pointer; letter-spacing:.04em; text-transform:uppercase; transition:all .3s cubic-bezier(.34,1.56,.64,1); white-space:nowrap; position:relative; overflow:hidden; }
+    @media (min-width:480px) { .mini-cta-btn { width:auto; } }
+    .mini-cta-btn:hover { transform:translateY(-2px) scale(1.04); box-shadow:0 8px 20px rgba(74,144,226,.4); }
+    .mini-cta-note { font-size:.73rem; color:rgba(160,180,192,.5); margin-top:.6rem; font-family:'JetBrains Mono',monospace; }
+    .mini-cta-msg { display:none; margin-top:.8rem; padding:.65rem 1rem; border-radius:8px; font-size:.84rem; font-weight:600; text-align:center; }
+    .mini-cta-msg.success { background:rgba(40,200,64,.1); color:#5ddc7a; border:1px solid rgba(40,200,64,.3); }
+    .mini-cta-msg.error { background:rgba(255,95,87,.1); color:#ff7b75; border:1px solid rgba(255,95,87,.3); }
+
+    /* FORMULARIO COMPLETO */
+    .listmonk-form { margin-top:2rem; }
+    .newsletter-form-container { background:rgba(74,144,226,.05); backdrop-filter:blur(15px); border-radius:var(--border-radius); padding:2.5rem; border:1px solid rgba(74,144,226,.2); position:relative; overflow:hidden; transition:all .3s ease; }
+    .newsletter-form-container::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,transparent,var(--accent-color),transparent); animation:shimmer 3s linear infinite; background-size:200% auto; }
+    .newsletter-form-container:hover { background:rgba(74,144,226,.08); box-shadow:0 12px 40px rgba(74,144,226,.15); }
+    .newsletter-form-title { font-size:clamp(1.3rem,3vw,1.7rem); font-weight:800; color:var(--text-light); margin-bottom:1.8rem; text-align:center; background:linear-gradient(135deg,var(--text-light),var(--accent-color)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .form-group { margin-bottom:1.1rem; }
+    .form-input { width:100%; padding:.95rem 1.1rem; background:rgba(255,255,255,.06); border:1.5px solid rgba(255,255,255,.12); border-radius:10px; color:var(--text-light); font-size:1rem; font-family:'Inter',sans-serif; transition:all .3s ease; }
+    .form-input:focus { outline:none; border-color:var(--accent-color); background:rgba(74,144,226,.08); box-shadow:0 0 0 3px rgba(74,144,226,.15); transform:translateY(-1px); }
+    .form-input::placeholder { color:var(--text-gray); opacity:.7; }
+    .checkbox-group { display:flex; align-items:flex-start; gap:.75rem; margin-bottom:1.4rem; padding:.9rem 1rem; background:rgba(255,255,255,.03); border-radius:10px; border:1px solid rgba(255,255,255,.05); }
+    .form-checkbox { width:18px; height:18px; margin-top:3px; accent-color:var(--accent-color); cursor:pointer; flex-shrink:0; }
+    .checkbox-content { flex:1; }
+    .checkbox-label { color:var(--text-light); font-weight:600; font-size:.92rem; cursor:pointer; display:block; margin-bottom:.3rem; }
+    .checkbox-description { color:var(--text-gray); font-size:.82rem; line-height:1.5; }
+    .form-submit { width:100%; background:linear-gradient(135deg,var(--accent-color),#6bb6ff); color:var(--white); padding:1.1rem; border:none; border-radius:var(--border-radius); font-weight:800; font-size:.92rem; font-family:'Inter',sans-serif; cursor:pointer; letter-spacing:.07em; text-transform:uppercase; position:relative; overflow:hidden; transition:all .3s cubic-bezier(.34,1.56,.64,1); animation:glow 3s ease-in-out infinite; }
+    .form-submit::before { content:''; position:absolute; top:50%; left:50%; width:0; height:0; background:rgba(255,255,255,.15); border-radius:50%; transform:translate(-50%,-50%); transition:width .6s,height .6s; }
+    .form-submit:hover::before { width:400px; height:400px; }
+    .form-submit:hover { transform:translateY(-3px) scale(1.02); box-shadow:0 10px 30px rgba(74,144,226,.5); }
+    .message { display:none; padding:1rem 1.1rem; border-radius:10px; margin-bottom:1.1rem; font-weight:600; text-align:center; font-size:.9rem; }
+    .message.success { background:rgba(40,200,64,.1); color:#5ddc7a; border:1px solid rgba(40,200,64,.3); }
+    .message.error { background:rgba(255,95,87,.1); color:#ff7b75; border:1px solid rgba(255,95,87,.3); }
+    .loading { display:none; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); }
+    .loading-spinner { width:20px; height:20px; border:2px solid rgba(255,255,255,.3); border-top:2px solid #fff; border-radius:50%; animation:spin 1s linear infinite; }
+    .spam-note { text-align:center; margin-top:1.1rem; color:var(--text-gray); font-size:.78rem; font-family:'JetBrains Mono',monospace; opacity:.6; }
+
+    /* FOOTER */
+    .footer { text-align:center; padding:3rem 0 2rem; border-top:1px solid rgba(255,255,255,.07); margin-top:3rem; color:var(--text-gray); font-size:.85rem; line-height:1.8; }
+    .footer a { color:var(--accent-color); text-decoration:none; transition:color .3s; font-family:'JetBrains Mono',monospace; font-size:.78rem; }
+    .footer a:hover { color:var(--text-light); }
+
+    /* SCROLL ANIMATIONS */
+    .fade-in { opacity:0; transform:translateY(40px); transition:opacity .8s cubic-bezier(.23,1,.32,1),transform .8s cubic-bezier(.23,1,.32,1); }
+    .fade-in.visible { opacity:1; transform:translateY(0); }
+
+    /* ===== RESPONSIVE ===== */
+
+    /* Tablet grande / landscape phone — 768px */
+    @media (max-width:768px) {
+      /* Cursor off en touch */
+      body { cursor:auto; }
+      .cursor, .cursor-follower { display:none; }
+
+      /* Layout */
+      .container { padding:1rem .9rem; }
+
+      /* Header */
+      .header { padding:3rem 0 2rem; }
+      .logo-wrapper { width:110px; height:110px; }
+      .logo { width:110px; height:110px; }
+      .logo-ring { inset:-7px; }
+      .main-title { font-size:clamp(1.7rem,6vw,2.4rem); }
+      .subtitle { font-size:1rem; margin-bottom:2rem; }
+
+      /* Social */
+      .social-links { gap:1rem; margin-bottom:3rem; }
+      .social-link { width:48px; height:48px; font-size:1.15rem; }
+
+      /* Secciones */
+      .section { padding:1.8rem 1.4rem; }
+      .mini-cta { padding:1.3rem 1.4rem; }
+
+      /* Tipografía */
+      .section-title { font-size:clamp(1.4rem,5vw,2rem); }
+      .text-impact { font-size:clamp(1.35rem,5.5vw,2rem); margin:1.4rem 0 .8rem; }
+      .text-callout { font-size:clamp(1rem,3vw,1.2rem); padding:.7rem 1rem; }
+
+      /* Mini CTA form — columna en tablet */
+      .mini-cta-form { flex-direction:column; gap:.6rem; }
+      .mini-cta-input { min-width:0; width:100%; }
+      .mini-cta-btn { width:100%; padding:.85rem 1rem; font-size:.88rem; }
+
+      /* Stats */
+      .stats-row { gap:.8rem; }
+      .stat-number { font-size:1.7rem; }
+
+      /* Form */
+      .newsletter-form-container { padding:1.8rem; }
+
+      /* Features */
+      .feature-item { padding:.9rem; }
+
+      /* Code blocks */
+      .code-block { font-size:.8rem; }
+      .code-body { padding:.9rem 1.1rem; font-size:.78rem; overflow-x:auto; }
+    }
+
+    /* Móvil — 480px */
+    @media (max-width:480px) {
+      /* Layout */
+      .container { padding:.75rem .7rem; }
+
+      /* Header */
+      .header { padding:2.2rem 0 1.5rem; }
+      .logo-wrapper { width:95px; height:95px; }
+      .logo { width:95px; height:95px; }
+      .logo-ring { inset:-6px; }
+      .main-title { font-size:clamp(1.5rem,7.5vw,2rem); line-height:1.3; }
+      .subtitle { font-size:.95rem; }
+
+      /* Social */
+      .social-links { gap:.8rem; margin-bottom:2rem; }
+      .social-link { width:44px; height:44px; font-size:1.1rem; }
+
+      /* Secciones */
+      .section { padding:1.4rem 1.1rem; margin-bottom:1.1rem; border-radius:12px; }
+      /* Desactivar hover translate en móvil (no hay hover real) */
+      .section:hover { transform:none; }
+
+      /* Tipografía */
+      .section-number { font-size:.65rem; }
+      .section-title { font-size:clamp(1.25rem,6.5vw,1.7rem); }
+      .text-impact { font-size:clamp(1.2rem,7vw,1.7rem); letter-spacing:-.01em; }
+      .text-callout { font-size:.98rem; padding:.65rem .9rem; }
+      .section-text { font-size:.95rem; line-height:1.75; }
+      .dialog-item { font-size:.92rem; padding:.55rem .85rem; }
+
+      /* Mini CTA */
+      .mini-cta { padding:1.1rem 1rem; border-radius:12px; }
+      .mini-cta-title { font-size:.96rem; }
+      .mini-cta-input { padding:.7rem .9rem; font-size:.88rem; }
+      .mini-cta-btn { padding:.8rem 1rem; font-size:.84rem; }
+      .mini-cta-note { font-size:.68rem; }
+
+      /* Stats — 3 columnas que caben bien */
+      .stats-row { gap:.6rem; }
+      .stat-card { padding:.9rem .6rem; min-width:0; border-radius:10px; }
+      .stat-number { font-size:1.4rem; }
+      .stat-label { font-size:.65rem; letter-spacing:.04em; }
+
+      /* Features */
+      .feature-list { gap:.7rem; }
+      .feature-item { padding:.85rem .9rem; border-radius:10px; }
+      .feature-item:hover { transform:none!important; }
+      .feature-icon { width:34px; height:34px; font-size:1.1rem; border-radius:7px; }
+      .feature-title { font-size:.88rem; }
+      .feature-desc { font-size:.82rem; }
+
+      /* Code blocks */
+      .code-block { border-radius:10px; font-size:.75rem; }
+      .code-body { padding:.85rem 1rem; font-size:.75rem; word-break:break-word; }
+      .code-body::before { display:none; } /* sin el '>' en móvil muy pequeño para no romper layout */
+
+      /* Form completo */
+      .newsletter-form-container { padding:1.3rem 1.1rem; border-radius:12px; }
+      .newsletter-form-title { font-size:1.2rem; margin-bottom:1.3rem; }
+      .form-input { padding:.85rem .95rem; font-size:.92rem; }
+      .form-submit { font-size:.82rem; padding:1rem; letter-spacing:.05em; }
+      .checkbox-group { padding:.75rem .85rem; }
+      .checkbox-label { font-size:.88rem; }
+      .checkbox-description { font-size:.78rem; }
+      .spam-note { font-size:.72rem; }
+
+      /* Divider menos margen */
+      .divider { margin:.6rem 0 1.4rem; }
+      .para-break { height:1rem; }
+    }
+
+    /* Móvil muy pequeño — 360px */
+    @media (max-width:360px) {
+      .container { padding:.6rem .6rem; }
+      .main-title { font-size:1.35rem; }
+      .section { padding:1.2rem .95rem; }
+      .mini-cta { padding:1rem .95rem; }
+      .stat-number { font-size:1.25rem; }
+      .text-impact { font-size:1.1rem; }
+      .section-title { font-size:1.15rem; }
+    }
+
+    /* Touch: desactivar efectos hover que no tienen sentido */
+    @media (hover:none) {
+      .section:hover { transform:none; box-shadow:none; background:rgba(255,255,255,.04); }
+      .feature-item:hover { transform:translateX(0)!important; background:rgba(255,255,255,.03); border-color:rgba(255,255,255,.05); }
+      .stat-card:hover { transform:none; border-color:rgba(74,144,226,.2); }
+      .social-link:hover { transform:none; }
+      .mini-cta-btn:hover { transform:none; box-shadow:none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
+  <div class="animated-background" id="animatedBg"></div>
+  <div class="grid-overlay"></div>
+  <div class="scanline"></div>
+
+  <div class="container">
+
+    <!-- HEADER -->
+    <header class="header">
+      <div class="logo-wrapper">
+        <div class="logo-ring"></div>
         <div class="logo">
-          <img src="src/Logo.webp" alt="AkiDev Logo" />
+          <div class="pulse-ring"></div><div class="pulse-ring"></div><div class="pulse-ring"></div>
+          <img src="src/Foto Perfil.png" alt="AkiDev" />
         </div>
-        <h1 class="main-title">El mundo web es un puto lío. Yo te enseño a dominarla con la IA para que consigas curro</h1>
-        <p class="subtitle">(Por cierto, me llamo AkiDev)</p>
-      </header>
+      </div>
+      <h1 class="main-title">El mundo web es un puto lío. Yo te enseño a dominarla con la IA para que consigas curro</h1>
+      <p class="subtitle">(Por cierto, me llamo AkiDev)</p>
+    </header>
 
-      <!-- Sección 1: Quién coño soy -->
-      <section class="section fade-in">
-        <h2 class="section-title">Vale, ¿y tú quién eres para enseñarme?</h2>
-        
-        <p class="section-text">
-          Buena pregunta. <br> Internet está lleno de iluminados que nunca han desplegado nada en producción.
-        </p>
-        
-        <p class="section-text">
-          Yo llevo años currando en esto. <br> Me he comido los mocos con servidores que no respondían, <br> con deploys que petaban un viernes a las 8,<br>  con código que funcionaba en local y en producción ardía Troya.
-        </p>
-        
-        <p class="section-text">
-          Y de todo eso he aprendido una cosa: <span class="highlight">el 90% de lo que enseñan por ahí no sirve para el mundo real.</span>
-        </p>
-        
-        <p class="section-text">
-          Mi objetivo es que tú aprendas lo que importa, <br> y que no pierdas el tiempo que yo perdí.
-        </p>
-      </section>
-
-      <!-- Sección 2: El problema (actualizado con IA) -->
-      <section class="section fade-in">
-        <h2 class="section-title">¿Te pasa esto?</h2>
-        
-        <p class="section-text">
-          Sabes maquetar. <br> Controlas lo básico de JavaScript. <br> Pero luego llega el momento de <em>subir la página</em> y se te hiela el culo.
-        </p>
-        
-        <p class="section-text">
-          ¿Qué hostias es un servidor? <br> ¿Cómo configuro la web para que funcione? <br> ¿Por qué Git me manda estos mensajes de mierda? <br> ¿Y si el deploy falla, qué hago, salgo corriendo?
-        </p>
-
-        <p class="section-text">
-          <span class="highlight">Y ahora encima con la IA...</span> <br> Todo el mundo dice que te va a quitar el trabajo. <br> Que si ChatGPT hace código solo. <br> Que si ya no hace falta aprender.
-        </p>
-        
-        <p class="section-text">
-          Son las 11 de la noche, llevas 3 horas peleándote con la terminal, <br> le preguntas a ChatGPT, te suelta una mierda que no funciona, <br> y te preguntas si esto es para ti.
-        </p>
-        
-        <p class="section-text">
-          <span class="highlight">El problema no eres tú. Es que te han enseñado la mitad del camino.</span> <br>
-          <span class="highlight">Y encima no te han enseñado a usar la puta IA.</span>
-        </p>
-      </section>
-
-      <!-- Sección 3: Lo que ofreces (actualizado con IA) -->
-      <section class="section fade-in">
-        <h2 class="section-title">Esto es lo que voy a soltarte en el correo cada semana:</h2>
-        
-        <p class="section-text">
-          <span class="highlight">🧠 Frontend claro:</span> HTML, CSS, JavaScript, React… lo que uses. Pero explicado como persona humana que eres, no como si estudiaras para un examen.
-        </p>
-        
-        <p class="section-text">
-          <span class="highlight">⚡️ Servidores y despliegues:</span> Desde configurar un VPS privado hasta hacer que tu web sea rápida de verdad. Coolify, DNS, SSL, y todo ese mundo que parece de hackers (pero que no lo es).
-        </p>
-        
-        <p class="section-text">
-          <span class="highlight">🐛 Problemas reales:</span> Los errores que me encuentro currando y cómo los soluciono. Para que cuando te pasen a ti, sepas qué hacer.
-        </p>
-
-        <p class="section-text">
-          <span class="highlight">🤖 IA como ayudante, no como sustituto:</span> Cómo uso ChatGPT, Claude y Copilot para currar más rápido. Los prompts que realmente funcionan. Y lo más importante: <span class="highlight">cómo saber cuándo la IA te está mintiendo.</span>
-        </p>
-        
-        <p class="section-text">
-          Porque la IA no te va a quitar el trabajo. <br> <span class="highlight">El que sepa usar la IA le va a quitar el trabajo al que no.</span>
-        </p>
-      </section>
-
-      <!-- Sección 4: La prueba (actualizada con IA) -->
-      <section class="section fade-in">
-        <h2 class="section-title">Lee esto y dime si te pierdes.</h2>
-        
-        <div class="code-block">
-          "El código funciona en local pero en el servidor da 500. Mira los logs del servidor antes de tocar nada."
-        </div>
-        
-        <div class="code-block">
-          "git rebase origin/main && git push --force-with-lease. Pero solo si sabes lo que estás haciendo."
-        </div>
-        
-        <div class="code-block">
-          "Un certificado SSL gratis con Let's Encrypt y lo renuevas con cron. Ni te enteras."
-        </div>
-
-        <div class="code-block">
-          "ChatGPT me ha dado este código pero tiene un error tonto. El prompt que he usado para que se corrija solo."
-        </div>
-        
-        <p class="section-text">
-          Si lo lees y piensas "obvio, siguiente", <br>joder, <br>qué bien. <br> Estás en tu casa.
-        </p>
-        
-        <p class="section-text">
-          Si lo lees y piensas "¿pero este tío de qué habla?", <br> <span class="highlight">mejor.</span> <br> Justo para eso estoy aquí. <br>Para que dentro de unos meses leas eso y te parezca una chorrada.
-        </p>
-      </section>
-
-      <!-- Sección 5: Newsletter (actualizada con IA) -->
-      <section class="section fade-in">
-        <h2 class="section-title">Más de 100 personas ya están dentro.</h2>
-        
-        <p class="section-text">
-          Subí un vídeo sobre Git sin muchas expectativas (y encima no es de mi tema principal). <br> Solo quería ayudar con algo que a mí me costó horrores.
-        </p>
-        
-        <p class="section-text">
-          De repente, 15.500 visitas y un montón de gente dándome las gracias. <br> Y pensé: "Si esto le sirve a tanta gente, igual merece la pena seguir".
-        </p>
-        
-        <p class="section-text">
-          Por eso ahora escribo esta newsletter. <br>  Porque veo que no soy el único que estaba harto de tutoriales de mierda y quería algo real.
-        </p>
-        
-        <p class="section-text">¿Qué vas a hacer?</p>
-        
-        <p class="section-text">
-          Puedes seguir igual. <br>Tutoriales infinitos. <br> Documentación que no entiendes. <br> Deploys que te dan miedo. <br> Frustración los domingos por la tarde. <br> Preguntándole a ChatGPT y que te responda cualquier mierda.
-        </p>
-        
-        <p class="section-text">
-          O puedes probar esto. <br> 5 minutos a la semana. <br> Gratis. <br> Solo yo contándote lo que aprendo currando, <br> cómo uso la IA para ir más rápido, <br> y cómo no dejar que te sustituya.
-        </p>
-        
-        <p class="section-text">Tú eliges.</p>
-
-        <!-- Mensaje de estado para formulario principal -->
-        <div id="message-main" class="message"></div>
-
-        <!-- Único formulario de newsletter -->
-        <form
-          id="mainNewsletterForm"
-          method="post"
-          action="https://listmonk.akidojo.dev/subscription/form"
-          class="listmonk-form"
-        >
-          <div class="newsletter-form-container">
-            <h3 class="newsletter-form-title">Únete a la newsletter de AkiDev</h3>
-            <input type="hidden" name="nonce" />
-
-            <div class="form-group">
-              <input
-                type="email"
-                name="email"
-                required
-                placeholder="Correo electrónico"
-                class="form-input"
-              />
-            </div>
-
-            <div class="form-group">
-              <input
-                type="text"
-                name="name"
-                placeholder="Nombre (opcional)"
-                class="form-input"
-              />
-            </div>
-
-            <div class="checkbox-group">
-              <input
-                id="newsletter-main"
-                type="checkbox"
-                name="l"
-                checked
-                value="b4f01952-65a2-4460-92e7-c058ae2775de"
-                class="form-checkbox"
-              />
-              <div class="checkbox-content">
-                <label for="newsletter-main" class="checkbox-label">
-                  Newsletter semanal
-                </label>
-                <span class="checkbox-description">
-                  Frontend, servidores, IA aplicada y problemas reales
-                </span>
-              </div>
-            </div>
-
-            <button type="submit" class="form-submit">
-              <span class="btn-text">UNIRME A LA NEWSLETTER DE AKIDEV</span>
-              <div class="loading">
-                <div class="loading-spinner"></div>
-              </div>
-            </button>
-            
-            <p style="text-align: center; margin-top: 1rem; color: var(--text-gray); font-size: 0.9rem;">
-              *Odio el spam más que un "docker: command not found" un viernes a las 7. No te preocupes, no te llenaré el correo.
-            </p>
-          </div>
-        </form>
-      </section>
+    <!-- MINI CTA 0 — bajo el header -->
+    <div class="mini-cta fade-in">
+      <span class="mini-cta-label">// empieza aquí</span>
+      <p class="mini-cta-title">5 minutos a la semana. Gratis. Sin bullshit.</p>
+      <div class="mini-cta-form">
+        <input type="email" class="mini-cta-input" placeholder="tu@correo.com" data-cta="0" />
+        <button class="mini-cta-btn" onclick="submitMiniCta(0)">Apúntame →</button>
+      </div>
+      <div class="mini-cta-msg" id="mini-msg-0"></div>
+      <p class="mini-cta-note">// ya están dentro más de 100 devs como tú</p>
     </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-      <p>Página creada por AkiDev mientras debuggeaba un contenedor a las 2 de la mañana.</p>
-      <p>
-        <a href="https://github.com/Electrum10/LinkTree-Casero-AkiDev">
-          Link al repositorio
-        </a>
-      </p>
-      <p id="fecha"></p>
-    </footer>
+    <!-- SECCIÓN 1 -->
+    <section class="section fade-in">
+      <span class="section-number">// 01 — sobre mí</span>
+      <h2 class="section-title">Vale, ¿y tú quién eres para enseñarme?</h2>
+      <div class="divider"><div class="divider-line"></div><div class="divider-dot"></div><div class="divider-line"></div></div>
 
-    <script>
-      // ===== CONFIGURACIÓN =====
-      const CONFIG = {
-        listmonkUrl: "https://listmonk.akidojo.dev", // API común para ambos formularios
-        redirectDelay: 1000,
-        // Configuración específica por formulario
-        forms: {
-          main: {
-            redirectUrl: "https://links.akidojo.dev/NewsletterEnviada/normal.html",
-            webhookUrl: "https://n8n.bichear.com/webhook/main-newsletter", // Webhook específico para newsletter principal
-            webhookType: "main_newsletter_subscription"
-          }
-        },
-        // Configuración del fondo animado
-        shapes: ["circle", "square", "triangle", "hexagon"],
-        colors: [
-          "rgba(74, 144, 226, 0.3)",
-          "rgba(255, 255, 255, 0.2)",
-          "rgba(107, 182, 255, 0.25)",
-          "rgba(42, 63, 77, 0.4)",
-        ],
-        shapeInterval: 1500,
-        initialShapes: 8,
-        shapeLifetime: 25000
-      };
+      <p class="section-text">Buena pregunta.</p>
 
-      // ===== UTILIDADES =====
-      const Utils = {
-        isValidEmail(email) {
-          const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-          return re.test(email);
-        },
+      <p class="text-impact">Internet está lleno de <span class="hl">iluminados</span> que nunca han desplegado nada en producción.</p>
 
-        showMessage(messageId, text, type) {
-          const messageDiv = document.getElementById(messageId);
-          messageDiv.textContent = text;
-          messageDiv.className = `message ${type}`;
-          messageDiv.style.display = "block";
-          messageDiv.scrollIntoView({ behavior: "smooth", block: "center" });
-        },
+      <p class="section-text">Yo llevo años currando en esto. Me he comido los mocos con servidores que no respondían, con deploys que petaban un viernes a las 8, con código que funcionaba en local y en producción ardía Troya.</p>
 
-        hideMessage(messageId) {
-          document.getElementById(messageId).style.display = "none";
-        },
+      <p class="text-callout">El 90% de lo que enseñan por ahí no sirve para el mundo real.</p>
 
-        setLoadingState(form, isLoading) {
-          const submitBtn = form.querySelector('button[type="submit"]');
-          const btnText = submitBtn.querySelector('.btn-text');
-          const loading = submitBtn.querySelector('.loading');
+      <p class="section-text">Mi objetivo es que tú aprendas lo que importa, y que no pierdas el tiempo que yo perdí.</p>
+    </section>
 
-          submitBtn.disabled = isLoading;
-          btnText.style.opacity = isLoading ? "0" : "1";
-          loading.style.display = isLoading ? "block" : "none";
-        }
-      };
+    <!-- MINI CTA 1 -->
+    <div class="mini-cta fade-in">
+      <span class="mini-cta-label">// suena bien, ¿no?</span>
+      <p class="mini-cta-title">Aprende de alguien que lo ha vivido de verdad. <span style="color:var(--accent-color)">Únete gratis.</span></p>
+      <div class="mini-cta-form">
+        <input type="email" class="mini-cta-input" placeholder="tu@correo.com" data-cta="1" />
+        <button class="mini-cta-btn" onclick="submitMiniCta(1)">Entrar →</button>
+      </div>
+      <div class="mini-cta-msg" id="mini-msg-1"></div>
+    </div>
 
-      // ===== MANEJO DE FORMULARIOS =====
-      const FormHandler = {
-        async submitForm(formData) {
-          try {
-            const response = await fetch(`${CONFIG.listmonkUrl}/subscription/form`, {
-              method: "POST",
-              body: formData,
-            });
+    <!-- SECCIÓN 2 -->
+    <section class="section fade-in">
+      <span class="section-number">// 02 — ¿te suena esto?</span>
+      <h2 class="section-title">¿Te pasa esto?</h2>
+      <div class="divider"><div class="divider-line"></div><div class="divider-dot"></div><div class="divider-line"></div></div>
 
-            if (response.ok) {
-              return { success: true };
-            } else {
-              // Intento con no-cors como fallback
-              await fetch(`${CONFIG.listmonkUrl}/subscription/form`, {
-                method: "POST",
-                mode: "no-cors",
-                body: formData,
-              });
-              return { success: true };
-            }
-          } catch (error) {
-            console.error("Error:", error);
-            
-            // Último intento con no-cors
-            try {
-              await fetch(`${CONFIG.listmonkUrl}/subscription/form`, {
-                method: "POST",
-                mode: "no-cors",
-                body: formData,
-              });
-              return { success: true };
-            } catch (finalError) {
-              console.error("Error final:", finalError);
-              return { success: false, error: finalError };
-            }
-          }
-        },
+      <p class="section-text">Sabes maquetar. Controlas lo básico de JavaScript. Pero luego llega el momento de <em>subir la página</em> y se te hiela el culo.</p>
 
-        async sendWebhook(email, name, formType) {
-          const formConfig = CONFIG.forms[formType];
-          
-          try {
-            const webhookData = {
-              email: email,
-              name: name || "",
-              type: formConfig.webhookType,
-              timestamp: new Date().toISOString(),
-              source: "akidev_website"
-            };
+      <div class="dialog-list">
+        <div class="dialog-item">❓ ¿Qué hostias es un servidor?</div>
+        <div class="dialog-item">❓ ¿Cómo configuro la web para que funcione?</div>
+        <div class="dialog-item">❓ ¿Por qué Git me manda estos mensajes de mierda?</div>
+        <div class="dialog-item">❓ ¿Y si el deploy falla, qué hago, salgo corriendo?</div>
+      </div>
 
-            const response = await fetch(formConfig.webhookUrl, {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(webhookData),
-            });
+      <div class="para-break"></div>
+      <p class="text-impact"><span class="hl">Y ahora encima con la IA…</span></p>
+      <p class="section-text">Todo el mundo dice que te va a quitar el trabajo. Que si ChatGPT hace código solo. Que si ya no hace falta aprender.</p>
+      <p class="section-text">Son las 11 de la noche, llevas 3 horas peleándote con la terminal, le preguntas a ChatGPT, te suelta una mierda que no funciona, y te preguntas si esto es para ti.</p>
 
-            console.log(`Webhook ${formType} enviado:`, response.ok ? "✅ Éxito" : "❌ Error");
-            return response.ok;
-          } catch (error) {
-            console.error(`Error enviando webhook ${formType}:`, error);
-            return false;
-          }
-        },
+      <p class="text-callout">El problema no eres tú.<br>Es que te han enseñado la mitad del camino.<br>Y encima no te han enseñado a usar la puta IA.</p>
+    </section>
 
-        validateForm(email, lists) {
-          if (!Utils.isValidEmail(email)) {
-            return { valid: false, message: "Por favor, ingresa un correo electrónico válido." };
-          }
+    <!-- MINI CTA 2 -->
+    <div class="mini-cta fade-in">
+      <span class="mini-cta-label">// aquí termina esa frustración</span>
+      <p class="mini-cta-title">Cada semana te cuento la otra mitad del camino.</p>
+      <div class="mini-cta-form">
+        <input type="email" class="mini-cta-input" placeholder="tu@correo.com" data-cta="2" />
+        <button class="mini-cta-btn" onclick="submitMiniCta(2)">Quiero saber →</button>
+      </div>
+      <div class="mini-cta-msg" id="mini-msg-2"></div>
+    </div>
 
-          if (lists.length === 0) {
-            return { valid: false, message: "Por favor, marca la casilla para suscribirte." };
-          }
+    <!-- SECCIÓN 3 -->
+    <section class="section fade-in">
+      <span class="section-number">// 03 — lo que recibes</span>
+      <h2 class="section-title">Esto es lo que voy a soltarte en el correo cada semana:</h2>
+      <div class="divider"><div class="divider-line"></div><div class="divider-dot"></div><div class="divider-line"></div></div>
 
-          return { valid: true };
-        },
+      <div class="feature-list">
+        <div class="feature-item">
+          <div class="feature-icon">🧠</div>
+          <div><div class="feature-title">Frontend claro</div><div class="feature-desc">HTML, CSS, JavaScript, React… lo que uses. Pero explicado como persona humana que eres, no como si estudiaras para un examen.</div></div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">⚡️</div>
+          <div><div class="feature-title">Servidores y despliegues</div><div class="feature-desc">Desde configurar un VPS privado hasta hacer que tu web sea rápida de verdad. Coolify, DNS, SSL, y todo ese mundo que parece de hackers (pero que no lo es).</div></div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🐛</div>
+          <div><div class="feature-title">Problemas reales</div><div class="feature-desc">Los errores que me encuentro currando y cómo los soluciono. Para que cuando te pasen a ti, sepas qué hacer.</div></div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🤖</div>
+          <div><div class="feature-title">IA como ayudante, no como sustituto</div><div class="feature-desc">Cómo uso ChatGPT, Claude y Copilot para currar más rápido. Los prompts que realmente funcionan. Y lo más importante: <span class="hl">cómo saber cuándo la IA te está mintiendo.</span></div></div>
+        </div>
+      </div>
 
-        async handleSubmission(e) {
-          e.preventDefault();
+      <div class="para-break"></div>
+      <p class="text-impact">La IA no te va a quitar el trabajo.</p>
+      <p class="text-callout">El que sepa usar la IA le va a quitar el trabajo al que no.</p>
+    </section>
 
-          const form = e.target;
-          const formId = form.id;
-          const formData = new FormData(form);
-          const email = formData.get("email");
-          const name = formData.get("name") || "";
-          const lists = formData.getAll("l");
+    <!-- MINI CTA 3 -->
+    <div class="mini-cta fade-in">
+      <span class="mini-cta-label">// sé el que sabe usarla</span>
+      <p class="mini-cta-title">Aprende a usar la IA <span style="color:var(--accent-color)">como herramienta</span>, no como muleta.</p>
+      <div class="mini-cta-form">
+        <input type="email" class="mini-cta-input" placeholder="tu@correo.com" data-cta="3" />
+        <button class="mini-cta-btn" onclick="submitMiniCta(3)">Me apunto →</button>
+      </div>
+      <div class="mini-cta-msg" id="mini-msg-3"></div>
+    </div>
 
-          // Determinar configuración específica del formulario
-          let messageId, formType;
-          
-          if (formId === "mainNewsletterForm") {
-            messageId = "message-main";
-            formType = "main";
-          }
+    <!-- SECCIÓN 4 -->
+    <section class="section fade-in">
+      <span class="section-number">// 04 — test rápido</span>
+      <h2 class="section-title">Lee esto y dime si te pierdes.</h2>
+      <div class="divider"><div class="divider-line"></div><div class="divider-dot"></div><div class="divider-line"></div></div>
 
-          const formConfig = CONFIG.forms[formType];
+      <div class="code-block"><div class="code-header"><div class="code-dot code-dot-red"></div><div class="code-dot code-dot-yellow"></div><div class="code-dot code-dot-green"></div></div><div class="code-body"><span class="typed-text" data-text="El código funciona en local pero en el servidor da 500. Mira los logs del servidor antes de tocar nada."></span></div></div>
+      <div class="code-block"><div class="code-header"><div class="code-dot code-dot-red"></div><div class="code-dot code-dot-yellow"></div><div class="code-dot code-dot-green"></div></div><div class="code-body"><span class="typed-text" data-text="git rebase origin/main && git push --force-with-lease. Pero solo si sabes lo que estás haciendo."></span></div></div>
+      <div class="code-block"><div class="code-header"><div class="code-dot code-dot-red"></div><div class="code-dot code-dot-yellow"></div><div class="code-dot code-dot-green"></div></div><div class="code-body"><span class="typed-text" data-text="Un certificado SSL gratis con Let's Encrypt y lo renuevas con cron. Ni te enteras."></span></div></div>
+      <div class="code-block"><div class="code-header"><div class="code-dot code-dot-red"></div><div class="code-dot code-dot-yellow"></div><div class="code-dot code-dot-green"></div></div><div class="code-body"><span class="typed-text" data-text="ChatGPT me ha dado este código pero tiene un error tonto. El prompt que he usado para que se corrija solo."></span></div></div>
 
-          const validation = this.validateForm(email, lists);
-          if (!validation.valid) {
-            Utils.showMessage(messageId, validation.message, "error");
-            return;
-          }
+      <div class="para-break"></div>
+      <p class="text-impact">Si lo lees y piensas <span class="hl">"obvio, siguiente"</span>…</p>
+      <p class="section-text">Joder, qué bien. Estás en tu casa.</p>
+      <div class="para-break"></div>
+      <p class="text-impact">Si piensas <span class="hl">"¿de qué habla este tío?"</span>…</p>
+      <p class="text-callout">Mejor. Justo para eso estoy aquí. Para que dentro de unos meses leas eso y te parezca una chorrada.</p>
+    </section>
 
-          Utils.setLoadingState(form, true);
-          Utils.hideMessage(messageId);
+    <!-- MINI CTA 4 -->
+    <div class="mini-cta fade-in">
+      <span class="mini-cta-label">// convierte eso en obvio</span>
+      <p class="mini-cta-title">En unos meses vas a leer eso y te va a parecer básico. <span style="color:var(--accent-color)">Empieza hoy.</span></p>
+      <div class="mini-cta-form">
+        <input type="email" class="mini-cta-input" placeholder="tu@correo.com" data-cta="4" />
+        <button class="mini-cta-btn" onclick="submitMiniCta(4)">Quiero aprenderlo →</button>
+      </div>
+      <div class="mini-cta-msg" id="mini-msg-4"></div>
+    </div>
 
-          // Preparar FormData para Listmonk (API común)
-          const formDataToSend = new FormData();
-          formDataToSend.append("email", email);
-          formDataToSend.append("name", name);
-          lists.forEach((listId) => {
-            formDataToSend.append("l", listId);
-          });
+    <!-- SECCIÓN 5: NEWSLETTER PRINCIPAL -->
+    <section class="section fade-in">
+      <span class="section-number">// 05 — únete</span>
+      <h2 class="section-title">Más de 100 personas ya están dentro.</h2>
+      <div class="divider"><div class="divider-line"></div><div class="divider-dot"></div><div class="divider-line"></div></div>
 
-          const result = await this.submitForm(formDataToSend);
+      <div class="stats-row">
+        <div class="stat-card"><span class="stat-number" data-target="100" data-suffix="+">0+</span><span class="stat-label">Suscriptores</span></div>
+        <div class="stat-card"><span class="stat-number" data-target="15500">0</span><span class="stat-label">Visitas vídeo Git</span></div>
+        <div class="stat-card"><span class="stat-number" data-target="5" data-prefix="~" data-suffix="min">~0min</span><span class="stat-label">Por semana</span></div>
+      </div>
 
-          if (result.success) {
-            Utils.showMessage(messageId, "¡Perfecto! Te has suscrito correctamente. Redirigiendo...", "success");
-            
-            // Enviar webhook específico del formulario
-            await this.sendWebhook(email, name, formType);
-            
-            // Redirigir a URL específica del formulario
-            setTimeout(() => {
-              window.location.href = formConfig.redirectUrl;
-            }, CONFIG.redirectDelay);
-          } else {
-            Utils.showMessage(messageId, "Ha ocurrido un error. Por favor, inténtalo de nuevo.", "error");
-          }
+      <p class="section-text">Subí un vídeo sobre Git sin muchas expectativas. Solo quería ayudar con algo que a mí me costó horrores.</p>
+      <p class="text-impact"><span class="hl">15.500 visitas</span> y un montón de gente dándome las gracias.</p>
+      <p class="section-text">Y pensé: si esto le sirve a tanta gente, igual merece la pena seguir. Por eso escribo esta newsletter. Porque no soy el único harto de tutoriales de mierda.</p>
 
-          Utils.setLoadingState(form, false);
-        }
-      };
+      <div class="para-break"></div>
+      <p class="text-impact">¿Qué vas a hacer?</p>
 
-      // ===== FONDO ANIMADO =====
-      const BackgroundAnimation = {
-        createShape() {
-          const background = document.getElementById("animatedBg");
-          const shapeType = CONFIG.shapes[Math.floor(Math.random() * CONFIG.shapes.length)];
-          const size = Math.random() * 60 + 20;
+      <div class="dialog-list">
+        <div class="dialog-item" style="border-left-color:rgba(255,95,87,.5);color:rgba(160,180,192,.65)">❌ Tutoriales infinitos que no llevan a ningún sitio</div>
+        <div class="dialog-item" style="border-left-color:rgba(255,95,87,.5);color:rgba(160,180,192,.65)">❌ Documentación que no entiendes a las 11 de la noche</div>
+        <div class="dialog-item" style="border-left-color:rgba(255,95,87,.5);color:rgba(160,180,192,.65)">❌ Deploys que te dan miedo. Frustración los domingos</div>
+        <div class="dialog-item" style="border-left-color:rgba(74,144,226,.7);color:var(--text-light);background:rgba(74,144,226,.07)">✅ 5 minutos a la semana. Gratis. Cosas reales que funcionan.</div>
+      </div>
 
-          const shape = document.createElement("div");
-          shape.className = `geometric-shape shape-${shapeType}`;
+      <p class="text-callout" style="margin-top:1.8rem">Tú eliges.</p>
 
-          if (shapeType === "circle" || shapeType === "square") {
-            shape.style.width = size + "px";
-            shape.style.height = size + "px";
-            if (shapeType === "circle") {
-              shape.style.background = CONFIG.colors[Math.floor(Math.random() * CONFIG.colors.length)];
-            }
-          }
+      <div id="message-main" class="message"></div>
+      <form id="mainNewsletterForm" method="post" action="https://listmonk.akidojo.dev/subscription/form" class="listmonk-form">
+        <div class="newsletter-form-container">
+          <h3 class="newsletter-form-title">Únete a la newsletter de AkiDev</h3>
+          <input type="hidden" name="nonce" />
+          <div class="form-group"><input type="email" name="email" required placeholder="tu@correo.com" class="form-input" /></div>
+          <div class="form-group"><input type="text" name="name" placeholder="Nombre (opcional)" class="form-input" /></div>
+          <div class="checkbox-group">
+            <input id="newsletter-main" type="checkbox" name="l" checked value="b4f01952-65a2-4460-92e7-c058ae2775de" class="form-checkbox" />
+            <div class="checkbox-content">
+              <label for="newsletter-main" class="checkbox-label">📬 Newsletter semanal</label>
+              <span class="checkbox-description">Frontend, servidores, IA aplicada y problemas reales</span>
+            </div>
+          </div>
+          <button type="submit" class="form-submit">
+            <span class="btn-text">UNIRME A LA NEWSLETTER DE AKIDEV</span>
+            <div class="loading"><div class="loading-spinner"></div></div>
+          </button>
+          <p class="spam-note">// Odio el spam más que un "docker: command not found" un viernes a las 7. No te llenaré el correo.</p>
+        </div>
+      </form>
+    </section>
 
-          // Configurar animación
-          shape.style.left = Math.random() * window.innerWidth + "px";
-          shape.style.animationDuration = Math.random() * 15 + 10 + "s";
-          shape.style.animationDelay = Math.random() * 5 + "s";
+  </div>
 
-          // Algunas figuras van en dirección contraria
-          if (Math.random() > 0.5) {
-            shape.style.animationName = "float-geometric-reverse";
-          }
+  <footer class="footer">
+    <p>Página creada por AkiDev mientras debuggeaba un contenedor a las 2 de la mañana.</p>
+    <p style="margin-top:.5rem"><a href="https://github.com/Electrum10/LinkTree-Casero-AkiDev">→ Link al repositorio</a></p>
+    <p id="fecha" style="margin-top:.5rem;opacity:.4;font-family:'JetBrains Mono',monospace;font-size:.72rem"></p>
+  </footer>
 
-          // Algunas figuras tienen animación de pulso
-          if (Math.random() > 0.7) {
-            shape.style.animation += ", pulse-gentle 4s infinite";
-          }
+  <script>
+    const CONFIG = {
+      listmonkUrl:"https://listmonk.akidojo.dev",
+      redirectDelay:1000,
+      forms:{main:{redirectUrl:"https://links.akidojo.dev/NewsletterEnviada/normal.html",webhookUrl:"https://n8n.bichear.com/webhook/main-newsletter",webhookType:"main_newsletter_subscription"}}
+    };
 
-          background.appendChild(shape);
+    /* CURSOR */
+    const cursor=document.getElementById('cursor'),cf=document.getElementById('cursorFollower');
+    let mx=0,my=0,fx=0,fy=0;
+    document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px';});
+    (function ac(){fx+=(mx-fx)*.12;fy+=(my-fy)*.12;cf.style.left=fx+'px';cf.style.top=fy+'px';requestAnimationFrame(ac);})();
+    document.querySelectorAll('a,button,.section,.feature-item,.stat-card,.social-link,.mini-cta').forEach(el=>{
+      el.addEventListener('mouseenter',()=>cf.classList.add('hover'));
+      el.addEventListener('mouseleave',()=>cf.classList.remove('hover'));
+    });
 
-          // Eliminar la figura después de la animación
-          setTimeout(() => {
-            if (shape.parentNode) {
-              shape.parentNode.removeChild(shape);
-            }
-          }, CONFIG.shapeLifetime);
-        },
+    /* BACKGROUND */
+    (function(){
+      const bg=document.getElementById('animatedBg');
+      function spawn(){
+        const el=document.createElement('div'); el.className='particle';
+        const t=Math.floor(Math.random()*3),s=4+Math.random()*10,o=.1+Math.random()*.3,d=15+Math.random()*20,dir=Math.random()>.5?'float-p':'float-pr';
+        if(t===0) el.style.cssText=`width:${s}px;height:${s}px;border-radius:50%;background:rgba(74,144,226,${o});left:${Math.random()*100}%;animation:${dir} ${d}s ${Math.random()*8}s infinite linear;`;
+        else if(t===1) el.style.cssText=`width:${s}px;height:${s}px;background:rgba(255,255,255,${o*.4});transform:rotate(45deg);left:${Math.random()*100}%;animation:${dir} ${d}s ${Math.random()*8}s infinite linear;`;
+        else{const len=20+Math.random()*40;el.style.cssText=`width:${len}px;height:1px;background:linear-gradient(90deg,transparent,rgba(74,144,226,${o}),transparent);left:${Math.random()*100}%;animation:${dir} ${d}s ${Math.random()*8}s infinite linear;`;}
+        bg.appendChild(el);
+        setTimeout(()=>el.parentNode&&el.parentNode.removeChild(el),25000);
+      }
+      setInterval(spawn,1800);
+      for(let i=0;i<6;i++) setTimeout(spawn,i*500);
+    })();
 
-        init() {
-          // Crear figuras periódicamente
-          setInterval(() => this.createShape(), CONFIG.shapeInterval);
+    /* TYPEWRITER */
+    function typeText(el,text,speed=22){
+      return new Promise(res=>{let i=0;el.textContent='';const iv=setInterval(()=>{el.textContent+=text[i++];if(i>=text.length){clearInterval(iv);el.classList.add('done');res();}},speed);});
+    }
+    const tyObs=new IntersectionObserver(entries=>{
+      entries.forEach(e=>{if(e.isIntersecting){const el=e.target;if(!el.classList.contains('typed')){el.classList.add('typed');typeText(el,el.dataset.text);}tyObs.unobserve(el);}});
+    },{threshold:.5});
+    document.querySelectorAll('.typed-text').forEach(el=>tyObs.observe(el));
 
-          // Crear algunas figuras iniciales
-          for (let i = 0; i < CONFIG.initialShapes; i++) {
-            setTimeout(() => this.createShape(), i * 800);
-          }
-        }
-      };
+    /* COUNTER */
+    function animateNum(el){
+      const target=parseInt(el.dataset.target),prefix=el.dataset.prefix||'',suffix=el.dataset.suffix||'',start=performance.now();
+      (function up(now){const p=Math.min((now-start)/1500,1),ease=1-Math.pow(1-p,3);el.textContent=prefix+Math.floor(ease*target).toLocaleString()+suffix;if(p<1)requestAnimationFrame(up);})(start);
+    }
+    const cntObs=new IntersectionObserver(entries=>{
+      entries.forEach(e=>{if(e.isIntersecting){const el=e.target;if(!el.classList.contains('counted')){el.classList.add('counted');setTimeout(()=>animateNum(el),300);}cntObs.unobserve(el);}});
+    },{threshold:.8});
+    document.querySelectorAll('.stat-number').forEach(el=>cntObs.observe(el));
 
-      // ===== INTERSECTION OBSERVER =====
-      const ScrollAnimations = {
-        init() {
-          const observerOptions = {
-            threshold: 0.1,
-            rootMargin: "0px 0px -50px 0px",
-          };
+    /* SCROLL ANIMATIONS */
+    const fadeObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:.07,rootMargin:'0px 0px -40px 0px'});
+    document.querySelectorAll('.fade-in').forEach(el=>fadeObs.observe(el));
+    const ftObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.querySelectorAll('.feature-item').forEach((it,i)=>setTimeout(()=>it.classList.add('visible'),i*110));ftObs.unobserve(e.target);}});},{threshold:.1});
+    document.querySelectorAll('.feature-list').forEach(el=>ftObs.observe(el));
 
-          const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                entry.target.classList.add("visible");
-              }
-            });
-          }, observerOptions);
+    /* UTILS */
+    const isEmail=e=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
 
-          // Observar todos los elementos con clase fade-in
-          document.querySelectorAll(".fade-in").forEach((el) => {
-            observer.observe(el);
-          });
-        }
-      };
+    async function postToListmonk(email,name){
+      const fd=new FormData();fd.append('email',email);fd.append('name',name||'');fd.append('l','b4f01952-65a2-4460-92e7-c058ae2775de');
+      try{const r=await fetch(`${CONFIG.listmonkUrl}/subscription/form`,{method:'POST',body:fd});if(r.ok)return true;}catch(e){}
+      try{await fetch(`${CONFIG.listmonkUrl}/subscription/form`,{method:'POST',mode:'no-cors',body:fd});return true;}catch(e){return false;}
+    }
 
-      // ===== SMOOTH SCROLLING =====
-      const SmoothScroll = {
-        init() {
-          document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-            anchor.addEventListener("click", function (e) {
-              e.preventDefault();
-              const target = document.querySelector(this.getAttribute("href"));
-              if (target) {
-                target.scrollIntoView({
-                  behavior: "smooth",
-                  block: "start",
-                });
-              }
-            });
-          });
-        }
-      };
+    async function sendWebhook(email,name){
+      try{await fetch(CONFIG.forms.main.webhookUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,name:name||'',type:CONFIG.forms.main.webhookType,timestamp:new Date().toISOString(),source:'akidev_website'})});}catch(e){}
+    }
 
-      // ===== INICIALIZACIÓN =====
-      const App = {
-        init() {
-          this.setCurrentYear();
-          this.bindEvents();
-          BackgroundAnimation.init();
-          ScrollAnimations.init();
-          SmoothScroll.init();
-        },
+    /* MINI CTAs */
+    async function submitMiniCta(idx){
+      const input=document.querySelector(`[data-cta="${idx}"]`);
+      const msgEl=document.getElementById(`mini-msg-${idx}`);
+      const btn=input.nextElementSibling;
+      const email=input.value.trim();
+      if(!isEmail(email)){showMiniMsg(msgEl,'Correo inválido.','error');return;}
+      btn.disabled=true;btn.textContent='Enviando…';
+      const ok=await postToListmonk(email,'');
+      if(ok){
+        showMiniMsg(msgEl,'¡Dentro! Revisa tu correo para confirmar. 🎉','success');
+        await sendWebhook(email,'');
+        input.value='';btn.textContent='¡Hecho! ✓';
+        setTimeout(()=>{window.location.href=CONFIG.forms.main.redirectUrl;},CONFIG.redirectDelay);
+      } else {
+        showMiniMsg(msgEl,'Error al suscribir. Inténtalo de nuevo.','error');
+        btn.disabled=false;btn.textContent='Reintentar →';
+      }
+    }
+    function showMiniMsg(el,text,type){el.textContent=text;el.className=`mini-cta-msg ${type}`;el.style.display='block';}
 
-        setCurrentYear() {
-          document.getElementById("fecha").textContent = new Date().getFullYear();
-        },
+    /* FORMULARIO PRINCIPAL */
+    document.getElementById('mainNewsletterForm').addEventListener('submit',async e=>{
+      e.preventDefault();
+      const form=e.target,email=form.querySelector('[name=email]').value,name=form.querySelector('[name=name]').value||'';
+      const msgEl=document.getElementById('message-main'),btn=form.querySelector('button[type=submit]');
+      const btnText=btn.querySelector('.btn-text'),spinner=btn.querySelector('.loading');
+      if(!isEmail(email)){showMsg(msgEl,'Por favor, ingresa un correo electrónico válido.','error');return;}
+      btn.disabled=true;btnText.style.opacity='0';spinner.style.display='block';msgEl.style.display='none';
+      const ok=await postToListmonk(email,name);
+      if(ok){
+        showMsg(msgEl,'¡Perfecto! Te has suscrito correctamente. Redirigiendo…','success');
+        await sendWebhook(email,name);
+        setTimeout(()=>{window.location.href=CONFIG.forms.main.redirectUrl;},CONFIG.redirectDelay);
+      } else {
+        showMsg(msgEl,'Ha ocurrido un error. Por favor, inténtalo de nuevo.','error');
+        btn.disabled=false;btnText.style.opacity='1';spinner.style.display='none';
+      }
+    });
+    function showMsg(el,text,type){el.textContent=text;el.className=`message ${type}`;el.style.display='block';el.scrollIntoView({behavior:'smooth',block:'center'});}
 
-        bindEvents() {
-          // Único formulario de newsletter
-          const mainNewsletterForm = document.getElementById("mainNewsletterForm");
-          if (mainNewsletterForm) {
-            mainNewsletterForm.addEventListener("submit", (e) => FormHandler.handleSubmission(e));
-          }
-        }
-      };
+    /* SMOOTH SCROLL */
+    document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(a.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'});}));
 
-      // Inicializar cuando cargue la página
-      document.addEventListener("DOMContentLoaded", () => {
-        App.init();
-      });
-    </script>
-  </body>
+    document.getElementById('fecha').textContent=new Date().getFullYear();
+  </script>
+</body>
 </html>
