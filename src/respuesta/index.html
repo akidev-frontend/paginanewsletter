@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recibido — AkiDev</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0e1e28;
+      --surface: #152535;
+      --border: #2a4a5e;
+      --border-dim: #1e3a4d;
+      --blue: #4a90e2;
+      --blue-dim: #4a7a9b;
+      --text: #c8d8e4;
+      --text-bright: #e8f4fd;
+      --text-dim: #2a4a5e;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .card {
+      max-width: 480px;
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      animation: fadeUp 0.5s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .bar { height: 3px; background: var(--blue); }
+
+    .header {
+      background: var(--bg);
+      padding: 20px 32px;
+      border-bottom: 1px solid var(--border-dim);
+    }
+
+    .header p {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--blue);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    .body {
+      padding: 40px 32px;
+    }
+
+    .check {
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 28px;
+      animation: popIn 0.4s 0.3s ease both;
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.7); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    .check svg {
+      width: 18px;
+      height: 18px;
+      stroke: var(--blue);
+      stroke-width: 2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    h1 {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--text-bright);
+      line-height: 1.3;
+      margin-bottom: 14px;
+    }
+
+    p {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--text);
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border-dim);
+      margin: 28px 0;
+    }
+
+    .meta {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--blue-dim);
+      letter-spacing: 1px;
+    }
+
+    .bar-bottom { height: 3px; background: var(--blue); }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="bar"></div>
+
+    <div class="header">
+      <p>// AkiDev</p>
+    </div>
+
+    <div class="body">
+      <div class="check">
+        <svg viewBox="0 0 24 24">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </div>
+
+      <h1>Tu respuesta me ha llegado.</h1>
+
+      <p>Gracias por contestar.<br>
+      Es lo que me ayuda a saber que esto vale la pena.</p>
+
+      <hr class="divider">
+
+      <p class="meta">Si no estás suscrito todavía →<br>
+      <a href="https://newsletter.akidojo.dev" style="color: #4a90e2; text-decoration: underline;">newsletter.akidojo.dev</a></p>
+    </div>
+
+    <div class="bar-bottom"></div>
+  </div>
+</body>
+</html>
