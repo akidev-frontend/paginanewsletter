@@ -3,618 +3,791 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AkiDev - Frontend + IA</title>
+  <title>AkiDev — Webs con IA sin quemar tokens</title>
+  <meta name="description" content="Newsletter semanal para devs web que quieren construir con IA sin quedarse sin tokens a mitad del proyecto." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,900;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,900;1,400&family=JetBrains+Mono:wght@400;500;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
   <style>
-    * { margin:0; padding:0; box-sizing:border-box; }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
     :root {
-      --primary-color:#192a34; --secondary-color:#2a3f4d;
-      --accent-color:#4a90e2; --text-light:#e8f4fd; --text-gray:#a0b4c0;
-      --white:#ffffff; --gradient:linear-gradient(135deg,#192a34 0%,#2a3f4d 100%);
-      --shadow:0 10px 40px rgba(25,42,52,.3); --border-radius:16px;
+      --bg:#0d1117;
+      --bg2:#161b22;
+      --bg3:#1c2230;
+      --accent:#4a90e2;
+      --accent2:#63b3ed;
+      --accent-dim:rgba(74,144,226,.12);
+      --red:#ff5f57;
+      --green:#28c840;
+      --text:#e6edf3;
+      --muted:#7d8590;
+      --border:rgba(255,255,255,.07);
+      --border-accent:rgba(74,144,226,.25);
+      --radius:14px;
+      --font-display:'Instrument Serif', serif;
+      --font-body:'Inter', sans-serif;
+      --font-mono:'JetBrains Mono', monospace;
     }
     html { scroll-behavior:smooth; }
-    body { font-family:"Inter",sans-serif; background:var(--gradient); color:var(--text-light); line-height:1.6; min-height:100vh; overflow-x:hidden; cursor:none; }
+    body {
+      font-family:var(--font-body);
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.6;
+      overflow-x:hidden;
+      cursor:none;
+    }
 
     /* CURSOR */
-    .cursor { position:fixed; width:8px; height:8px; background:var(--accent-color); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); }
-    .cursor-follower { position:fixed; width:32px; height:32px; border:1.5px solid rgba(74,144,226,.5); border-radius:50%; pointer-events:none; z-index:9998; transition:width .3s,height .3s,border-color .3s; transform:translate(-50%,-50%); }
-    .cursor-follower.hover { width:52px; height:52px; border-color:rgba(74,144,226,.8); background:rgba(74,144,226,.05); }
+    .cursor { position:fixed; width:6px; height:6px; background:var(--accent); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); }
+    .cursor-ring { position:fixed; width:28px; height:28px; border:1px solid rgba(74,144,226,.5); border-radius:50%; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); transition:width .3s,height .3s,border-color .3s,background .3s; }
+    .cursor-ring.hover { width:44px; height:44px; border-color:rgba(74,144,226,.8); background:rgba(74,144,226,.04); }
+    @media(hover:none){ .cursor,.cursor-ring{display:none} body{cursor:auto} }
 
     /* KEYFRAMES */
-    @keyframes fadeInUp { from{opacity:0;transform:translateY(40px)} to{opacity:1;transform:translateY(0)} }
-    @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
-    @keyframes glow { 0%,100%{box-shadow:0 0 20px rgba(74,144,226,.3)} 50%{box-shadow:0 0 40px rgba(74,144,226,.7),0 0 80px rgba(74,144,226,.2)} }
-    @keyframes spin { to{transform:rotate(360deg)} }
-    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
-    @keyframes pulse-ring { 0%{transform:scale(.8);opacity:1} 100%{transform:scale(2.2);opacity:0} }
-    @keyframes shimmer { 0%{background-position:-200% center} 100%{background-position:200% center} }
-    @keyframes float-p { 0%{transform:translateY(100vh) rotate(0);opacity:0} 10%{opacity:.5} 90%{opacity:.5} 100%{transform:translateY(-120px) translateX(60px) rotate(360deg);opacity:0} }
-    @keyframes float-pr { 0%{transform:translateY(-120px) rotate(0);opacity:0} 10%{opacity:.4} 90%{opacity:.4} 100%{transform:translateY(100vh) translateX(-60px) rotate(-360deg);opacity:0} }
-    @keyframes scanline { 0%{transform:translateY(-100%)} 100%{transform:translateY(100vh)} }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(32px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes fadeDown { from{opacity:0;transform:translateY(-24px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes fadeLeft { from{opacity:0;transform:translateX(-40px)} to{opacity:1;transform:translateX(0)} }
+    @keyframes fadeRight { from{opacity:0;transform:translateX(40px)} to{opacity:1;transform:translateX(0)} }
+    @keyframes scaleIn { from{opacity:0;transform:scale(.88)} to{opacity:1;transform:scale(1)} }
+    @keyframes spin   { to{transform:rotate(360deg)} }
+    @keyframes blink  { 0%,100%{opacity:1} 50%{opacity:0} }
+    @keyframes pulse  { 0%,100%{box-shadow:0 0 0 0 rgba(74,144,226,.4)} 70%{box-shadow:0 0 0 12px rgba(74,144,226,0)} }
+    @keyframes shimmer{ 0%{background-position:-200% center} 100%{background-position:200% center} }
+    @keyframes scanline{ 0%{transform:translateY(-100%)} 100%{transform:translateY(100vh)} }
+    @keyframes floatY { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+    @keyframes tokenDrain {
+      0%   { width:100%; background:var(--green); }
+      60%  { background:#febc2e; }
+      85%  { background:var(--red); }
+      100% { width:8%; background:var(--red); }
+    }
+    @keyframes lineGrow { from{transform:scaleX(0)} to{transform:scaleX(1)} }
+    @keyframes proofCount { from{opacity:0;transform:translateY(12px) scale(.9)} to{opacity:1;transform:translateY(0) scale(1)} }
+    @keyframes borderBeam {
+      0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%}
+    }
 
     /* BG */
-    .animated-background { position:fixed; inset:0; z-index:-1; overflow:hidden; }
-    .grid-overlay { position:fixed; inset:0; z-index:-1; background-image:linear-gradient(rgba(74,144,226,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(74,144,226,.025) 1px,transparent 1px); background-size:60px 60px; pointer-events:none; }
-    .scanline { position:fixed; top:0; left:0; width:100%; height:3px; background:linear-gradient(90deg,transparent,rgba(74,144,226,.1),transparent); z-index:1; pointer-events:none; animation:scanline 10s linear infinite; }
-    .particle { position:absolute; pointer-events:none; }
+    .bg-grid {
+      position:fixed; inset:0; z-index:0; pointer-events:none;
+      background-image:
+        linear-gradient(rgba(74,144,226,.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(74,144,226,.03) 1px, transparent 1px);
+      background-size:48px 48px;
+    }
+    .bg-glow {
+      position:fixed; top:-20%; left:50%; transform:translateX(-50%);
+      width:600px; height:400px; border-radius:50%;
+      background:radial-gradient(ellipse, rgba(74,144,226,.06) 0%, transparent 70%);
+      pointer-events:none; z-index:0;
+    }
+    .scanline {
+      position:fixed; top:0; left:0; width:100%; height:2px;
+      background:linear-gradient(90deg,transparent,rgba(74,144,226,.08),transparent);
+      animation:scanline 12s linear infinite; z-index:1; pointer-events:none;
+    }
 
     /* LAYOUT */
-    .container { max-width:800px; margin:0 auto; padding:2rem 1rem; }
+    .wrap { max-width:760px; margin:0 auto; padding:0 1.25rem; position:relative; z-index:2; }
 
     /* HEADER */
-    .header { text-align:center; padding:5rem 0 3rem; animation:fadeInUp 1s ease-out; }
-    .logo-wrapper { position:relative; width:130px; height:130px; margin:0 auto 2.5rem; }
-    .logo-ring { position:absolute; inset:-8px; border-radius:50%; background:conic-gradient(var(--accent-color),transparent,var(--accent-color),transparent,var(--accent-color)); animation:spin 6s linear infinite; opacity:.6; }
-    .logo-ring::after { content:''; position:absolute; inset:3px; border-radius:50%; background:var(--primary-color); }
-    .logo { position:relative; z-index:1; width:130px; height:130px; border-radius:50%; background:linear-gradient(135deg,var(--accent-color),#6bb6ff); display:flex; align-items:center; justify-content:center; overflow:hidden; animation:float 4s ease-in-out infinite 2s; box-shadow:0 0 40px rgba(74,144,226,.3); }
-    .logo img { width:100%; height:100%; object-fit:cover; border-radius:50%; display:block; }
-    .pulse-ring { position:absolute; inset:0; border-radius:50%; border:2px solid rgba(74,144,226,.4); animation:pulse-ring 3s ease-out infinite; }
-    .pulse-ring:nth-child(2){animation-delay:1s} .pulse-ring:nth-child(3){animation-delay:2s}
-    .main-title { font-size:clamp(2rem,4.5vw,3.2rem); font-weight:900; margin-bottom:1rem; line-height:1.25; background:linear-gradient(135deg,var(--text-light) 0%,var(--accent-color) 55%,#6bb6ff 100%); background-size:200% auto; -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; animation:fadeInUp 1s ease-out .3s both,shimmer 5s linear 2s infinite; }
-    .subtitle { font-size:clamp(1rem,2.5vw,1.3rem); color:var(--text-gray); font-weight:400; font-style:italic; margin-bottom:3rem; animation:fadeInUp 1s ease-out .6s both; }
+    header { padding:5rem 0 2.5rem; text-align:center; animation:fadeUp .9s ease both; }
+    .avatar {
+      width:88px; height:88px; border-radius:50%;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      margin:0 auto 2rem;
+      display:flex; align-items:center; justify-content:center;
+      font-size:2.2rem;
+      box-shadow:0 0 0 1px var(--border-accent), 0 0 32px rgba(74,144,226,.2);
+      animation:floatY 4s ease-in-out infinite, pulse 3s ease-in-out infinite;
+      overflow:hidden;
+    }
+    .avatar img { width:100%; height:100%; object-fit:cover; border-radius:50%; }
 
-    /* SOCIAL */
-    .social-links { display:flex; justify-content:center; gap:1.5rem; margin-bottom:4rem; animation:fadeInUp 1s ease-out .8s both; }
-    .social-link { width:54px; height:54px; background:var(--secondary-color); border-radius:50%; display:flex; align-items:center; justify-content:center; text-decoration:none; color:var(--text-light); font-size:1.3rem; transition:all .3s cubic-bezier(.34,1.56,.64,1); border:2px solid rgba(255,255,255,.07); position:relative; }
-    .social-link::before { content:''; position:absolute; inset:-2px; border-radius:50%; background:linear-gradient(135deg,var(--accent-color),#6bb6ff); z-index:-1; opacity:0; transition:opacity .3s; }
-    .social-link:hover { transform:translateY(-6px) scale(1.15); color:var(--white); border-color:transparent; }
-    .social-link:hover::before { opacity:1; }
+    .tag-pill {
+      display:inline-flex; align-items:center; gap:.4rem;
+      font-family:var(--font-mono); font-size:.7rem; color:var(--accent);
+      background:var(--accent-dim); border:1px solid var(--border-accent);
+      border-radius:99px; padding:.3rem .8rem; margin-bottom:1.5rem;
+      letter-spacing:.08em;
+    }
+    .tag-pill::before { content:''; width:6px; height:6px; border-radius:50%; background:var(--accent); animation:pulse 2s ease-in-out infinite; }
 
-    /* SECTIONS */
-    .section { position:relative; background:rgba(255,255,255,.04); backdrop-filter:blur(12px); border-radius:var(--border-radius); padding:3rem; margin-bottom:1.5rem; border:1px solid rgba(255,255,255,.07); transition:background 1.2s ease, transform 1.2s cubic-bezier(.23,1,.32,1), box-shadow 1.2s ease, border-color 1.2s ease; overflow:hidden; }
-    .section::before { content:''; position:absolute; top:0; right:0; width:100%; height:100%; background:radial-gradient(ellipse at top right, rgba(74,144,226,.12) 0%, transparent 65%); pointer-events:none; opacity:0; transition:opacity 1.2s ease; z-index:0; }
-    .section > * { position:relative; z-index:1; }
-    .section:hover { background:rgba(255,255,255,.07); transform:translateY(-4px); box-shadow:0 20px 60px rgba(0,0,0,.3), 0 0 60px rgba(74,144,226,.15), 0 0 120px rgba(74,144,226,.07); border-color:rgba(74,144,226,.25); }
-    .section:hover::before { opacity:1; }
-    .section-number { font-family:'JetBrains Mono',monospace; font-size:.72rem; color:rgba(74,144,226,.55); letter-spacing:.15em; text-transform:uppercase; display:block; margin-bottom:.6rem; }
+    h1 {
+      font-family:var(--font-display);
+      font-size:clamp(2rem,5vw,3.2rem);
+      font-weight:800;
+      line-height:1.15;
+      letter-spacing:-.03em;
+      margin-bottom:1.2rem;
+    }
+    .h1-dim { color:var(--muted); font-weight:700; }
+    .h1-hl {
+      background:linear-gradient(135deg,var(--text) 0%,var(--accent) 50%,var(--accent2) 100%);
+      background-size:200% auto;
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+      background-clip:text;
+      animation:shimmer 5s linear 1s infinite;
+    }
 
-    /* TIPOGRAFÍA VÍVIDA */
-    .section-title { font-size:clamp(1.7rem,3.8vw,2.4rem); font-weight:800; margin-bottom:.5rem; color:var(--text-light); line-height:1.2; }
+    .header-sub {
+      font-size:clamp(1rem,2.5vw,1.15rem);
+      color:var(--muted);
+      max-width:520px;
+      margin:0 auto 2.5rem;
+      line-height:1.75;
+    }
 
-    /* Frase de impacto: grande, brutal */
-    .text-impact { font-size:clamp(1.6rem,4vw,2.5rem); font-weight:900; line-height:1.15; color:var(--text-light); margin:1.8rem 0 1rem; letter-spacing:-.02em; }
+    /* TOKEN WIDGET */
+    .token-widget {
+      background:var(--bg2);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:1.2rem 1.4rem;
+      margin:0 auto 3rem;
+      max-width:480px;
+      text-align:left;
+      font-family:var(--font-mono);
+      font-size:.82rem;
+    }
+    .tw-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:.75rem; }
+    .tw-label { color:var(--muted); font-size:.72rem; letter-spacing:.08em; }
+    .tw-count { color:var(--red); font-weight:700; }
+    .tw-bar-bg { background:rgba(255,255,255,.06); border-radius:99px; height:8px; overflow:hidden; }
+    .tw-bar { height:100%; border-radius:99px; animation:tokenDrain 4s ease-out 1.5s both; }
+    .tw-msg { margin-top:.7rem; font-size:.72rem; color:var(--muted); }
+    .tw-msg span { color:var(--red); }
 
-    /* Callout: borde izquierdo accent */
-    .text-callout { font-size:clamp(1.05rem,2.6vw,1.35rem); font-weight:700; color:var(--accent-color); line-height:1.5; margin:1.2rem 0; padding:.8rem 1.1rem; border-left:3px solid var(--accent-color); background:rgba(74,144,226,.06); border-radius:0 8px 8px 0; }
+    /* CTA HERO */
+    .cta-hero {
+      background:var(--bg2);
+      border:1px solid var(--border-accent);
+      border-radius:var(--radius);
+      padding:2rem 2rem 1.6rem;
+      margin-bottom:1.2rem;
+      position:relative; overflow:hidden;
+      animation:fadeUp .9s ease .2s both;
+    }
+    .cta-hero::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:2px;
+      background:linear-gradient(90deg,transparent,var(--accent),transparent);
+      animation:shimmer 3s linear infinite; background-size:200% auto;
+    }
+    .cta-label { font-family:var(--font-mono); font-size:.68rem; color:var(--accent); letter-spacing:.12em; text-transform:uppercase; display:block; margin-bottom:.5rem; }
+    .cta-title { font-size:clamp(1rem,2.5vw,1.2rem); font-weight:700; margin-bottom:1.2rem; line-height:1.45; }
+    .cta-fields { display:flex; flex-direction:column; gap:.6rem; margin-bottom:.8rem; }
+    .cta-input {
+      width:100%; padding:.75rem 1rem;
+      background:rgba(255,255,255,.05); border:1.5px solid var(--border);
+      border-radius:10px; color:var(--text); font-family:var(--font-body); font-size:.9rem;
+      transition:border-color .2s, background .2s, box-shadow .2s;
+    }
+    .cta-input:focus { outline:none; border-color:var(--accent); background:rgba(74,144,226,.07); box-shadow:0 0 0 3px rgba(74,144,226,.12); }
+    .cta-input::placeholder { color:var(--muted); opacity:.7; }
+    .cta-btn {
+      width:100%; background:linear-gradient(135deg,var(--accent),var(--accent2));
+      color:#fff; border:none; border-radius:10px;
+      padding:.85rem 1.2rem; font-family:var(--font-body); font-weight:700; font-size:.88rem;
+      cursor:pointer; letter-spacing:.04em; text-transform:uppercase;
+      transition:transform .25s cubic-bezier(.34,1.56,.64,1), box-shadow .25s;
+    }
+    .cta-btn:hover { transform:translateY(-2px) scale(1.02); box-shadow:0 8px 24px rgba(74,144,226,.35); }
+    .cta-note { font-family:var(--font-mono); font-size:.7rem; color:rgba(125,133,144,.55); margin-top:.6rem; }
+    .cta-msg { display:none; margin-top:.7rem; padding:.6rem 1rem; border-radius:8px; font-size:.83rem; font-weight:600; text-align:center; }
+    .cta-msg.ok  { background:rgba(40,200,64,.08); color:#5ddc7a; border:1px solid rgba(40,200,64,.25); }
+    .cta-msg.err { background:rgba(255,95,87,.08); color:#ff7b75; border:1px solid rgba(255,95,87,.25); }
 
-    /* Texto cuerpo normal */
-    .section-text { font-size:clamp(.95rem,2.2vw,1.1rem); color:var(--text-gray); margin-bottom:1rem; line-height:1.85; font-weight:400; }
-    .section-text:last-of-type { margin-bottom:0; }
+    /* SECCIONES */
+    section {
+      background:var(--bg2);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:2.5rem;
+      margin-bottom:1.2rem;
+      position:relative; overflow:hidden;
+      transition:border-color .4s, box-shadow .4s, background .4s;
+    }
+    section::after {
+      content:''; position:absolute; inset:0;
+      background:radial-gradient(ellipse at top right, rgba(74,144,226,.08) 0%, transparent 60%);
+      opacity:0; transition:opacity .4s; pointer-events:none;
+    }
+    section:hover { border-color:var(--border-accent); box-shadow:0 12px 40px rgba(0,0,0,.3); }
+    section:hover::after { opacity:1; }
+    @media(hover:none){ section:hover { border-color:var(--border); box-shadow:none; } }
 
-    /* Texto pequeño / nota */
-    .text-small { font-size:.82rem; color:rgba(160,180,192,.55); font-family:'JetBrains Mono',monospace; margin:.4rem 0; }
+    .sec-tag { font-family:var(--font-mono); font-size:.68rem; color:rgba(74,144,226,.5); letter-spacing:.12em; text-transform:uppercase; display:block; margin-bottom:.6rem; }
+    .sec-title { font-family:var(--font-display); font-size:clamp(1.5rem,4vw,2.1rem); font-weight:800; line-height:1.2; margin-bottom:.4rem; }
+    .divider { display:flex; align-items:center; gap:.8rem; margin:.6rem 0 1.8rem; opacity:.3; }
+    .divider-line { flex:1; height:1px; background:linear-gradient(90deg,transparent,var(--accent),transparent); }
+    .divider-dot { width:4px; height:4px; border-radius:50%; background:var(--accent); }
 
-    /* Inline highlights */
-    .hl { color:var(--accent-color); font-weight:700; }
-    .hl-white { color:var(--text-light); font-weight:700; }
+    .body-text { font-size:clamp(.93rem,2.2vw,1.05rem); color:var(--muted); line-height:1.8; margin-bottom:1rem; }
+    .body-text:last-child { margin-bottom:0; }
+    .hl { color:var(--accent); font-weight:600; }
+    .hl-white { color:var(--text); font-weight:700; }
 
-    /* Separador */
-    .divider { display:flex; align-items:center; gap:1rem; margin:.8rem 0 2rem; opacity:.35; }
-    .divider-line { flex:1; height:1px; background:linear-gradient(90deg,transparent,var(--accent-color),transparent); }
-    .divider-dot { width:4px; height:4px; border-radius:50%; background:var(--accent-color); }
+    .impact {
+      font-family:var(--font-display);
+      font-size:clamp(1.4rem,4vw,2rem);
+      font-weight:800; line-height:1.2;
+      margin:1.6rem 0 .8rem;
+      letter-spacing:-.02em;
+    }
+    .callout {
+      font-size:clamp(.98rem,2.5vw,1.15rem);
+      font-weight:600; color:var(--accent);
+      padding:.8rem 1.1rem;
+      border-left:3px solid var(--accent);
+      background:var(--accent-dim); border-radius:0 8px 8px 0;
+      margin:1.2rem 0; line-height:1.55;
+    }
 
-    .para-break { height:1.4rem; }
+    /* DIALOG LIST */
+    .dlist { display:flex; flex-direction:column; gap:.5rem; margin:1.2rem 0; }
+    .ditem {
+      font-size:clamp(.92rem,2.2vw,1.02rem); color:var(--muted);
+      padding:.65rem 1rem; border-radius:8px;
+      background:rgba(255,255,255,.025); border-left:2px solid rgba(74,144,226,.2);
+      transition:background .2s, border-color .2s, color .2s;
+    }
+    .ditem:hover { background:rgba(74,144,226,.07); border-left-color:var(--accent); color:var(--text); }
+    .ditem.good { border-left-color:rgba(40,200,64,.5); color:var(--text); background:rgba(40,200,64,.04); }
+    .ditem.bad  { border-left-color:rgba(255,95,87,.4); color:rgba(125,133,144,.7); }
 
-    /* Lista tipo diálogo */
-    .dialog-list { margin:1.2rem 0; display:flex; flex-direction:column; gap:.55rem; }
-    .dialog-item { font-size:clamp(.95rem,2.2vw,1.1rem); color:var(--text-gray); padding:.65rem 1rem; background:rgba(255,255,255,.03); border-radius:8px; border-left:2px solid rgba(74,144,226,.25); transition:all .2s ease; }
-    .dialog-item:hover { background:rgba(74,144,226,.06); border-left-color:rgba(74,144,226,.6); color:var(--text-light); }
+    /* FEATURE LIST */
+    .flist { display:flex; flex-direction:column; gap:.9rem; margin:1.5rem 0; }
+    .fitem {
+      display:flex; gap:1rem; align-items:flex-start;
+      padding:1.1rem; background:rgba(255,255,255,.025);
+      border:1px solid var(--border); border-radius:10px;
+      transition:background .25s, border-color .25s, transform .25s;
+      opacity:0; transform:translateX(-16px);
+    }
+    .fitem.visible { opacity:1; transform:translateX(0); }
+    .fitem:hover { background:rgba(74,144,226,.07); border-color:rgba(74,144,226,.2); transform:translateX(4px) !important; }
+    @media(hover:none){ .fitem:hover{transform:translateX(0)!important} }
+    .ficon { width:36px; height:36px; border-radius:8px; background:var(--accent-dim); border:1px solid var(--border-accent); display:flex; align-items:center; justify-content:center; font-size:1.2rem; flex-shrink:0; }
+    .ftitle { color:var(--text); font-weight:700; font-size:.92rem; margin-bottom:.2rem; }
+    .fdesc  { color:var(--muted); font-size:.85rem; line-height:1.6; }
 
-    /* CODE BLOCKS */
-    .code-block { background:rgba(10,20,28,.85); border-radius:12px; padding:0; margin:1.1rem 0; font-family:'JetBrains Mono',monospace; font-size:.84rem; color:var(--text-light); border:1px solid rgba(74,144,226,.18); overflow:hidden; position:relative; transition:all .3s ease; }
-    .code-block:hover { border-color:rgba(74,144,226,.45); box-shadow:0 0 20px rgba(74,144,226,.08); }
-    .code-header { display:flex; align-items:center; gap:6px; padding:9px 14px; background:rgba(255,255,255,.03); border-bottom:1px solid rgba(255,255,255,.04); }
-    .code-dot { width:9px; height:9px; border-radius:50%; }
-    .code-dot-red{background:#ff5f57} .code-dot-yellow{background:#febc2e} .code-dot-green{background:#28c840}
-    .code-body { padding:1.1rem 1.4rem; line-height:1.7; color:#b8d4e8; overflow-x:auto; word-break:break-word; white-space:pre-wrap; }
-    .code-body::before { content:'> '; color:var(--accent-color); opacity:.6; font-weight:700; }
-    .typed-text::after { content:'|'; color:var(--accent-color); animation:blink 1s step-end infinite; display:inline-block; margin-left:1px; }
-    .typed-text.done::after { display:none; }
+    /* CODE BLOCK */
+    .code {
+      background:#0d1117; border:1px solid rgba(74,144,226,.15);
+      border-radius:10px; overflow:hidden; margin:1rem 0;
+      font-family:var(--font-mono); font-size:.82rem;
+      transition:border-color .3s;
+    }
+    .code:hover { border-color:rgba(74,144,226,.4); }
+    .code-head {
+      display:flex; align-items:center; gap:5px;
+      padding:8px 12px; background:rgba(255,255,255,.025);
+      border-bottom:1px solid rgba(255,255,255,.04);
+    }
+    .dot { width:8px; height:8px; border-radius:50%; }
+    .dot-r{background:#ff5f57} .dot-y{background:#febc2e} .dot-g{background:#28c840}
+    .code-body {
+      padding:1rem 1.2rem; line-height:1.7; color:#8ba8c4;
+      white-space:pre-wrap; word-break:break-word; overflow-x:auto;
+    }
+    .typed::after { content:'|'; color:var(--accent); animation:blink 1s step-end infinite; margin-left:1px; }
+    .typed.done::after { display:none; }
 
-    /* FEATURES */
-    .feature-list { display:flex; flex-direction:column; gap:1rem; margin:1.5rem 0; }
-    .feature-item { display:flex; gap:1rem; align-items:flex-start; padding:1.1rem; background:rgba(255,255,255,.03); border-radius:12px; border:1px solid rgba(255,255,255,.05); transition:all .3s ease; cursor:default; opacity:0; transform:translateX(-20px); }
-    .feature-item.visible { opacity:1; transform:translateX(0); }
-    .feature-item:hover { background:rgba(74,144,226,.07); border-color:rgba(74,144,226,.22); transform:translateX(5px)!important; }
-    .feature-icon { font-size:1.3rem; width:38px; height:38px; display:flex; align-items:center; justify-content:center; background:rgba(74,144,226,.1); border-radius:8px; border:1px solid rgba(74,144,226,.15); flex-shrink:0; }
-    .feature-title { color:var(--text-light); font-weight:700; font-size:.94rem; margin-bottom:.25rem; }
-    .feature-desc { color:var(--text-gray); font-size:.87rem; line-height:1.6; }
+    /* SOCIAL PROOF */
+    .proof {
+      display:flex; align-items:center; gap:1rem;
+      background:var(--accent-dim); border:1px solid var(--border-accent);
+      border-radius:10px; padding:1rem 1.3rem; margin:1.5rem 0;
+    }
+    .proof-num { font-family:var(--font-mono); font-size:1.9rem; font-weight:700; color:var(--accent); white-space:nowrap; }
+    .proof-txt { font-size:.9rem; color:var(--muted); line-height:1.5; }
 
-    /* STATS */
-    .stats-row { display:flex; gap:1.2rem; margin:1.8rem 0; flex-wrap:wrap; }
-    .stat-card { flex:1; min-width:120px; background:rgba(74,144,226,.07); border:1px solid rgba(74,144,226,.2); border-radius:12px; padding:1.1rem; text-align:center; transition:all .3s ease; }
-    .stat-card:hover { border-color:rgba(74,144,226,.5); transform:translateY(-3px); }
-    .stat-number { font-family:'JetBrains Mono',monospace; font-size:1.9rem; font-weight:700; color:var(--accent-color); display:block; line-height:1; margin-bottom:.35rem; }
-    .stat-label { font-size:.74rem; color:var(--text-gray); text-transform:uppercase; letter-spacing:.08em; }
+    /* BOTTOM FORM */
+    .form-wrap {
+      background:rgba(74,144,226,.05); border:1px solid var(--border-accent);
+      border-radius:var(--radius); padding:2.2rem;
+      position:relative; overflow:hidden;
+      transition:background .3s, box-shadow .3s;
+    }
+    .form-wrap::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:2px;
+      background:linear-gradient(90deg,transparent,var(--accent),transparent);
+      animation:shimmer 3s linear infinite; background-size:200% auto;
+    }
+    .form-wrap:hover { background:rgba(74,144,226,.08); box-shadow:0 12px 40px rgba(74,144,226,.12); }
+    .form-title {
+      font-family:var(--font-display); font-size:clamp(1.2rem,3vw,1.55rem);
+      font-weight:800; text-align:center; margin-bottom:1.6rem;
+      background:linear-gradient(135deg,var(--text),var(--accent));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+    }
+    .f-input {
+      width:100%; padding:.9rem 1rem; margin-bottom:.8rem;
+      background:rgba(255,255,255,.05); border:1.5px solid var(--border);
+      border-radius:10px; color:var(--text); font-family:var(--font-body); font-size:.95rem;
+      transition:border-color .2s, background .2s, box-shadow .2s;
+    }
+    .f-input:focus { outline:none; border-color:var(--accent); background:rgba(74,144,226,.07); box-shadow:0 0 0 3px rgba(74,144,226,.12); }
+    .f-input::placeholder { color:var(--muted); opacity:.7; }
+    .f-btn {
+      width:100%; background:linear-gradient(135deg,var(--accent),var(--accent2));
+      color:#fff; border:none; border-radius:var(--radius);
+      padding:1.05rem; font-family:var(--font-body); font-weight:800; font-size:.9rem;
+      cursor:pointer; letter-spacing:.06em; text-transform:uppercase;
+      position:relative; overflow:hidden;
+      transition:transform .3s cubic-bezier(.34,1.56,.64,1), box-shadow .3s;
+      box-shadow:0 0 24px rgba(74,144,226,.2);
+    }
+    .f-btn:hover { transform:translateY(-3px) scale(1.02); box-shadow:0 10px 32px rgba(74,144,226,.45); }
+    .f-btn .spinner { display:none; width:18px; height:18px; border:2px solid rgba(255,255,255,.3); border-top-color:#fff; border-radius:50%; animation:spin 1s linear infinite; margin:0 auto; }
+    .f-msg { display:none; padding:.8rem 1rem; border-radius:8px; margin-bottom:.8rem; font-weight:600; text-align:center; font-size:.88rem; }
+    .f-msg.ok  { background:rgba(40,200,64,.08); color:#5ddc7a; border:1px solid rgba(40,200,64,.25); }
+    .f-msg.err { background:rgba(255,95,87,.08); color:#ff7b75; border:1px solid rgba(255,95,87,.25); }
+    .spam-note { text-align:center; font-family:var(--font-mono); font-size:.72rem; color:rgba(125,133,144,.45); margin-top:.9rem; }
 
-    /* MINI CTA */
-    .mini-cta { background:rgba(74,144,226,.07); border:1px solid rgba(74,144,226,.25); border-radius:var(--border-radius); padding:1.6rem 2rem; margin-bottom:1.5rem; position:relative; overflow:hidden; opacity:0; transform:translateY(20px); transition:opacity .7s ease,transform .7s ease; }
-    .mini-cta.visible { opacity:1; transform:translateY(0); }
-    .mini-cta::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,transparent,var(--accent-color),transparent); animation:shimmer 3s linear infinite; background-size:200% auto; }
-    .mini-cta-label { font-size:.7rem; font-family:'JetBrains Mono',monospace; color:rgba(74,144,226,.7); text-transform:uppercase; letter-spacing:.15em; margin-bottom:.6rem; display:block; }
-    .mini-cta-title { font-size:clamp(.98rem,2.4vw,1.18rem); font-weight:700; color:var(--text-light); margin-bottom:1rem; line-height:1.4; }
-    .mini-cta-fields { display:flex; flex-direction:column; gap:.55rem; margin-bottom:.7rem; }
-    @media (min-width:480px) { .mini-cta-fields { flex-direction:column; } }
-    .mini-cta-input { flex:1; min-width:0; width:100%; padding:.72rem 1rem; background:rgba(255,255,255,.07); border:1.5px solid rgba(255,255,255,.12); border-radius:10px; color:var(--text-light); font-family:'Inter',sans-serif; font-size:.9rem; transition:all .3s ease; }
-    .mini-cta-input:focus { outline:none; border-color:var(--accent-color); background:rgba(74,144,226,.1); box-shadow:0 0 0 3px rgba(74,144,226,.15); }
-    .mini-cta-input::placeholder { color:var(--text-gray); opacity:.7; }
-    .mini-cta-btn { width:100%; background:linear-gradient(135deg,var(--accent-color),#6bb6ff); color:var(--white); border:none; border-radius:10px; padding:.82rem 1.3rem; font-family:'Inter',sans-serif; font-weight:700; font-size:.88rem; cursor:pointer; letter-spacing:.04em; text-transform:uppercase; transition:all .3s cubic-bezier(.34,1.56,.64,1); position:relative; overflow:hidden; margin-bottom:.5rem; }
-    .mini-cta-btn:hover { transform:translateY(-2px) scale(1.04); box-shadow:0 8px 20px rgba(74,144,226,.4); }
-    .mini-cta-note { font-size:.73rem; color:rgba(160,180,192,.5); margin-top:.6rem; font-family:'JetBrains Mono',monospace; }
-    .mini-cta-msg { display:none; margin-top:.8rem; padding:.65rem 1rem; border-radius:8px; font-size:.84rem; font-weight:600; text-align:center; }
-    .mini-cta-msg.success { background:rgba(40,200,64,.1); color:#5ddc7a; border:1px solid rgba(40,200,64,.3); }
-    .mini-cta-msg.error { background:rgba(255,95,87,.1); color:#ff7b75; border:1px solid rgba(255,95,87,.3); }
+    /* SCROLL REVEAL — sistema completo */
+    .reveal { opacity:0; transform:translateY(40px); transition:opacity .75s cubic-bezier(.23,1,.32,1), transform .75s cubic-bezier(.23,1,.32,1); }
+    .reveal.visible { opacity:1; transform:translateY(0); }
 
-    /* FORMULARIO COMPLETO */
-    .listmonk-form { margin-top:2rem; }
-    .newsletter-form-container { background:rgba(74,144,226,.05); backdrop-filter:blur(15px); border-radius:var(--border-radius); padding:2.5rem; border:1px solid rgba(74,144,226,.2); position:relative; overflow:hidden; transition:all .3s ease; }
-    .newsletter-form-container::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,transparent,var(--accent-color),transparent); animation:shimmer 3s linear infinite; background-size:200% auto; }
-    .newsletter-form-container:hover { background:rgba(74,144,226,.08); box-shadow:0 12px 40px rgba(74,144,226,.15); }
-    .newsletter-form-title { font-size:clamp(1.3rem,3vw,1.7rem); font-weight:800; color:var(--text-light); margin-bottom:1.8rem; text-align:center; background:linear-gradient(135deg,var(--text-light),var(--accent-color)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
-    .form-group { margin-bottom:1.1rem; }
-    .form-input { width:100%; padding:.95rem 1.1rem; background:rgba(255,255,255,.06); border:1.5px solid rgba(255,255,255,.12); border-radius:10px; color:var(--text-light); font-size:1rem; font-family:'Inter',sans-serif; transition:all .3s ease; }
-    .form-input:focus { outline:none; border-color:var(--accent-color); background:rgba(74,144,226,.08); box-shadow:0 0 0 3px rgba(74,144,226,.15); transform:translateY(-1px); }
-    .form-input::placeholder { color:var(--text-gray); opacity:.7; }
-    .form-submit { width:100%; background:linear-gradient(135deg,var(--accent-color),#6bb6ff); color:var(--white); padding:1.1rem; border:none; border-radius:var(--border-radius); font-weight:800; font-size:.92rem; font-family:'Inter',sans-serif; cursor:pointer; letter-spacing:.07em; text-transform:uppercase; position:relative; overflow:hidden; transition:all .3s cubic-bezier(.34,1.56,.64,1); animation:glow 3s ease-in-out infinite; }
-    .form-submit::before { content:''; position:absolute; top:50%; left:50%; width:0; height:0; background:rgba(255,255,255,.15); border-radius:50%; transform:translate(-50%,-50%); transition:width .6s,height .6s; }
-    .form-submit:hover::before { width:400px; height:400px; }
-    .form-submit:hover { transform:translateY(-3px) scale(1.02); box-shadow:0 10px 30px rgba(74,144,226,.5); }
-    .message { display:none; padding:1rem 1.1rem; border-radius:10px; margin-bottom:1.1rem; font-weight:600; text-align:center; font-size:.9rem; }
-    .message.success { background:rgba(40,200,64,.1); color:#5ddc7a; border:1px solid rgba(40,200,64,.3); }
-    .message.error { background:rgba(255,95,87,.1); color:#ff7b75; border:1px solid rgba(255,95,87,.3); }
-    .loading { display:none; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); }
-    .loading-spinner { width:20px; height:20px; border:2px solid rgba(255,255,255,.3); border-top:2px solid #fff; border-radius:50%; animation:spin 1s linear infinite; }
-    .spam-note { text-align:center; margin-top:1.1rem; color:var(--text-gray); font-size:.78rem; font-family:'JetBrains Mono',monospace; opacity:.6; }
+    /* Variantes direccionales */
+    .reveal-left  { opacity:0; transform:translateX(-48px); transition:opacity .7s cubic-bezier(.23,1,.32,1), transform .7s cubic-bezier(.23,1,.32,1); }
+    .reveal-right { opacity:0; transform:translateX(48px);  transition:opacity .7s cubic-bezier(.23,1,.32,1), transform .7s cubic-bezier(.23,1,.32,1); }
+    .reveal-scale { opacity:0; transform:scale(.9);          transition:opacity .65s cubic-bezier(.23,1,.32,1), transform .65s cubic-bezier(.23,1,.32,1); }
+    .reveal-left.visible, .reveal-right.visible, .reveal-scale.visible { opacity:1; transform:none; }
+
+    /* Stagger delays */
+    .sd1 { transition-delay:.08s !important; }
+    .sd2 { transition-delay:.16s !important; }
+    .sd3 { transition-delay:.24s !important; }
+    .sd4 { transition-delay:.32s !important; }
+    .sd5 { transition-delay:.40s !important; }
+
+    /* Línea decorativa animada bajo títulos */
+    .sec-title-line {
+      display:block; height:2px; width:0;
+      background:linear-gradient(90deg, var(--accent), var(--accent2), transparent);
+      border-radius:99px; margin-top:.4rem;
+      transition:width 1s cubic-bezier(.23,1,.32,1) .3s;
+    }
+    .reveal.visible .sec-title-line,
+    section.in-view .sec-title-line { width:60px; }
+
+    /* Palabras del h1 animadas una a una */
+    .word-wrap { display:inline-block; overflow:hidden; vertical-align:bottom; }
+    .word { display:inline-block; transform:translateY(105%); opacity:0; transition:transform .6s cubic-bezier(.23,1,.32,1), opacity .6s ease; }
+    .word.visible { transform:translateY(0); opacity:1; }
+
+    /* Proof counter */
+    .proof-num { font-family:var(--font-mono); font-size:1.9rem; font-weight:700; color:var(--accent); white-space:nowrap; opacity:0; transform:translateY(12px) scale(.9); transition:opacity .5s ease, transform .5s cubic-bezier(.34,1.56,.64,1); }
+    .proof-num.visible { opacity:1; transform:none; }
+
+    /* Divider line grow on scroll */
+    .divider-line { flex:1; height:1px; background:linear-gradient(90deg,transparent,var(--accent),transparent); transform-origin:left; transform:scaleX(0); transition:transform .9s cubic-bezier(.23,1,.32,1) .2s; }
+    section.in-view .divider-line, .cta-hero.in-view .divider-line { transform:scaleX(1); }
+
+    /* Code blocks slide in alternado */
+    .code-reveal { opacity:0; transform:translateY(20px); transition:opacity .55s ease, transform .55s cubic-bezier(.23,1,.32,1); }
+    .code-reveal.visible { opacity:1; transform:none; }
+
+    /* Callout pop */
+    .callout { transform:translateX(-8px); opacity:0; transition:transform .6s cubic-bezier(.34,1.56,.64,1), opacity .5s ease; }
+    .callout.visible { transform:translateX(0); opacity:1; }
 
     /* FOOTER */
-    .footer { text-align:center; padding:3rem 0 2rem; border-top:1px solid rgba(255,255,255,.07); margin-top:3rem; color:var(--text-gray); font-size:.85rem; line-height:1.8; }
-    .footer a { color:var(--accent-color); text-decoration:none; transition:color .3s; font-family:'JetBrains Mono',monospace; font-size:.78rem; }
-    .footer a:hover { color:var(--text-light); }
+    footer { text-align:center; padding:2.5rem 0 2rem; border-top:1px solid var(--border); margin-top:2rem; color:var(--muted); font-size:.82rem; line-height:1.9; }
+    footer a { color:var(--accent); text-decoration:none; font-family:var(--font-mono); font-size:.76rem; }
+    footer a:hover { color:var(--text); }
 
-    /* SCROLL ANIMATIONS */
-    .fade-in { opacity:0; transform:translateY(40px); transition:opacity .8s cubic-bezier(.23,1,.32,1),transform .8s cubic-bezier(.23,1,.32,1); }
-    .fade-in.visible { opacity:1; transform:translateY(0); }
-
-    /* ===== RESPONSIVE ===== */
-
-    /* Tablet grande / landscape phone — 768px */
-    @media (max-width:768px) {
-      body { cursor:auto; }
-      .cursor, .cursor-follower { display:none; }
-      .container { padding:1rem .9rem; }
-      .header { padding:3rem 0 2rem; }
-      .logo-wrapper { width:110px; height:110px; }
-      .logo { width:110px; height:110px; }
-      .logo-ring { inset:-7px; }
-      .main-title { font-size:clamp(1.7rem,6vw,2.4rem); }
-      .subtitle { font-size:1rem; margin-bottom:2rem; }
-      .social-links { gap:1rem; margin-bottom:3rem; }
-      .social-link { width:48px; height:48px; font-size:1.15rem; }
-      .section { padding:1.8rem 1.4rem; }
-      .mini-cta { padding:1.3rem 1.4rem; }
-      .section-title { font-size:clamp(1.4rem,5vw,2rem); }
-      .text-impact { font-size:clamp(1.35rem,5.5vw,2rem); margin:1.4rem 0 .8rem; }
-      .text-callout { font-size:clamp(1rem,3vw,1.2rem); padding:.7rem 1rem; }
-      .mini-cta-form { flex-direction:column; gap:.6rem; }
-      .mini-cta-input { min-width:0; width:100%; }
-      .mini-cta-btn { width:100%; padding:.85rem 1rem; font-size:.88rem; }
-      .stats-row { gap:.8rem; }
-      .stat-number { font-size:1.7rem; }
-      .newsletter-form-container { padding:1.8rem; }
-      .feature-item { padding:.9rem; }
-      .code-block { font-size:.8rem; }
-      .code-body { padding:.9rem 1.1rem; font-size:.78rem; overflow-x:auto; }
+    /* RESPONSIVE */
+    @media(max-width:540px){
+      header { padding:3rem 0 1.5rem; }
+      .avatar { width:74px; height:74px; font-size:1.9rem; }
+      section { padding:1.6rem 1.2rem; }
+      .cta-hero { padding:1.5rem 1.2rem 1.3rem; }
+      .form-wrap { padding:1.6rem 1.2rem; }
+      .proof { flex-direction:column; text-align:center; }
     }
-
-    @media (max-width:480px) {
-      .container { padding:.75rem .7rem; }
-      .header { padding:2.2rem 0 1.5rem; }
-      .logo-wrapper { width:95px; height:95px; }
-      .logo { width:95px; height:95px; }
-      .logo-ring { inset:-6px; }
-      .main-title { font-size:clamp(1.5rem,7.5vw,2rem); line-height:1.3; }
-      .subtitle { font-size:.95rem; }
-      .social-links { gap:.8rem; margin-bottom:2rem; }
-      .social-link { width:44px; height:44px; font-size:1.1rem; }
-      .section { padding:1.4rem 1.1rem; margin-bottom:1.1rem; border-radius:12px; }
-      .section:hover { transform:none; }
-      .section-number { font-size:.65rem; }
-      .section-title { font-size:clamp(1.25rem,6.5vw,1.7rem); }
-      .text-impact { font-size:clamp(1.2rem,7vw,1.7rem); letter-spacing:-.01em; }
-      .text-callout { font-size:.98rem; padding:.65rem .9rem; }
-      .section-text { font-size:.95rem; line-height:1.75; }
-      .dialog-item { font-size:.92rem; padding:.55rem .85rem; }
-      .mini-cta { padding:1.1rem 1rem; border-radius:12px; }
-      .mini-cta-title { font-size:.96rem; }
-      .mini-cta-input { padding:.7rem .9rem; font-size:.88rem; }
-      .mini-cta-btn { padding:.8rem 1rem; font-size:.84rem; }
-      .mini-cta-note { font-size:.68rem; }
-      .stats-row { gap:.6rem; }
-      .stat-card { padding:.9rem .6rem; min-width:0; border-radius:10px; }
-      .stat-number { font-size:1.4rem; }
-      .stat-label { font-size:.65rem; letter-spacing:.04em; }
-      .feature-list { gap:.7rem; }
-      .feature-item { padding:.85rem .9rem; border-radius:10px; }
-      .feature-item:hover { transform:none!important; }
-      .feature-icon { width:34px; height:34px; font-size:1.1rem; border-radius:7px; }
-      .feature-title { font-size:.88rem; }
-      .feature-desc { font-size:.82rem; }
-      .code-block { border-radius:10px; font-size:.75rem; }
-      .code-body { padding:.85rem 1rem; font-size:.75rem; word-break:break-word; }
-      .code-body::before { display:none; }
-      .newsletter-form-container { padding:1.3rem 1.1rem; border-radius:12px; }
-      .newsletter-form-title { font-size:1.2rem; margin-bottom:1.3rem; }
-      .form-input { padding:.85rem .95rem; font-size:.92rem; }
-      .form-submit { font-size:.82rem; padding:1rem; letter-spacing:.05em; }
-      .spam-note { font-size:.72rem; }
-      .divider { margin:.6rem 0 1.4rem; }
-      .para-break { height:1rem; }
-    }
-
-    @media (max-width:360px) {
-      .container { padding:.6rem .6rem; }
-      .main-title { font-size:1.35rem; }
-      .section { padding:1.2rem .95rem; }
-      .mini-cta { padding:1rem .95rem; }
-      .stat-number { font-size:1.25rem; }
-      .text-impact { font-size:1.1rem; }
-      .section-title { font-size:1.15rem; }
-    }
-
-    @media (hover:none) {
-      .section:hover { transform:none; box-shadow:none; background:rgba(255,255,255,.04); }
-      .feature-item:hover { transform:translateX(0)!important; background:rgba(255,255,255,.03); border-color:rgba(255,255,255,.05); }
-      .stat-card:hover { transform:none; border-color:rgba(74,144,226,.2); }
-      .social-link:hover { transform:none; }
-      .mini-cta-btn:hover { transform:none; box-shadow:none; }
+    @media(max-width:380px){
+      section { padding:1.3rem 1rem; }
+      .sec-title { font-size:1.3rem; }
+      .impact { font-size:1.2rem; }
     }
   </style>
 </head>
 <body>
+
   <div class="cursor" id="cursor"></div>
-  <div class="cursor-follower" id="cursorFollower"></div>
-  <div class="animated-background" id="animatedBg"></div>
-  <div class="grid-overlay"></div>
+  <div class="cursor-ring" id="ring"></div>
+  <div class="bg-grid"></div>
+  <div class="bg-glow"></div>
   <div class="scanline"></div>
 
-  <div class="container">
+  <div class="wrap">
 
     <!-- HEADER -->
-    <header class="header">
-      <div class="logo-wrapper">
-        <div class="logo-ring"></div>
-        <div class="logo">
-          <div class="pulse-ring"></div><div class="pulse-ring"></div><div class="pulse-ring"></div>
-          <img src="src/Foto Perfil.png" alt="AkiDev" />
-        </div>
+    <header>
+      <div class="avatar">
+        <img src="src/Foto Perfil.png" alt="AkiDev" />
       </div>
-      <h1 class="main-title">La IA te va a quitar el trabajo.<br>O no. Depende de cómo la uses.</h1>
-      <p class="subtitle">Cada Domingo · Gratis (de momento) · 5 minutos para leerlo</p>
+
+      <div class="tag-pill">newsletter · AkiDev · semanal</div>
+
+      <h1>
+        <span class="h1-dim">Se te acaban los tokens</span><br>
+        <span class="h1-hl">antes de acabar la web.</span>
+      </h1>
+
+      <p class="header-sub">
+        Lo que nadie te explica sobre usar IA para programar: no es la herramienta, eres el prompt.
+        Cada semana te enseño a hacer mejores webs con menos contexto gastado.
+      </p>
+
+      <!-- TOKEN DRAIN WIDGET -->
+      <div class="token-widget">
+        <div class="tw-top">
+          <span class="tw-label">// tokens restantes — sesión actual</span>
+          <span class="tw-count">⚠ crítico</span>
+        </div>
+        <div class="tw-bar-bg"><div class="tw-bar"></div></div>
+        <p class="tw-msg">Claude ha perdido el contexto. <span>Tu web, a medias.</span> — ¿te suena?</p>
+      </div>
     </header>
 
-    <!-- MINI CTA 0 -->
-    <div class="mini-cta fade-in">
-      <span class="mini-cta-label">// newsletter de AkiDev</span>
-      <p class="mini-cta-title">📬 Cada Domingo: 1 consejo sobre web + IA aplicada a la vida real.</p>
-      <div class="mini-cta-fields">
-        <input type="text"  class="mini-cta-input" placeholder="Tu nombre (opcional)" data-name="0" />
-        <input type="email" class="mini-cta-input" placeholder="tu@correo.com" data-cta="0" />
+    <!-- CTA HERO -->
+    <div class="cta-hero">
+      <span class="cta-label">// newsletter de AkiDev</span>
+      <p class="cta-title">📬 Aprende a construir webs con IA de verdad. Cada semana. Gratis (por ahora).</p>
+      <div class="cta-fields">
+        <input type="text"  class="cta-input" placeholder="Tu nombre (opcional)" data-name="0" />
+        <input type="email" class="cta-input" placeholder="tu@correo.com" data-email="0" />
       </div>
-      <button class="mini-cta-btn" onclick="submitMiniCta(0)">Quiero aprender →</button>
-      <div class="mini-cta-msg" id="mini-msg-0"></div>
-      <p class="mini-cta-note">// ya dentro: +70 devs que dejaron de tener miedo al código real</p>
+      <button class="cta-btn" onclick="submitCta(0)">Quiero dejar de tirar tokens a la basura →</button>
+      <div class="cta-msg" id="cta-msg-0"></div>
+      <p class="cta-note">// 5 min de lectura · sin spam · +70 devs ya dentro</p>
     </div>
 
-    <!-- SECCIÓN 1: PARA QUIÉN ES ESTO -->
-    <section class="section fade-in">
-      <span class="section-number">// 01 — esto es para ti si...</span>
-      <h2 class="section-title">Esto te suena, ¿verdad?</h2>
+    <!-- 01: PAIN -->
+    <section class="reveal">
+      <span class="sec-tag reveal-left sd1">// 01 — el problema de verdad</span>
+      <h2 class="sec-title">Usas IA para programar.<br>Pero algo no cuadra.<span class="sec-title-line"></span></h2>
       <div class="divider"><div class="divider-line"></div><div class="divider-dot"></div><div class="divider-line"></div></div>
 
-      <div class="dialog-list">
-        <div class="dialog-item">🎨 Sabes maquetar. Controlas HTML/CSS y algo de JavaScript.</div>
-        <div class="dialog-item">😰 Pero cuando toca SUBIR la web al mundo real... se te hiela el culo.</div>
-        <div class="dialog-item">🖥️ ¿Qué coño es un servidor? ¿Cómo configuro el dominio? ¿Y los DNS?</div>
-        <div class="dialog-item">🐘 Le preguntas a ChatGPT y te suelta comandos que no funcionan.</div>
-        <div class="dialog-item">🚀 Has oído lo de "la IA te va a quitar el trabajo" y te da cosa.</div>
+      <div class="dlist">
+        <div class="ditem reveal-left sd1">💸 A mitad del componente, Claude ya no recuerda el principio del archivo.</div>
+        <div class="ditem reveal-left sd2">🔄 Pegas todo el HTML de 400 líneas en el chat. Otra vez. Cuarta vez.</div>
+        <div class="ditem reveal-left sd3">🤦 Le pides que "arregle el CSS" y te rompe tres cosas que funcionaban.</div>
+        <div class="ditem reveal-left sd4">😤 El límite de contexto aparece justo cuando más lo necesitas.</div>
+        <div class="ditem reveal-left sd5">🤷 ChatGPT te da código que "funciona" pero tú no entiendes qué hace.</div>
       </div>
 
-      <div class="para-break"></div>
-      <p class="text-impact">No eres tonto. Simplemente te han enseñado <span class="hl">la mitad del camino.</span></p>
-      <p class="section-text">Maquetar es el 30%. El otro 70% es desplegar, mantener, debuggear y no morir en el intento. Eso es lo que nadie te cuenta.</p>
+      <p class="impact reveal sd2">No es culpa de la IA.<br><span class="hl">Es que nadie te enseñó a hablarle.</span></p>
+
+      <p class="body-text reveal sd3">
+        Los tokens no son un bug, son una restricción de diseño. Cuando sabes trabajar con esa restricción en vez de contra ella, construyes webs enteras sin perder el hilo. Eso es lo que yo aprendí a base de golpes. Y lo que te voy a contar cada semana.
+      </p>
     </section>
 
-    <!-- SECCIÓN 2: SOBRE MÍ -->
-    <section class="section fade-in">
-      <span class="section-number">// 02 — sobre mí</span>
-      <h2 class="section-title">Vale, ¿y tú quién eres para enseñarme esto?</h2>
+    <!-- 02: QUIÉN SOY -->
+    <section class="reveal">
+      <span class="sec-tag reveal-left sd1">// 02 — quién escribe esto</span>
+      <h2 class="sec-title">¿Y tú qué sabes de esto?<span class="sec-title-line"></span></h2>
       <div class="divider"><div class="divider-line"></div><div class="divider-dot"></div><div class="divider-line"></div></div>
 
-      <p class="section-text">Buena pregunta. Y tienes todo el derecho a hacértela.</p>
+      <p class="body-text reveal sd1">Pregunta legítima. Te la respondo sin adornos.</p>
 
-      <p class="text-impact">Internet está lleno de <span class="hl">iluminados</span> que nunca han desplegado nada en producción.</p>
+      <p class="body-text reveal sd2">
+        Tengo <span class="hl-white">AkiWebs</span>, una agencia donde hago landing pages para negocios locales de Catalunya. Diseño, copy, código, deploy. Las hago en <span class="hl">30–45 minutos</span> usando IA. No porque sea un genio, sino porque llevo meses afinando exactamente qué decirle a la IA, cómo darle el contexto justo y cuándo no confiar en lo que te escupe.
+      </p>
 
-      <p class="section-text">Yo llevo años currando en esto. Me he comido los mocos con servidores que no respondían, con deploys que petaban un viernes a las 8, con código que funcionaba en local y en producción ardía Troya.</p>
+      <div class="proof reveal-scale sd3">
+        <span class="proof-num">15.500</span>
+        <p class="proof-txt">visitas a un vídeo sobre Git que subí sin esperar nada. Solo quería explicar algo que a mí me costó horrores pillar. Ese es el espíritu de esta newsletter.</p>
+      </div>
 
-      <p class="text-callout">El 90% de lo que enseñan por ahí no sirve para el mundo real.</p>
-
-      <p class="section-text">Mi objetivo es que tú aprendas lo que importa, y que no pierdas el tiempo que yo perdí.</p>
-      
-      <p class="section-text"><span class="hl">Un ejemplo real:</span> Subí un vídeo sobre Git sin muchas expectativas. Solo quería ayudar con algo que a mí me costó horrores. <strong>15.500 visitas</strong> y un montón de gente dándome las gracias. Por eso escribo esta newsletter.</p>
+      <p class="impact reveal sd3">Internet está lleno de cuentas de IA que <span class="hl">nunca han entregado nada a un cliente.</span></p>
+      <p class="body-text reveal sd4">Yo hablo de lo que uso a diario en proyectos reales. Lo que funciona, lo que no, y por qué.</p>
     </section>
 
-    <!-- MINI CTA 1 -->
-    <div class="mini-cta fade-in">
-      <span class="mini-cta-label">// aprende de alguien que lo vive cada día</span>
-      <p class="mini-cta-title">🛠️ Cada 2 días: 1 prompt real que uso + el código que ha generado. Sin filtros.</p>
-      <div class="mini-cta-fields">
-        <input type="text"  class="mini-cta-input" placeholder="Tu nombre (opcional)" data-name="1" />
-        <input type="email" class="mini-cta-input" placeholder="tu@correo.com" data-cta="1" />
-      </div>
-      <button class="mini-cta-btn" onclick="submitMiniCta(1)">Apúntame gratis →</button>
-      <div class="mini-cta-msg" id="mini-msg-1"></div>
-    </div>
-
-    <!-- SECCIÓN 3: LO QUE APRENDERÁS -->
-    <section class="section fade-in">
-      <span class="section-number">// 03 — lo que aprenderás</span>
-      <h2 class="section-title">Esto es exactamente lo que vas a saber en 3 meses:</h2>
+    <!-- 03: QUÉ APRENDERÁS -->
+    <section class="reveal">
+      <span class="sec-tag reveal-left sd1">// 03 — lo que vas a aprender</span>
+      <h2 class="sec-title">Qué cambia cuando sabes usar la IA bien.<span class="sec-title-line"></span></h2>
       <div class="divider"><div class="divider-line"></div><div class="divider-dot"></div><div class="divider-line"></div></div>
 
-      <div class="feature-list">
-        <div class="feature-item">
-          <div class="feature-icon">🤖</div>
-          <div><div class="feature-title">IA que te ayude de verdad</div><div class="feature-desc">Los prompts que uso a diario. Cuándo confiar en ChatGPT y cuándo NO. Cómo usarla para debuggear más rápido y escribir código que funciona.</div></div>
+      <div class="flist">
+        <div class="fitem">
+          <div class="ficon">🎯</div>
+          <div>
+            <div class="ftitle">Prompting de precisión para webs</div>
+            <div class="fdesc">Cómo estructurar lo que le pides a Claude o ChatGPT para que lo haga en un solo intento. Sin iterar cuatro veces. Sin desperdiciar tokens explicando lo que ya explicaste.</div>
+          </div>
         </div>
-        <div class="feature-item">
-          <div class="feature-icon">⚛️</div>
-          <div><div class="feature-title">Frontend sin postureo</div><div class="feature-desc">HTML, CSS, JavaScript, React… lo que uses. Pero explicado como persona humana, no como si estudiaras para un examen.</div></div>
+        <div class="fitem">
+          <div class="ficon">🧠</div>
+          <div>
+            <div class="ftitle">Gestión de contexto sin drama</div>
+            <div class="fdesc">Qué información le das, cuándo, y en qué formato para que la IA no pierda el hilo a mitad de tu componente. Divide y vencerás, pero de forma inteligente.</div>
+          </div>
         </div>
-        <div class="feature-item">
-          <div class="feature-icon">🐛</div>
-          <div><div class="feature-title">Problemas reales</div><div class="feature-desc">Los errores que me encuentro currando y cómo los soluciono. Para que cuando te pasen a ti, sepas qué hacer.</div></div>
+        <div class="fitem">
+          <div class="ficon">⚡</div>
+          <div>
+            <div class="ftitle">Webs reales en tiempo récord</div>
+            <div class="fdesc">El flujo que uso para entregar landing pages completas —diseño, copy, código, deploy— sin perder el contexto y sin que la IA se vuelva loca.</div>
+          </div>
         </div>
-        <div class="feature-item">
-          <div class="feature-icon">📦</div>
-          <div><div class="feature-title">Servidores (más adelante)</div><div class="feature-desc">Por ahora el foco es frontend + IA. Los despliegues, VPS y todo eso lo dejaré para más adelante. Pero cuando llegue, llegará bien explicado.</div></div>
+        <div class="fitem">
+          <div class="ficon">🐛</div>
+          <div>
+            <div class="ftitle">Cuando la IA te da código roto</div>
+            <div class="fdesc">Cómo detectarlo, cómo pedirle que se corrija sin gastarte otros 1000 tokens, y cuándo es más rápido arreglarlo tú a mano.</div>
+          </div>
         </div>
       </div>
 
-      <div class="para-break"></div>
-      <p class="text-impact">La IA no te va a quitar el trabajo.</p>
-      <p class="text-callout">El que sepa usar la IA + frontend sólido le va a quitar el trabajo al que no.</p>
+      <p class="impact reveal sd2">La IA no te quita el trabajo.</p>
+      <div class="callout">El dev que sabe hablarle a la IA le quita el trabajo al que no.</div>
     </section>
 
-    <!-- MINI CTA 2 -->
-    <div class="mini-cta fade-in">
-      <span class="mini-cta-label">// la diferencia la hace saber pedirle bien</span>
-      <p class="mini-cta-title">🎯 Frontend + IA bien usada = perfil imbatible. ¿Empiezas esta semana?</p>
-      <div class="mini-cta-fields">
-        <input type="text"  class="mini-cta-input" placeholder="Tu nombre (opcional)" data-name="2" />
-        <input type="email" class="mini-cta-input" placeholder="tu@correo.com" data-cta="2" />
-      </div>
-      <button class="mini-cta-btn" onclick="submitMiniCta(2)">Quiero ser ese perfil →</button>
-      <div class="mini-cta-msg" id="mini-msg-2"></div>
-    </div>
-
-    <!-- SECCIÓN 4: TEST RÁPIDO -->
-    <section class="section fade-in">
-      <span class="section-number">// 04 — test de 10 segundos</span>
-      <h2 class="section-title">¿Esto te suena a chino o te parece obvio?</h2>
+    <!-- 04: TEST PROMPTS -->
+    <section class="reveal">
+      <span class="sec-tag reveal-left sd1">// 04 — ¿prompts o intuición?</span>
+      <h2 class="sec-title">¿Tú harías estos prompts así?<span class="sec-title-line"></span></h2>
       <div class="divider"><div class="divider-line"></div><div class="divider-dot"></div><div class="divider-line"></div></div>
 
-      <div class="code-block"><div class="code-header"><div class="code-dot code-dot-red"></div><div class="code-dot code-dot-yellow"></div><div class="code-dot code-dot-green"></div></div><div class="code-body"><span class="typed-text" data-text="El código funciona en local pero en el servidor da 500. Mira los logs antes de tocar nada."></span></div></div>
-      <div class="code-block"><div class="code-header"><div class="code-dot code-dot-red"></div><div class="code-dot code-dot-yellow"></div><div class="code-dot code-dot-green"></div></div><div class="code-body"><span class="typed-text" data-text="git rebase origin/main &amp;&amp; git push --force-with-lease. Pero solo si sabes lo que estás haciendo."></span></div></div>
-      <div class="code-block"><div class="code-header"><div class="code-dot code-dot-red"></div><div class="code-dot code-dot-yellow"></div><div class="code-dot code-dot-green"></div></div><div class="code-body"><span class="typed-text" data-text="Le pregunto a ChatGPT y me da código que no funciona. Este es el prompt que uso para que se corrija solo."></span></div></div>
-      <div class="code-block"><div class="code-header"><div class="code-dot code-dot-red"></div><div class="code-dot code-dot-yellow"></div><div class="code-dot code-dot-green"></div></div><div class="code-body"><span class="typed-text" data-text="Un certificado SSL gratis con Let's Encrypt. Se renueva solo con cron. Ni te enteras."></span></div></div>
+      <div class="code code-reveal sd1">
+        <div class="code-head"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+        <div class="code-body"><span class="typed" data-text='❌ "arregla el CSS del navbar" → te rompe el JS también. Siempre acota el alcance.'></span></div>
+      </div>
+      <div class="code code-reveal sd2">
+        <div class="code-head"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+        <div class="code-body"><span class="typed" data-text='❌ Pegar 600 líneas de HTML para que "le eche un ojo". Tokens quemados, contexto contaminado.'></span></div>
+      </div>
+      <div class="code code-reveal sd3">
+        <div class="code-head"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+        <div class="code-body"><span class="typed" data-text='✅ Dale el componente mínimo que contiene el problema + el error exacto. Punto.'></span></div>
+      </div>
+      <div class="code code-reveal sd4">
+        <div class="code-head"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+        <div class="code-body"><span class="typed" data-text='✅ Dile qué NO tocar. "Solo modifica el padding del .hero, no cambies nada más."'></span></div>
+      </div>
 
-      <div class="para-break"></div>
-      
-      <p class="text-impact">Si lees esto y piensas <span class="hl">"vale, obvio"</span> → estás en tu casa. Quizás esta newsletter no es para ti.</p>
-      
-      <p class="text-impact" style="margin-top: 1.5rem;">Si piensas <span class="hl">"¿de qué coño habla este tío?"</span> → 🎯 perfecto.</p>
-      
-      <p class="text-callout">Para eso estoy aquí. Para que dentro de 3 meses leas esto y te parezca una chorrada.</p>
+      <p class="impact reveal sd2">Si lees los ❌ y piensas <span class="hl">"yo hago eso"</span> → perfecto.</p>
+      <div class="callout">Para eso estás aquí. En 3 meses eso te parecerá una chorrada obvia.</div>
     </section>
 
-    <!-- MINI CTA 3 -->
-    <div class="mini-cta fade-in">
-      <span class="mini-cta-label">// de "¿qué dice?" a "obvio"</span>
-      <p class="mini-cta-title">📈 En 12 semanas vas a leer esos comandos sin sudar. ¿Empiezas ahora?</p>
-      <div class="mini-cta-fields">
-        <input type="text"  class="mini-cta-input" placeholder="Tu nombre (opcional)" data-name="3" />
-        <input type="email" class="mini-cta-input" placeholder="tu@correo.com" data-cta="3" />
-      </div>
-      <button class="mini-cta-btn" onclick="submitMiniCta(3)">Quiero entenderlo →</button>
-      <div class="mini-cta-msg" id="mini-msg-3"></div>
-    </div>
-
-    <!-- SECCIÓN 5: NEWSLETTER PRINCIPAL -->
-    <section class="section fade-in">
-      <span class="section-number">// 05 — la comunidad</span>
-      <h2 class="section-title">Ya somos más de 100 devs aprendiendo juntos</h2>
+    <!-- 05: ELECCIÓN + FORM -->
+    <section class="reveal">
+      <span class="sec-tag reveal-left sd1">// 05 — tú eliges</span>
+      <h2 class="sec-title">Dos tipos de devs que usan IA.<span class="sec-title-line"></span></h2>
       <div class="divider"><div class="divider-line"></div><div class="divider-dot"></div><div class="divider-line"></div></div>
 
-      <div class="stats-row">
-        <div class="stat-card"><span class="stat-number" data-target="100" data-suffix="+">0+</span><span class="stat-label">Suscriptores</span></div>
-        <div class="stat-card"><span class="stat-number" data-target="15500">0</span><span class="stat-label">Visitas vídeo Git</span></div>
-        <div class="stat-card"><span class="stat-number" data-target="5" data-prefix="~" data-suffix="min">~0min</span><span class="stat-label">Por entrega</span></div>
+      <div class="dlist">
+        <div class="ditem bad reveal-left sd1">❌ Pega código entero en el chat. La IA adivina. A veces acierta.</div>
+        <div class="ditem bad reveal-left sd2">❌ Gasta tokens explicando contexto que ya explicó la sesión pasada.</div>
+        <div class="ditem bad reveal-left sd3">❌ No sabe si el código que le da la IA es bueno hasta que lo ejecuta y peta.</div>
+        <div class="ditem bad reveal-left sd4">❌ Sigue viendo tutoriales que nunca llegan al mundo real.</div>
+        <div class="ditem good reveal-left sd5">✅ 5 minutos cada semana. Técnicas concretas. Aplicables el mismo día.</div>
       </div>
 
-      <div class="para-break"></div>
-      <p class="text-impact">Tú eliges el camino:</p>
+      <div id="f-msg-main" class="f-msg"></div>
 
-      <div class="dialog-list">
-        <div class="dialog-item" style="border-left-color:rgba(255,95,87,.5);color:rgba(160,180,192,.65)">❌ Seguir viendo tutoriales infinitos que no te enseñan a currar</div>
-        <div class="dialog-item" style="border-left-color:rgba(255,95,87,.5);color:rgba(160,180,192,.65)">❌ Preguntarle a ChatGPT y no saber si te está mintiendo</div>
-        <div class="dialog-item" style="border-left-color:rgba(255,95,87,.5);color:rgba(160,180,192,.65)">❌ Perder horas arreglando código que la IA te dio mal</div>
-        <div class="dialog-item" style="border-left-color:rgba(74,144,226,.7);color:var(--text-light);background:rgba(74,144,226,.07)">✅ 5 minutos cada 2 días. Gratis. Contenido que funciona en el mundo real.</div>
-      </div>
-
-      <div id="message-main" class="message"></div>
-      <form id="mainNewsletterForm" method="post" action="https://listmonk.akidojo.dev/subscription/form" class="listmonk-form">
-        <div class="newsletter-form-container">
-          <h3 class="newsletter-form-title">📬 Únete gratis a la newsletter</h3>
-          <input type="hidden" name="nonce" />
-          <div class="form-group"><input type="email" name="email" required placeholder="tu@correo.com" class="form-input" /></div>
-          <div class="form-group"><input type="text" name="name" placeholder="Nombre (opcional)" class="form-input" /></div>
-
-          <button type="submit" class="form-submit">
-            <span class="btn-text">Quiero aprender frontend + IA</span>
-            <div class="loading"><div class="loading-spinner"></div></div>
+      <form id="mainForm" method="post" action="https://listmonk.akidojo.dev/subscription/form" style="margin-top:1.8rem;">
+        <input type="hidden" name="nonce" />
+        <div class="form-wrap">
+          <h3 class="form-title">📬 Entra antes de que esto sea de pago</h3>
+          <input type="email" name="email" required placeholder="tu@correo.com" class="f-input" />
+          <input type="text"  name="name" placeholder="Nombre (opcional)" class="f-input" />
+          <button type="submit" class="f-btn">
+            <span class="btn-txt">Quiero aprender a no tirar tokens →</span>
+            <div class="spinner"></div>
           </button>
-          <p class="spam-note">// Odio el spam más que un error 500 en producción. Cada 2 días. Sin sorpresas.</p>
+          <p class="spam-note">// Odio el spam más que un error 500 en producción · sin sorpresas · puedes darte de baja cuando quieras</p>
         </div>
       </form>
     </section>
 
   </div>
 
-  <footer class="footer">
-    <p>Página creada por AkiDev mientras debuggeaba un contenedor a las 2 de la mañana.</p>
-    <p style="margin-top:.5rem"><a href="https://github.com/Electrum10/LinkTree-Casero-AkiDev">→ Link al repositorio</a></p>
-    <p id="fecha" style="margin-top:.5rem;opacity:.4;font-family:'JetBrains Mono',monospace;font-size:.72rem"></p>
+  <footer>
+    <p><a href="https://github.com/Electrum10/LinkTree-Casero-AkiDev">→ Repositorio en GitHub</a></p>
+    <p id="yr" style="margin-top:.4rem;opacity:.3;font-family:var(--font-mono);font-size:.7rem"></p>
   </footer>
 
   <script>
-
     /* CURSOR */
-    const cursor=document.getElementById('cursor'),cf=document.getElementById('cursorFollower');
-    let mx=0,my=0,fx=0,fy=0;
-    document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px';});
-    (function ac(){fx+=(mx-fx)*.12;fy+=(my-fy)*.12;cf.style.left=fx+'px';cf.style.top=fy+'px';requestAnimationFrame(ac);})();
-    document.querySelectorAll('a,button,.section,.feature-item,.stat-card,.social-link,.mini-cta').forEach(el=>{
-      el.addEventListener('mouseenter',()=>cf.classList.add('hover'));
-      el.addEventListener('mouseleave',()=>cf.classList.remove('hover'));
+    const cur=document.getElementById('cursor'), ring=document.getElementById('ring');
+    let mx=0,my=0,rx=0,ry=0;
+    document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+    (function loop(){rx+=(mx-rx)*.11;ry+=(my-ry)*.11;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop);})();
+    document.querySelectorAll('a,button,section,.cta-hero,.fitem,.ditem').forEach(el=>{
+      el.addEventListener('mouseenter',()=>ring.classList.add('hover'));
+      el.addEventListener('mouseleave',()=>ring.classList.remove('hover'));
     });
-
-    /* BACKGROUND */
-    (function(){
-      const bg=document.getElementById('animatedBg');
-      function spawn(){
-        const el=document.createElement('div'); el.className='particle';
-        const t=Math.floor(Math.random()*3),s=4+Math.random()*10,o=.1+Math.random()*.3,d=15+Math.random()*20,dir=Math.random()>.5?'float-p':'float-pr';
-        if(t===0) el.style.cssText=`width:${s}px;height:${s}px;border-radius:50%;background:rgba(74,144,226,${o});left:${Math.random()*100}%;animation:${dir} ${d}s ${Math.random()*8}s infinite linear;`;
-        else if(t===1) el.style.cssText=`width:${s}px;height:${s}px;background:rgba(255,255,255,${o*.4});transform:rotate(45deg);left:${Math.random()*100}%;animation:${dir} ${d}s ${Math.random()*8}s infinite linear;`;
-        else{const len=20+Math.random()*40;el.style.cssText=`width:${len}px;height:1px;background:linear-gradient(90deg,transparent,rgba(74,144,226,${o}),transparent);left:${Math.random()*100}%;animation:${dir} ${d}s ${Math.random()*8}s infinite linear;`;}
-        bg.appendChild(el);
-        setTimeout(()=>el.parentNode&&el.parentNode.removeChild(el),25000);
-      }
-      setInterval(spawn,1800);
-      for(let i=0;i<6;i++) setTimeout(spawn,i*500);
-    })();
 
     /* TYPEWRITER */
-    function typeText(el,text,speed=22){
-      return new Promise(res=>{let i=0;el.textContent='';const iv=setInterval(()=>{el.textContent+=text[i++];if(i>=text.length){clearInterval(iv);el.classList.add('done');res();}},speed);});
+    function typeText(el, text, speed=24){
+      return new Promise(res=>{
+        let i=0; el.textContent='';
+        const iv=setInterval(()=>{el.textContent+=text[i++];if(i>=text.length){clearInterval(iv);el.classList.add('done');res();}},speed);
+      });
     }
-    const tyObs=new IntersectionObserver(entries=>{
-      entries.forEach(e=>{if(e.isIntersecting){const el=e.target;if(!el.classList.contains('typed')){el.classList.add('typed');typeText(el,el.dataset.text);}tyObs.unobserve(el);}});
+    const tObs=new IntersectionObserver(entries=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          const el=e.target;
+          if(!el.dataset.typed){el.dataset.typed='1';typeText(el,el.dataset.text);}
+          tObs.unobserve(el);
+        }
+      });
+    },{threshold:.6});
+    document.querySelectorAll('.typed').forEach(el=>tObs.observe(el));
+
+    /* SCROLL REVEAL — reveal, reveal-left, reveal-right, reveal-scale */
+    const revealObs = new IntersectionObserver(entries=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          e.target.classList.add('visible');
+          revealObs.unobserve(e.target);
+        }
+      });
+    },{threshold:.08, rootMargin:'0px 0px -30px 0px'});
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el=>revealObs.observe(el));
+
+    /* SECTION in-view — activa divider-line y sec-title-line */
+    const secObs = new IntersectionObserver(entries=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          e.target.classList.add('in-view');
+          secObs.unobserve(e.target);
+        }
+      });
+    },{threshold:.1});
+    document.querySelectorAll('section, .cta-hero').forEach(el=>secObs.observe(el));
+
+    /* FEATURE ITEMS — stagger */
+    const fObs=new IntersectionObserver(entries=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          e.target.querySelectorAll('.fitem').forEach((it,i)=>setTimeout(()=>it.classList.add('visible'),i*110));
+          fObs.unobserve(e.target);
+        }
+      });
+    },{threshold:.1});
+    document.querySelectorAll('.flist').forEach(el=>fObs.observe(el));
+
+    /* CODE BLOCKS reveal */
+    const codeObs = new IntersectionObserver(entries=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          e.target.classList.add('visible');
+          codeObs.unobserve(e.target);
+        }
+      });
+    },{threshold:.2});
+    document.querySelectorAll('.code-reveal').forEach(el=>codeObs.observe(el));
+
+    /* CALLOUT reveal */
+    const calloutObs = new IntersectionObserver(entries=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          e.target.classList.add('visible');
+          calloutObs.unobserve(e.target);
+        }
+      });
+    },{threshold:.3});
+    document.querySelectorAll('.callout').forEach(el=>calloutObs.observe(el));
+
+    /* PROOF NUM animado */
+    const proofObs = new IntersectionObserver(entries=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          e.target.classList.add('visible');
+          /* counter up */
+          const target = 15500;
+          const el = e.target;
+          let start = 0;
+          const duration = 1200;
+          const step = timestamp => {
+            if(!start) start = timestamp;
+            const progress = Math.min((timestamp - start) / duration, 1);
+            const ease = 1 - Math.pow(1 - progress, 3);
+            el.textContent = Math.floor(ease * target).toLocaleString('es-ES');
+            if(progress < 1) requestAnimationFrame(step);
+            else el.textContent = target.toLocaleString('es-ES');
+          };
+          requestAnimationFrame(step);
+          proofObs.unobserve(e.target);
+        }
+      });
     },{threshold:.5});
-    document.querySelectorAll('.typed-text').forEach(el=>tyObs.observe(el));
+    document.querySelectorAll('.proof-num').forEach(el=>proofObs.observe(el));
 
-    /* COUNTER */
-    function animateNum(el){
-      const target=parseInt(el.dataset.target),prefix=el.dataset.prefix||'',suffix=el.dataset.suffix||'',start=performance.now();
-      (function up(now){const p=Math.min((now-start)/1500,1),ease=1-Math.pow(1-p,3);el.textContent=prefix+Math.floor(ease*target).toLocaleString()+suffix;if(p<1)requestAnimationFrame(up);})(start);
-    }
-    const cntObs=new IntersectionObserver(entries=>{
-      entries.forEach(e=>{if(e.isIntersecting){const el=e.target;if(!el.classList.contains('counted')){el.classList.add('counted');setTimeout(()=>animateNum(el),300);}cntObs.unobserve(el);}});
-    },{threshold:.8});
-    document.querySelectorAll('.stat-number').forEach(el=>cntObs.observe(el));
+    /* PARALLAX SUAVE en header */
+    window.addEventListener('scroll', ()=>{
+      const y = window.scrollY;
+      const avatar = document.querySelector('.avatar');
+      const h1 = document.querySelector('h1');
+      const sub = document.querySelector('.header-sub');
+      if(avatar) avatar.style.transform = `translateY(${y * .08}px)`;
+      if(h1)     h1.style.transform     = `translateY(${y * .04}px)`;
+      if(sub)    sub.style.transform    = `translateY(${y * .03}px)`;
+    }, {passive:true});
 
-    /* SCROLL ANIMATIONS */
-    const fadeObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:.07,rootMargin:'0px 0px -40px 0px'});
-    document.querySelectorAll('.fade-in').forEach(el=>fadeObs.observe(el));
-    const ftObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.querySelectorAll('.feature-item').forEach((it,i)=>setTimeout(()=>it.classList.add('visible'),i*110));ftObs.unobserve(e.target);}});},{threshold:.1});
-    document.querySelectorAll('.feature-list').forEach(el=>ftObs.observe(el));
+    /* LISTMONK */
+    const LISTMONK = 'https://listmonk.akidojo.dev/subscription/form';
+    const LIST_UUID = 'b4f01952-65a2-4460-92e7-c058ae2775de';
+    const isEmail = e=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
 
-    /* ===== FORMULARIOS ===== */
-    const LISTMONK_URL  = 'https://listmonk.akidojo.dev/subscription/form';
-    const LIST_UUID     = 'b4f01952-65a2-4460-92e7-c058ae2775de';
-    const isEmail = e => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
-
-    function submitToListmonk(email, name) {
-      const form = document.createElement('form');
-      form.method  = 'post';
-      form.action  = LISTMONK_URL;
-      form.style.display = 'none';
-
-      const fields = { email, name: name || '', nonce: '' };
-      for (const [k, v] of Object.entries(fields)) {
-        const el = document.createElement('input');
-        el.type = 'hidden'; el.name = k; el.value = v;
-        form.appendChild(el);
-      }
-
-      const listEl = document.createElement('input');
-      listEl.type = 'hidden'; listEl.name = 'l'; listEl.value = LIST_UUID;
-      form.appendChild(listEl);
-
-      document.body.appendChild(form);
-      form.submit();
+    function submitToListmonk(email, name){
+      const f=document.createElement('form');
+      f.method='post'; f.action=LISTMONK; f.style.display='none';
+      [['email',email],['name',name||''],['nonce','']].forEach(([k,v])=>{
+        const i=document.createElement('input');i.type='hidden';i.name=k;i.value=v;f.appendChild(i);
+      });
+      const l=document.createElement('input');l.type='hidden';l.name='l';l.value=LIST_UUID;f.appendChild(l);
+      document.body.appendChild(f); f.submit();
     }
 
-    function submitMiniCta(idx) {
-      const nameInput = document.querySelector(`[data-name="${idx}"]`);
-      const emailInput = document.querySelector(`[data-cta="${idx}"]`);
-      const msgEl  = document.getElementById(`mini-msg-${idx}`);
-      const btn    = emailInput.closest('.mini-cta').querySelector('.mini-cta-btn');
-      const email  = emailInput.value.trim();
-      const name   = nameInput ? nameInput.value.trim() : '';
-
-      if (!isEmail(email)) {
-        msgEl.textContent = 'Introduce un correo válido.';
-        msgEl.className   = 'mini-cta-msg error';
-        msgEl.style.display = 'block';
-        emailInput.focus();
-        return;
+    function submitCta(idx){
+      const emailEl=document.querySelector(`[data-email="${idx}"]`);
+      const nameEl =document.querySelector(`[data-name="${idx}"]`);
+      const msgEl  =document.getElementById(`cta-msg-${idx}`);
+      const btn    =emailEl.closest('.cta-hero').querySelector('.cta-btn');
+      const email  =emailEl.value.trim();
+      const name   =nameEl?nameEl.value.trim():'';
+      if(!isEmail(email)){
+        msgEl.textContent='Introduce un correo válido.';
+        msgEl.className='cta-msg err'; msgEl.style.display='block';
+        emailEl.focus(); return;
       }
-
-      btn.disabled      = true;
-      btn.textContent   = 'Enviando…';
-      msgEl.textContent = 'Redirigiendo a Listmonk…';
-      msgEl.className   = 'mini-cta-msg success';
-      msgEl.style.display = 'block';
-
+      btn.disabled=true; btn.textContent='Enviando…';
+      msgEl.textContent='Perfecto, redirigiendo…';
+      msgEl.className='cta-msg ok'; msgEl.style.display='block';
       submitToListmonk(email, name);
     }
 
-    document.getElementById('mainNewsletterForm').addEventListener('submit', function(e) {
+    document.getElementById('mainForm').addEventListener('submit',function(e){
       e.preventDefault();
-
-      const form    = e.target;
-      const email   = form.querySelector('[name=email]').value.trim();
-      const name    = form.querySelector('[name=name]').value.trim();
-      const msgEl   = document.getElementById('message-main');
-      const btn     = form.querySelector('button[type=submit]');
-      const btnText = btn.querySelector('.btn-text');
-      const spinner = btn.querySelector('.loading');
-
-      if (!isEmail(email)) {
-        msgEl.textContent   = 'Por favor, introduce un correo electrónico válido.';
-        msgEl.className     = 'message error';
-        msgEl.style.display = 'block';
-        msgEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        return;
+      const email=this.querySelector('[name=email]').value.trim();
+      const name =this.querySelector('[name=name]').value.trim();
+      const msgEl=document.getElementById('f-msg-main');
+      const btn  =this.querySelector('.f-btn');
+      const txt  =btn.querySelector('.btn-txt');
+      const spin =btn.querySelector('.spinner');
+      if(!isEmail(email)){
+        msgEl.textContent='Por favor, introduce un correo válido.';
+        msgEl.className='f-msg err'; msgEl.style.display='block';
+        msgEl.scrollIntoView({behavior:'smooth',block:'center'}); return;
       }
-
-      btn.disabled         = true;
-      btnText.style.opacity = '0';
-      spinner.style.display = 'block';
-      msgEl.textContent    = 'Enviando… redirigiendo a confirmación.';
-      msgEl.className      = 'message success';
-      msgEl.style.display  = 'block';
-
+      btn.disabled=true; txt.style.opacity='0'; spin.style.display='block';
+      msgEl.textContent='Enviando… redirigiendo a confirmación.';
+      msgEl.className='f-msg ok'; msgEl.style.display='block';
       submitToListmonk(email, name);
     });
 
-    document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(a.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'});}));
-
-    document.getElementById('fecha').textContent=new Date().getFullYear();
+    document.getElementById('yr').textContent=new Date().getFullYear();
   </script>
 </body>
 </html>

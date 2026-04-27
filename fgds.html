@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Entrenador Personal & Dietista Sabadell — Entrenamiento Personal & Nutrición Deportiva</title>
+  <meta name="description" content="Especialista en entrenamiento y dietética deportiva en Sabadell. Planes personalizados en Carrer de Bosch i Cardellach para transformar tu rendimiento y salud." />
+  <meta property="og:title" content="Entrenador Personal & Dietista Sabadell — Entrenamiento Personal & Nutrición Deportiva" />
+  <meta property="og:description" content="Especialista en entrenamiento y dietética deportiva en Sabadell. Planes personalizados en Carrer de Bosch i Cardellach para transformar tu rendimiento y salud." />
+  <meta property="og:image" content="https://tudominio.com/og-image.jpg" />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg:          #050505;
+      --bg-2:        #0a0a0a;
+      --surface:     #0e0e0e;
+      --surface-2:   #141414;
+      --border:      rgba(255,255,255,.08);
+      --border-hi:   rgba(255,255,255,.14);
+      --text:        #ededed;
+      --muted:       #8a8a8a;
+      --muted-2:     #525252;
+      --accent:      #10b981;
+      --accent-2:    #059669;
+      --accent-dim:  rgba(16,185,129,.12);
+      --accent-glow: rgba(16,185,129,.35);
+      --sans:  'Geist', system-ui, sans-serif;
+      --serif: 'Instrument Serif', Georgia, serif;
+      --mono:  'JetBrains Mono', monospace;
+      --nav-h: 64px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: var(--sans); font-weight: 400;
+      line-height: 1.55; overflow-x: hidden;
+      -webkit-font-smoothing: antialiased; min-height: 100vh;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    button { font-family: inherit; }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image:
+        linear-gradient(to right, rgba(255,255,255,.025) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,.025) 1px, transparent 1px);
+      background-size: 52px 52px;
+      pointer-events: none; z-index: 0;
+      mask-image: radial-gradient(ellipse 90% 60% at 50% 0%, #000 20%, transparent 85%);
+      -webkit-mask-image: radial-gradient(ellipse 90% 60% at 50% 0%, #000 20%, transparent 85%);
+    }
+    body::after {
+      content: ''; position: fixed; inset: 0;
+      pointer-events: none; z-index: 9998; opacity: .04;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    .progress {
+      position: fixed; top: 0; left: 0; height: 2px; width: 0%;
+      background: linear-gradient(90deg, var(--accent-2), var(--accent));
+      z-index: 9996; box-shadow: 0 0 12px var(--accent-glow);
+      transition: width .08s linear;
+    }
+
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+      height: var(--nav-h); display: flex; align-items: center;
+      padding: 0 5vw; transition: background .35s, box-shadow .35s, transform .35s;
+    }
+    .nav.solid {
+      background: rgba(5,5,5,.72);
+      backdrop-filter: blur(20px) saturate(140%);
+      -webkit-backdrop-filter: blur(20px) saturate(140%);
+      box-shadow: 0 1px 0 var(--border);
+    }
+    .nav.hidden { transform: translateY(-105%); }
+    .nav-inner {
+      width: 100%; max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: .95rem; letter-spacing: -.01em; }
+    .nav-logo-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 10px var(--accent-glow); }
+    .nav-logo span { color: var(--muted); font-weight: 400; }
+    .nav-links { display: flex; gap: 4px; list-style: none; }
+    .nav-links a { display: block; font-size: .82rem; font-weight: 400; color: var(--muted); padding: 8px 14px; border-radius: 8px; transition: color .2s, background .2s; }
+    .nav-links a:hover { color: var(--text); background: rgba(255,255,255,.04); }
+    .nav-cta {
+      position: relative; display: inline-flex; align-items: center; gap: 7px;
+      background: var(--accent); color: #050505;
+      font-size: .8rem; font-weight: 600;
+      padding: 9px 16px; border-radius: 100px;
+      transition: transform .2s, box-shadow .25s; overflow: hidden;
+    }
+    .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 8px 24px var(--accent-glow); }
+    .hamburger {
+      display: none; flex-direction: column; gap: 4px;
+      background: none; border: 1px solid var(--border);
+      cursor: pointer; padding: 9px 10px; border-radius: 8px;
+    }
+    .hamburger span { display: block; width: 18px; height: 1.5px; background: var(--text); transition: all .3s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
+    .mobile-menu {
+      display: none; position: fixed; inset: var(--nav-h) 0 0;
+      background: rgba(5,5,5,.96); backdrop-filter: blur(20px);
+      flex-direction: column; align-items: center; justify-content: center;
+      gap: 28px; z-index: 490;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { font-size: 1.6rem; font-weight: 500; color: var(--text); transition: color .2s; }
+    .mobile-menu a:hover { color: var(--accent); }
+    .mobile-menu .m-cta { background: var(--accent); color: #050505; padding: 14px 32px; border-radius: 100px; font-size: .9rem; font-weight: 600; }
+
+    .btn {
+      position: relative; display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--sans); font-size: .85rem; font-weight: 500;
+      padding: 12px 22px; border-radius: 100px;
+      cursor: pointer; border: none;
+      transition: transform .2s, box-shadow .25s, background .25s;
+      white-space: nowrap;
+    }
+    .btn-primary { background: var(--accent); color: #050505; font-weight: 600; }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 12px 30px var(--accent-glow); }
+    .btn-ghost { background: rgba(255,255,255,.04); color: var(--text); border: 1px solid var(--border); }
+    .btn-ghost:hover { background: rgba(255,255,255,.08); border-color: var(--border-hi); }
+    .btn-arrow { transition: transform .2s; }
+    .btn:hover .btn-arrow { transform: translateX(3px); }
+
+    .badge {
+      position: relative; display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 14px 6px 10px;
+      background: rgba(255,255,255,.04); border: 1px solid var(--border);
+      border-radius: 100px; font-size: .75rem; color: var(--muted); overflow: hidden;
+    }
+    .badge-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent); box-shadow: 0 0 8px var(--accent-glow);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .4; } }
+    .badge strong { color: var(--text); font-weight: 500; }
+
+    .hero {
+      position: relative; min-height: 100dvh;
+      padding: calc(var(--nav-h) + 60px) 5vw 80px;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center; overflow: hidden; z-index: 1;
+    }
+    .hero-spotlight {
+      position: absolute; inset: 0;
+      background: radial-gradient(600px circle at var(--mx, 50%) var(--my, 30%), var(--accent-dim), transparent 50%);
+      pointer-events: none; transition: background .2s;
+    }
+    .hero-glow {
+      position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
+      width: 900px; height: 600px;
+      background: radial-gradient(ellipse at center, var(--accent-dim) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      position: relative; z-index: 2; max-width: 900px;
+      display: flex; flex-direction: column; align-items: center; gap: 28px;
+    }
+    .hero-title {
+      font-size: clamp(2.6rem, 7vw, 5.4rem); font-weight: 600;
+      line-height: 1.02; letter-spacing: -.03em; max-width: 14ch; color: var(--text);
+    }
+    .shimmer {
+      font-family: var(--serif); font-weight: 400; font-style: italic;
+      background: linear-gradient(90deg, var(--accent) 0%, #fff 50%, var(--accent) 100%);
+      background-size: 200% 100%;
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      animation: shimmer 4s linear infinite;
+    }
+    @keyframes shimmer { from { background-position: 200% 50%; } to { background-position: -200% 50%; } }
+    .hero-sub { font-size: clamp(1rem, 1.4vw, 1.15rem); color: var(--muted); max-width: 58ch; line-height: 1.65; }
+    .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+    .hero-features {
+      display: flex; gap: 28px; flex-wrap: wrap; justify-content: center;
+      margin-top: 16px; font-size: .8rem; color: var(--muted);
+    }
+    .hero-features span { display: inline-flex; align-items: center; gap: 6px; }
+    .hero-features svg { color: var(--accent); }
+
+    .stats-bento {
+      position: relative; z-index: 2; max-width: 1100px; margin: 80px auto 0;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+    }
+    .stat-box {
+      position: relative;
+      background: linear-gradient(180deg, var(--surface), var(--bg-2));
+      border: 1px solid var(--border); border-radius: 14px;
+      padding: 22px 20px; text-align: left; overflow: hidden;
+      transition: border-color .3s, transform .3s;
+    }
+    .stat-box:hover { border-color: var(--border-hi); transform: translateY(-2px); }
+    .stat-box::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: 0; transition: opacity .3s;
+    }
+    .stat-box:hover::before { opacity: .5; }
+    .stat-box-val { font-size: 2rem; font-weight: 600; color: var(--text); line-height: 1; letter-spacing: -.02em; margin-bottom: 8px; }
+    .stat-box-val span { color: var(--accent); }
+    .stat-box-lbl { font-size: .72rem; color: var(--muted); font-family: var(--mono); }
+
+    .marquee {
+      position: relative; padding: 22px 0; margin-top: 80px;
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      overflow: hidden;
+      mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+    }
+    .marquee-track { display: flex; width: max-content; animation: marquee 30s linear infinite; }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .marquee-item {
+      display: inline-flex; align-items: center; gap: 16px; padding: 0 28px;
+      font-family: var(--mono); font-size: .78rem; color: var(--muted);
+      text-transform: uppercase; letter-spacing: .1em; white-space: nowrap;
+    }
+    .marquee-item svg { color: var(--accent); flex-shrink: 0; }
+
+    section { position: relative; z-index: 1; }
+    .s-inner { max-width: 1200px; margin: 0 auto; padding: 0 5vw; }
+    .s-head { text-align: center; max-width: 680px; margin: 0 auto 64px; }
+    .s-head .badge { margin-bottom: 20px; }
+    .s-head h2 { font-size: clamp(2rem, 4.5vw, 3.2rem); font-weight: 600; line-height: 1.08; letter-spacing: -.025em; margin-bottom: 16px; }
+    .s-head h2 em { font-family: var(--serif); font-weight: 400; font-style: italic; color: var(--accent); }
+    .s-head p { color: var(--muted); font-size: 1rem; line-height: 1.7; max-width: 54ch; margin: 0 auto; }
+
+    .about { padding: 120px 0; }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+    .about-media { position: relative; border-radius: 20px; overflow: hidden; }
+    .about-media::before {
+      content: ''; position: absolute; inset: -2px;
+      background: conic-gradient(from 0deg, transparent 0deg, var(--accent) 60deg, transparent 120deg, transparent 360deg);
+      border-radius: 20px; animation: rotate 8s linear infinite; z-index: 0;
+    }
+    @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .about-photo {
+      position: relative; z-index: 1; aspect-ratio: 4/5;
+      background: var(--surface); border-radius: 18px; margin: 2px;
+      overflow: hidden;
+    }
+    .about-photo img { width: 100%; height: 100%; object-fit: cover; }
+    .about-photo-placeholder {
+      width: 100%; height: 100%; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 10px; color: var(--muted-2);
+    }
+    .about-photo-placeholder span { font-family: var(--mono); font-size: .72rem; letter-spacing: .05em; }
+    .about-floating {
+      position: absolute; bottom: 20px; left: 20px; z-index: 2;
+      background: rgba(5,5,5,.85); backdrop-filter: blur(12px);
+      border: 1px solid var(--border-hi); border-radius: 12px;
+      padding: 12px 16px; display: flex; align-items: center; gap: 12px;
+    }
+    .about-floating-icon {
+      width: 34px; height: 34px; border-radius: 9px;
+      background: var(--accent); color: #050505;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .about-floating-t { font-size: .85rem; font-weight: 600; color: var(--text); line-height: 1; }
+    .about-floating-s { font-size: .68rem; color: var(--muted); font-family: var(--mono); margin-top: 3px; }
+    .about-content .badge { margin-bottom: 22px; }
+    .about-content h2 { font-size: clamp(1.9rem, 3.8vw, 2.8rem); font-weight: 600; line-height: 1.1; letter-spacing: -.025em; margin-bottom: 22px; }
+    .about-content h2 em { font-family: var(--serif); font-weight: 400; font-style: italic; color: var(--accent); }
+    .about-content p { color: var(--muted); line-height: 1.75; font-size: .98rem; margin-bottom: 14px; }
+    .about-content p strong { color: var(--text); font-weight: 500; }
+    .about-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+    .chip {
+      display: inline-flex; align-items: center; gap: 6px; padding: 7px 13px;
+      background: rgba(255,255,255,.03); border: 1px solid var(--border);
+      border-radius: 100px; font-size: .76rem; font-family: var(--mono); color: var(--muted);
+    }
+    .chip::before { content: ''; width: 4px; height: 4px; border-radius: 50%; background: var(--accent); }
+
+    .services { padding: 120px 0; }
+    .bento { display: grid; grid-template-columns: repeat(6, 1fr); grid-auto-rows: minmax(200px, auto); gap: 14px; }
+    .bento-card {
+      position: relative;
+      background: linear-gradient(180deg, var(--surface), var(--bg-2));
+      border: 1px solid var(--border); border-radius: 18px; padding: 32px;
+      overflow: hidden; transition: border-color .3s, transform .35s;
+    }
+    .bento-card:hover { border-color: var(--border-hi); transform: translateY(-3px); }
+    .bento-card::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(400px circle at var(--mx, -200px) var(--my, -200px), var(--accent-dim), transparent 40%);
+      opacity: 0; transition: opacity .3s; pointer-events: none;
+    }
+    .bento-card:hover::before { opacity: 1; }
+    .bento-card::after {
+      content: ''; position: absolute; inset: 0;
+      background-image: linear-gradient(to right, rgba(255,255,255,.02) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,.02) 1px, transparent 1px);
+      background-size: 28px 28px; pointer-events: none; opacity: .6;
+    }
+    .bento-card > * { position: relative; z-index: 1; }
+    .bento-1 { grid-column: span 4; }
+    .bento-2 { grid-column: span 2; }
+    .bento-3 { grid-column: span 2; }
+    .bento-4 { grid-column: span 4; }
+    .bento-icon {
+      width: 44px; height: 44px; border-radius: 11px;
+      background: var(--accent-dim); border: 1px solid rgba(255,255,255,.15);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--accent); margin-bottom: 20px;
+    }
+    .bento-card h3 { font-size: 1.3rem; font-weight: 600; letter-spacing: -.015em; margin-bottom: 10px; }
+    .bento-card p { color: var(--muted); line-height: 1.65; font-size: .9rem; }
+    .bento-list { list-style: none; margin-top: 18px; display: flex; flex-direction: column; gap: 8px; }
+    .bento-list li { font-size: .82rem; color: var(--muted); display: flex; align-items: flex-start; gap: 8px; font-family: var(--mono); }
+    .bento-list li::before { content: '→'; color: var(--accent); flex-shrink: 0; }
+    .bento-visual { position: absolute; bottom: -20px; right: -20px; width: 180px; height: 180px; opacity: .4; pointer-events: none; }
+    .bento-visual svg { width: 100%; height: 100%; color: var(--accent); }
+    .bento-big-num { font-size: 4rem; font-weight: 600; color: var(--accent); line-height: 1; letter-spacing: -.04em; margin-bottom: 14px; }
+
+    .testimonials { padding: 120px 0; overflow: hidden; }
+    .test-rows {
+      display: flex; flex-direction: column; gap: 14px; margin: 0 -5vw;
+      mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    }
+    .test-row { display: flex; gap: 14px; width: max-content; }
+    .test-row-1 { animation: tscroll 50s linear infinite; }
+    .test-row-2 { animation: tscroll 50s linear infinite reverse; }
+    @keyframes tscroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .t-card {
+      width: 380px; flex-shrink: 0; background: var(--surface);
+      border: 1px solid var(--border); border-radius: 16px; padding: 26px 28px;
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .t-stars { color: var(--accent); font-size: .85rem; letter-spacing: 2px; }
+    .t-text { font-size: .95rem; line-height: 1.65; color: var(--text); }
+    .t-footer { display: flex; align-items: center; gap: 12px; margin-top: auto; }
+    .t-avatar {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #050505; display: flex; align-items: center; justify-content: center;
+      font-weight: 600; font-size: .9rem; flex-shrink: 0;
+    }
+    .t-name { font-size: .85rem; font-weight: 500; color: var(--text); }
+    .t-role { font-size: .72rem; color: var(--muted); font-family: var(--mono); margin-top: 2px; }
+
+    .cta { padding: 80px 5vw 120px; }
+    .cta-box {
+      position: relative; max-width: 1100px; margin: 0 auto;
+      border-radius: 24px; overflow: hidden;
+      background: radial-gradient(ellipse at top, var(--accent-dim), transparent 60%), var(--surface);
+      border: 1px solid var(--border); padding: 80px 40px; text-align: center;
+    }
+    .cta-box::before {
+      content: ''; position: absolute; inset: 0;
+      background-image: linear-gradient(to right, rgba(255,255,255,.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      mask-image: radial-gradient(ellipse at center, #000 30%, transparent 80%);
+      -webkit-mask-image: radial-gradient(ellipse at center, #000 30%, transparent 80%);
+      pointer-events: none;
+    }
+    .cta-box::after {
+      content: ''; position: absolute; top: 0; left: 0; width: 200px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      animation: beam 6s linear infinite;
+    }
+    @keyframes beam { 0% { transform: translateX(-100%); } 100% { transform: translateX(calc(100vw)); } }
+    .cta-box > * { position: relative; z-index: 1; }
+    .cta-box .badge { margin-bottom: 22px; }
+    .cta-box h2 { font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 600; line-height: 1.08; letter-spacing: -.03em; margin-bottom: 18px; max-width: 14ch; margin-left: auto; margin-right: auto; }
+    .cta-box h2 em { font-family: var(--serif); font-weight: 400; font-style: italic; color: var(--accent); }
+    .cta-box p { color: var(--muted); font-size: 1rem; line-height: 1.7; max-width: 50ch; margin: 0 auto 44px; }
+
+    .form { max-width: 520px; margin: 0 auto; text-align: left; display: flex; flex-direction: column; gap: 14px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group label { font-size: .72rem; color: var(--muted); font-family: var(--mono); text-transform: uppercase; letter-spacing: .06em; }
+    .form-group input, .form-group textarea, .form-group select {
+      background: rgba(255,255,255,.03); border: 1px solid var(--border);
+      border-radius: 10px; padding: 12px 14px; color: var(--text);
+      font-family: var(--sans); font-size: .9rem; outline: none; width: 100%;
+      transition: border-color .2s, background .2s; -webkit-appearance: none;
+    }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--accent); background: rgba(255,255,255,.02); }
+    .form-group input::placeholder, .form-group textarea::placeholder { color: var(--muted-2); }
+    .form-group textarea { resize: vertical; min-height: 100px; }
+    .form-group select option { background: var(--bg); color: var(--text); }
+    .form-submit { margin-top: 8px; display: flex; }
+    .form-submit .btn { width: 100%; justify-content: center; padding: 15px; }
+
+    footer { border-top: 1px solid var(--border); padding: 36px 5vw; position: relative; z-index: 1; }
+    .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 18px; }
+    .footer-brand { display: flex; align-items: center; gap: 8px; font-size: .9rem; }
+    .footer-links { display: flex; gap: 20px; list-style: none; flex-wrap: wrap; }
+    .footer-links a { font-size: .78rem; color: var(--muted); transition: color .2s; }
+    .footer-links a:hover { color: var(--text); }
+    .footer-copy { font-size: .72rem; color: var(--muted-2); font-family: var(--mono); }
+
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+    .d1 { transition-delay: .08s; } .d2 { transition-delay: .16s; }
+    .d3 { transition-delay: .24s; } .d4 { transition-delay: .32s; }
+
+    @media (max-width: 960px) {
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .stats-bento { grid-template-columns: repeat(2, 1fr); }
+      .about { padding: 80px 0; }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .about-media { max-width: 420px; margin: 0 auto; width: 100%; }
+      .services { padding: 80px 0; }
+      .bento { grid-template-columns: repeat(2, 1fr); }
+      .bento-1, .bento-2, .bento-3, .bento-4 { grid-column: span 2; }
+      .testimonials { padding: 80px 0; }
+      .t-card { width: 320px; padding: 22px 24px; }
+      .cta { padding: 60px 5vw 80px; }
+      .cta-box { padding: 56px 28px; border-radius: 20px; }
+    }
+    @media (max-width: 520px) {
+      :root { --nav-h: 58px; }
+      .hero { padding-top: calc(var(--nav-h) + 48px); padding-bottom: 60px; }
+      .hero-inner { gap: 22px; }
+      .hero-ctas { flex-direction: column; width: 100%; }
+      .hero-ctas .btn { width: 100%; justify-content: center; padding: 14px; }
+      .stats-bento { margin-top: 56px; gap: 10px; }
+      .stat-box { padding: 18px 16px; }
+      .stat-box-val { font-size: 1.6rem; }
+      .marquee { margin-top: 56px; padding: 16px 0; }
+      .about { padding: 60px 0; }
+      .services { padding: 60px 0; }
+      .bento { grid-template-columns: 1fr; }
+      .bento-1, .bento-2, .bento-3, .bento-4 { grid-column: 1; }
+      .bento-card { padding: 24px; }
+      .bento-big-num { font-size: 3rem; }
+      .testimonials { padding: 60px 0; }
+      .t-card { width: 280px; padding: 20px; }
+      .cta { padding: 40px 4vw 60px; }
+      .cta-box { padding: 44px 22px; border-radius: 18px; }
+      .form-row { grid-template-columns: 1fr; }
+      footer { padding: 28px 5vw; }
+      .footer-inner { flex-direction: column; align-items: flex-start; gap: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="progress" id="progress"></div>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo">
+        <span class="nav-logo-dot"></span>
+        Entrenador Personal & Dietista Sabadell
+      </a>
+      <ul class="nav-links">
+        <li><a href="#about">Sobre mí</a></li>
+        <li><a href="#services">Servicios</a></li>
+        <li><a href="#testimonials">Testimonios</a></li>
+        <li><a href="#contact">Contacto</a></li>
+      </ul>
+      <a href="#contact" class="nav-cta">
+        Empezar mi cambio
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+      <button class="hamburger" id="burger" aria-label="Menú">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#about"        onclick="closeMenu()">Sobre mí</a>
+    <a href="#services"     onclick="closeMenu()">Servicios</a>
+    <a href="#testimonials" onclick="closeMenu()">Testimonios</a>
+    <a href="#contact"      onclick="closeMenu()">Contacto</a>
+    <a href="#contact" class="m-cta" onclick="closeMenu()">Empezar mi cambio →</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-spotlight" id="spotlight"></div>
+    <div class="hero-inner">
+      <div class="badge reveal">
+        <span class="badge-dot"></span>
+        <span>Asesoramiento presencial en Sabadell — <strong>Plan integral personalizado</strong></span>
+      </div>
+      <h1 class="hero-title reveal d1">
+        Domina tu cuerpo,<br>
+        <span class="shimmer">optimiza tu nutrición.</span>
+      </h1>
+      <p class="hero-sub reveal d2">Combinamos el entrenamiento de alta precisión con planes nutricionales científicos para que alcances tus metas en Sabadell. Sin dietas milagro, solo resultados.</p>
+      <div class="hero-ctas reveal d3">
+        <a href="#contact" class="btn btn-primary">
+          Empezar mi cambio
+          <svg class="btn-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#services" class="btn btn-ghost">Ver servicios</a>
+      </div>
+      <div class="hero-features reveal d4">
+        <span><svg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5'><polyline points='20 6 9 17 4 12'/></svg> Sabadell Centro</span><span><svg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5'><polyline points='20 6 9 17 4 12'/></svg> Plan 100% personalizado</span><span><svg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5'><polyline points='20 6 9 17 4 12'/></svg> Dieta + Entrenamiento</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="s-inner">
+    <div class="stats-bento">
+      <div class="stat-box reveal">
+        <div class="stat-box-val">100%</div>
+        <div class="stat-box-lbl">PLANES · PERSONALIZADOS</div>
+      </div>
+      <div class="stat-box reveal d1">
+        <div class="stat-box-val">SBD</div>
+        <div class="stat-box-lbl">UBICACIÓN · CENTRO</div>
+      </div>
+      <div class="stat-box reveal d2">
+        <div class="stat-box-val">MAX</div>
+        <div class="stat-box-lbl">RENDIMIENTO · DEPORTIVO</div>
+      </div>
+      <div class="stat-box reveal d3">
+        <div class="stat-box-val">2</div>
+        <div class="stat-box-lbl">ÁREAS · ESPECIALIZACIÓN</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MARQUEE -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span class="marquee-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg> Entrenamiento Personal</span><span class="marquee-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg> Dietética Deportiva</span><span class="marquee-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg> Nutrición Clínica</span><span class="marquee-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg> Pérdida de Grasa</span><span class="marquee-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg> Hipertrofia Muscular</span><span class="marquee-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg> Sabadell Centro</span>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="s-inner">
+      <div class="about-grid">
+        <div class="about-media reveal">
+          <div class="about-photo">
+            <img src="entrenador_sabadell.jpg" alt="Entrenador Personal & Dietista Sabadell"
+              onerror="this.parentElement.innerHTML='<div class=\'about-photo-placeholder\'><svg width=\'52\' height=\'52\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'1.2\'><circle cx=\'12\' cy=\'8\' r=\'4\'/><path d=\'M4 20c0-4 3.6-7 8-7s8 3 8 7\'/></svg><span>entrenador_sabadell.jpg</span></div>'" />
+          </div>
+          <div class="about-floating">
+            <div class="about-floating-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <div>
+              <div class="about-floating-t">Dietista colegiado</div>
+              <div class="about-floating-s">SABADELL · BOSCH I CARDELLACH</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-content">
+          <div class="badge reveal">
+            <span class="badge-dot"></span>
+            <span>Sobre mí</span>
+          </div>
+          <h2 class="reveal d1">Ciencia aplicada al <em>entrenamiento.</em></h2>
+          <p class="reveal d2">Ubicado en el corazón de <strong>Sabadell</strong>, ayudo a personas a romper el estancamiento mediante un enfoque dual: un entrenamiento eficiente y una nutrición adaptada a su realidad biológica.</p>
+          <p class="reveal d3">En <strong>Carrer de Bosch i Cardellach, 44</strong>, no solo vienes a sudar; vienes a aprender a comer para rendir y a entrenar para durar. Mi objetivo es que entiendas el porqué de cada repetición y de cada alimento en tu plato.</p>
+          <div class="about-chips reveal d4">
+            <span class="chip">Dietista Deportivo</span><span class="chip">Entrenador Personal</span><span class="chip">Especialista en Nutrición</span><span class="chip">Sabadell Centro</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICIOS -->
+  <section class="services" id="services">
+    <div class="s-inner">
+      <div class="s-head reveal">
+        <div class="badge"><span class="badge-dot"></span><span>Servicios</span></div>
+        <h2>Un método completo,<br>para un cambio <em>real.</em></h2>
+        <p>Cada servicio está diseñado para trabajar en sinergia. La nutrición potencia el entrenamiento.</p>
+      </div>
+      <div class="bento" id="bento">
+
+        <!-- Servicio 1 — grande izquierda -->
+        <div class="bento-card bento-1 reveal">
+          <div class="bento-icon">🥗</div>
+          <h3>Dietética Deportiva</h3>
+          <p>Planes nutricionales basados en evidencia científica. Ajustamos macros y micros para que tu energía nunca falte, ya sea en el gym o en tu día a día.</p>
+          <ul class="bento-list">
+            <li>Análisis nutricional completo</li><li>Menús flexibles y variados</li><li>Educación alimentaria</li><li>Ajustes según progreso</li>
+          </ul>
+          <div class="bento-visual"><svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="100" r="80" fill="none" stroke="currentColor" stroke-width="1" opacity=".3"/><circle cx="100" cy="100" r="60" fill="none" stroke="currentColor" stroke-width="1" opacity=".5"/><circle cx="100" cy="100" r="40" fill="none" stroke="currentColor" stroke-width="1" opacity=".7"/><circle cx="100" cy="100" r="20" fill="currentColor" opacity=".9"/></svg></div>
+        </div>
+
+        <!-- Servicio 2 — pequeña derecha -->
+        <div class="bento-card bento-2 reveal d1">
+          <div class="bento-big-num">1:1</div>
+          <h3>Entrenamiento Personal</h3>
+          <p>Sesiones individuales en Sabadell. Sin grupos, sin distracciones, máximo rendimiento presencial.</p>
+        </div>
+
+        <!-- Servicio 3 — pequeña izquierda -->
+        <div class="bento-card bento-3 reveal d2">
+          <div class="bento-big-num">100%</div>
+          <h3>Recomposición Corporal</h3>
+          <p>El equilibrio perfecto entre perder grasa y ganar músculo al mismo tiempo mediante un ajuste metabólico preciso.</p>
+        </div>
+
+        <!-- Servicio 4 — grande derecha -->
+        <div class="bento-card bento-4 reveal d3">
+          <div class="bento-icon">📍</div>
+          <h3>Ubicación Estratégica</h3>
+          <p>Entrena en una zona inmejorable de Sabadell, con instalaciones preparadas para un servicio exclusivo y profesional.</p>
+          <ul class="bento-list">
+            <li>Carrer de Bosch i Cardellach, 44</li><li>Trato cercano y humano</li><li>Sin aglomeraciones</li><li>Entorno profesional</li>
+          </ul>
+          <div class="bento-visual"><svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M100 30 L170 100 L100 170 L30 100 Z" fill="none" stroke="currentColor" stroke-width="1" opacity=".3"/><path d="M100 50 L150 100 L100 150 L50 100 Z" fill="none" stroke="currentColor" stroke-width="1" opacity=".5"/><path d="M100 70 L130 100 L100 130 L70 100 Z" fill="none" stroke="currentColor" stroke-width="1" opacity=".7"/><circle cx="100" cy="100" r="10" fill="currentColor" opacity=".9"/></svg></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIOS -->
+  <section class="testimonials" id="testimonials">
+    <div class="s-inner">
+      <div class="s-head reveal">
+        <div class="badge"><span class="badge-dot"></span><span>Testimonios</span></div>
+        <h2>Resultados en <em>Sabadell.</em></h2>
+        <p>Historias reales de personas que decidieron dejar de intentarlo solos.</p>
+      </div>
+    </div>
+    <div class="test-rows">
+      <div class="test-row test-row-1">
+        <div class="t-card"><div class="t-stars">★★★★★</div><p class="t-text">Buscaba un dietista en Sabadell y encontré mucho más. El cambio en mi energía diaria ha sido increíble.</p><div class="t-footer"><div class="t-avatar">R</div><div><div class="t-name">Raúl B.</div><div class="t-role">6 MESES · RENDIMIENTO</div></div></div></div><div class="t-card"><div class="t-stars">★★★★★</div><p class="t-text">En Bosch i Cardellach he encontrado la motivación que me faltaba. Entrenar con alguien que sabe de nutrición es un plus total.</p><div class="t-footer"><div class="t-avatar">M</div><div><div class="t-name">Marta F.</div><div class="t-role">4 MESES · PÉRDIDA DE PESO</div></div></div></div><div class="t-card"><div class="t-stars">★★★★★</div><p class="t-text">Buscaba un dietista en Sabadell y encontré mucho más. El cambio en mi energía diaria ha sido increíble.</p><div class="t-footer"><div class="t-avatar">R</div><div><div class="t-name">Raúl B.</div><div class="t-role">6 MESES · RENDIMIENTO</div></div></div></div><div class="t-card"><div class="t-stars">★★★★★</div><p class="t-text">En Bosch i Cardellach he encontrado la motivación que me faltaba. Entrenar con alguien que sabe de nutrición es un plus total.</p><div class="t-footer"><div class="t-avatar">M</div><div><div class="t-name">Marta F.</div><div class="t-role">4 MESES · PÉRDIDA DE PESO</div></div></div></div>
+      </div>
+      <div class="test-row test-row-2">
+        <div class="t-card"><div class="t-stars">★★★★★</div><p class="t-text">Llevaba años estancada. Con el ajuste nutricional y los entrenos personalizados en Sabadell por fin veo definición real.</p><div class="t-footer"><div class="t-avatar">E</div><div><div class="t-name">Elena S.</div><div class="t-role">5 MESES · DEFINICIÓN</div></div></div></div><div class="t-card"><div class="t-stars">★★★★★</div><p class="t-text">Trato excelente. No es el típico gimnasio, es un servicio de calidad donde te sientes asesorado de verdad.</p><div class="t-footer"><div class="t-avatar">D</div><div><div class="t-name">Dani M.</div><div class="t-role">10 MESES · FUERZA</div></div></div></div><div class="t-card"><div class="t-stars">★★★★★</div><p class="t-text">Llevaba años estancada. Con el ajuste nutricional y los entrenos personalizados en Sabadell por fin veo definición real.</p><div class="t-footer"><div class="t-avatar">E</div><div><div class="t-name">Elena S.</div><div class="t-role">5 MESES · DEFINICIÓN</div></div></div></div><div class="t-card"><div class="t-stars">★★★★★</div><p class="t-text">Trato excelente. No es el típico gimnasio, es un servicio de calidad donde te sientes asesorado de verdad.</p><div class="t-footer"><div class="t-avatar">D</div><div><div class="t-name">Dani M.</div><div class="t-role">10 MESES · FUERZA</div></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA / CONTACTO -->
+  <section class="cta" id="contact">
+    <div class="cta-box">
+      <div class="badge reveal">
+        <span class="badge-dot"></span>
+        <span>Sabadell Centro</span>
+      </div>
+      <h2 class="reveal d1">¿Hablamos de tu <em>objetivo?</em></h2>
+      <p class="reveal d2">Reserva una asesoría inicial en mi centro de Carrer de Bosch i Cardellach. Analizaremos tu punto de partida y trazaremos el plan perfecto para ti.</p>
+
+      <form class="form reveal d3" action="https://formspree.io/f/XXXXXXXX" method="POST">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Nombre</label>
+            <input type="text" name="nombre" placeholder="Tu nombre" required />
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" name="email" placeholder="tu@email.com" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>¿En qué te ayudo?</label>
+          <select name="servicio">
+            <option value="" disabled selected>Selecciona un servicio</option><option value="nutricion">Dietética Deportiva</option><option value="entreno">Entrenamiento Personal</option><option value="pack">Pack Integral (Dieta + Entreno)</option><option value="consulta">Consulta General</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Cuéntame tu situación</label>
+          <textarea name="mensaje" placeholder="Cuéntame tu objetivo (perder peso, ganar músculo, mejorar salud...)"></textarea>
+        </div>
+        <div class="form-submit">
+          <button type="submit" class="btn btn-primary">
+            Solicitar información
+            <svg class="btn-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="nav-logo-dot"></span>
+        <strong>Entrenador Personal & Dietista Sabadell</strong>
+      </div>
+      <ul class="footer-links">
+        <li><a href="#about">Sobre mí</a></li>
+        <li><a href="#services">Servicios</a></li>
+        <li><a href="#testimonials">Testimonios</a></li>
+        <li><a href="#contact">Contacto</a></li>
+      </ul>
+      <div class="footer-copy">© 2026 · Creado por <a href="https://webs.akidojo.dev" target="_blank" style="color:var(--accent)">AkiWebs</a></div>
+    </div>
+  </footer>
+
+  <script>
+  (() => {
+    const progress = document.getElementById('progress');
+    window.addEventListener('scroll', () => {
+      const p = window.scrollY / (document.body.scrollHeight - innerHeight) * 100;
+      progress.style.width = p + '%';
+    }, { passive: true });
+
+    const nav = document.getElementById('nav');
+    let lastY = 0;
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      nav.classList.toggle('solid', y > 40);
+      nav.classList.toggle('hidden', y > lastY && y > 200);
+      lastY = y;
+    }, { passive: true });
+
+    const burger = document.getElementById('burger');
+    const mm = document.getElementById('mobileMenu');
+    burger.addEventListener('click', () => {
+      const o = mm.classList.toggle('open');
+      burger.classList.toggle('open', o);
+      document.body.style.overflow = o ? 'hidden' : '';
+    });
+    window.closeMenu = () => {
+      mm.classList.remove('open'); burger.classList.remove('open');
+      document.body.style.overflow = '';
+    };
+
+    const ro = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); ro.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+    setTimeout(() => document.querySelectorAll('.hero .reveal').forEach(el => el.classList.add('in')), 80);
+
+    const spotlight = document.getElementById('spotlight');
+    const hero = document.getElementById('hero');
+    hero.addEventListener('mousemove', e => {
+      const r = hero.getBoundingClientRect();
+      spotlight.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      spotlight.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    });
+
+    const bento = document.getElementById('bento');
+    if (bento) {
+      bento.addEventListener('mousemove', e => {
+        bento.querySelectorAll('.bento-card').forEach(card => {
+          const r = card.getBoundingClientRect();
+          card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+          card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+        });
+      });
+    }
+  })();
+  </script>
+</body>
+</html>
