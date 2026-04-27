@@ -303,7 +303,6 @@
     .proof-num { font-family:var(--font-mono); font-size:1.9rem; font-weight:700; color:var(--accent); white-space:nowrap; }
     .proof-txt { font-size:.9rem; color:var(--muted); line-height:1.5; }
 
-<<<<<<< HEAD
     /* BOTTOM FORM */
     .form-wrap {
       background:rgba(74,144,226,.05); border:1px solid var(--border-accent);
@@ -350,29 +349,6 @@
     /* SCROLL REVEAL — sistema completo */
     .reveal { opacity:0; transform:translateY(40px); transition:opacity .75s cubic-bezier(.23,1,.32,1), transform .75s cubic-bezier(.23,1,.32,1); }
     .reveal.visible { opacity:1; transform:translateY(0); }
-=======
-    /* STATS — eliminamos la fila de stats numéricos, solo dejamos el dato real del vídeo */
-    .social-proof { display:flex; align-items:center; gap:1rem; background:rgba(74,144,226,.07); border:1px solid rgba(74,144,226,.2); border-radius:12px; padding:1.1rem 1.4rem; margin:1.5rem 0; }
-    .social-proof-number { font-family:'JetBrains Mono',monospace; font-size:2rem; font-weight:700; color:var(--accent-color); white-space:nowrap; }
-    .social-proof-text { font-size:.92rem; color:var(--text-gray); line-height:1.5; }
-
-    /* MINI CTA */
-    .mini-cta { background:rgba(74,144,226,.07); border:1px solid rgba(74,144,226,.25); border-radius:var(--border-radius); padding:1.6rem 2rem; margin-bottom:1.5rem; position:relative; overflow:hidden; opacity:0; transform:translateY(20px); transition:opacity .7s ease,transform .7s ease; }
-    .mini-cta.visible { opacity:1; transform:translateY(0); }
-    .mini-cta::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,transparent,var(--accent-color),transparent); animation:shimmer 3s linear infinite; background-size:200% auto; }
-    .mini-cta-label { font-size:.7rem; font-family:'JetBrains Mono',monospace; color:rgba(74,144,226,.7); text-transform:uppercase; letter-spacing:.15em; margin-bottom:.6rem; display:block; }
-    .mini-cta-title { font-size:clamp(.98rem,2.4vw,1.18rem); font-weight:700; color:var(--text-light); margin-bottom:1rem; line-height:1.4; }
-    .mini-cta-fields { display:flex; flex-direction:column; gap:.55rem; margin-bottom:.7rem; }
-    .mini-cta-input { flex:1; min-width:0; width:100%; padding:.72rem 1rem; background:rgba(255,255,255,.07); border:1.5px solid rgba(255,255,255,.12); border-radius:10px; color:var(--text-light); font-family:'Inter',sans-serif; font-size:.9rem; transition:all .3s ease; }
-    .mini-cta-input:focus { outline:none; border-color:var(--accent-color); background:rgba(74,144,226,.1); box-shadow:0 0 0 3px rgba(74,144,226,.15); }
-    .mini-cta-input::placeholder { color:var(--text-gray); opacity:.7; }
-    .mini-cta-btn { width:100%; background:linear-gradient(135deg,var(--accent-color),#6bb6ff); color:var(--white); border:none; border-radius:10px; padding:.82rem 1.3rem; font-family:'Inter',sans-serif; font-weight:700; font-size:.88rem; cursor:pointer; letter-spacing:.04em; text-transform:uppercase; transition:all .3s cubic-bezier(.34,1.56,.64,1); position:relative; overflow:hidden; margin-bottom:.5rem; }
-    .mini-cta-btn:hover { transform:translateY(-2px) scale(1.04); box-shadow:0 8px 20px rgba(74,144,226,.4); }
-    .mini-cta-note { font-size:.73rem; color:rgba(160,180,192,.5); margin-top:.6rem; font-family:'JetBrains Mono',monospace; }
-    .mini-cta-msg { display:none; margin-top:.8rem; padding:.65rem 1rem; border-radius:8px; font-size:.84rem; font-weight:600; text-align:center; }
-    .mini-cta-msg.success { background:rgba(40,200,64,.1); color:#5ddc7a; border:1px solid rgba(40,200,64,.3); }
-    .mini-cta-msg.error { background:rgba(255,95,87,.1); color:#ff7b75; border:1px solid rgba(255,95,87,.3); }
->>>>>>> 9fc26f484226115e33fea8d2382f8231ac5cc072
 
     /* Variantes direccionales */
     .reveal-left  { opacity:0; transform:translateX(-48px); transition:opacity .7s cubic-bezier(.23,1,.32,1), transform .7s cubic-bezier(.23,1,.32,1); }
@@ -423,7 +399,6 @@
     footer a { color:var(--accent); text-decoration:none; font-family:var(--font-mono); font-size:.76rem; }
     footer a:hover { color:var(--text); }
 
-<<<<<<< HEAD
     /* RESPONSIVE */
     @media(max-width:540px){
       header { padding:3rem 0 1.5rem; }
@@ -437,95 +412,6 @@
       section { padding:1.3rem 1rem; }
       .sec-title { font-size:1.3rem; }
       .impact { font-size:1.2rem; }
-=======
-    /* SCROLL ANIMATIONS */
-    .fade-in { opacity:0; transform:translateY(40px); transition:opacity .8s cubic-bezier(.23,1,.32,1),transform .8s cubic-bezier(.23,1,.32,1); }
-    .fade-in.visible { opacity:1; transform:translateY(0); }
-
-    /* ===== RESPONSIVE ===== */
-    @media (max-width:768px) {
-      body { cursor:auto; }
-      .cursor, .cursor-follower { display:none; }
-      .container { padding:1rem .9rem; }
-      .header { padding:3rem 0 2rem; }
-      .logo-wrapper { width:110px; height:110px; }
-      .logo { width:110px; height:110px; }
-      .logo-ring { inset:-7px; }
-      .main-title { font-size:clamp(1.7rem,6vw,2.4rem); }
-      .subtitle { font-size:1rem; margin-bottom:2rem; }
-      .social-links { gap:1rem; margin-bottom:3rem; }
-      .social-link { width:48px; height:48px; font-size:1.15rem; }
-      .section { padding:1.8rem 1.4rem; }
-      .mini-cta { padding:1.3rem 1.4rem; }
-      .section-title { font-size:clamp(1.4rem,5vw,2rem); }
-      .text-impact { font-size:clamp(1.35rem,5.5vw,2rem); margin:1.4rem 0 .8rem; }
-      .text-callout { font-size:clamp(1rem,3vw,1.2rem); padding:.7rem 1rem; }
-      .mini-cta-input { min-width:0; width:100%; }
-      .mini-cta-btn { width:100%; padding:.85rem 1rem; font-size:.88rem; }
-      .newsletter-form-container { padding:1.8rem; }
-      .feature-item { padding:.9rem; }
-      .code-block { font-size:.8rem; }
-      .code-body { padding:.9rem 1.1rem; font-size:.78rem; overflow-x:auto; }
-    }
-
-    @media (max-width:480px) {
-      .container { padding:.75rem .7rem; }
-      .header { padding:2.2rem 0 1.5rem; }
-      .logo-wrapper { width:95px; height:95px; }
-      .logo { width:95px; height:95px; }
-      .logo-ring { inset:-6px; }
-      .main-title { font-size:clamp(1.5rem,7.5vw,2rem); line-height:1.3; }
-      .subtitle { font-size:.95rem; }
-      .social-links { gap:.8rem; margin-bottom:2rem; }
-      .social-link { width:44px; height:44px; font-size:1.1rem; }
-      .section { padding:1.4rem 1.1rem; margin-bottom:1.1rem; border-radius:12px; }
-      .section:hover { transform:none; }
-      .section-number { font-size:.65rem; }
-      .section-title { font-size:clamp(1.25rem,6.5vw,1.7rem); }
-      .text-impact { font-size:clamp(1.2rem,7vw,1.7rem); letter-spacing:-.01em; }
-      .text-callout { font-size:.98rem; padding:.65rem .9rem; }
-      .section-text { font-size:.95rem; line-height:1.75; }
-      .dialog-item { font-size:.92rem; padding:.55rem .85rem; }
-      .mini-cta { padding:1.1rem 1rem; border-radius:12px; }
-      .mini-cta-title { font-size:.96rem; }
-      .mini-cta-input { padding:.7rem .9rem; font-size:.88rem; }
-      .mini-cta-btn { padding:.8rem 1rem; font-size:.84rem; }
-      .mini-cta-note { font-size:.68rem; }
-      .social-proof { flex-direction:column; text-align:center; gap:.6rem; }
-      .social-proof-number { font-size:1.7rem; }
-      .feature-list { gap:.7rem; }
-      .feature-item { padding:.85rem .9rem; border-radius:10px; }
-      .feature-item:hover { transform:none!important; }
-      .feature-icon { width:34px; height:34px; font-size:1.1rem; border-radius:7px; }
-      .feature-title { font-size:.88rem; }
-      .feature-desc { font-size:.82rem; }
-      .code-block { border-radius:10px; font-size:.75rem; }
-      .code-body { padding:.85rem 1rem; font-size:.75rem; word-break:break-word; }
-      .code-body::before { display:none; }
-      .newsletter-form-container { padding:1.3rem 1.1rem; border-radius:12px; }
-      .newsletter-form-title { font-size:1.2rem; margin-bottom:1.3rem; }
-      .form-input { padding:.85rem .95rem; font-size:.92rem; }
-      .form-submit { font-size:.82rem; padding:1rem; letter-spacing:.05em; }
-      .spam-note { font-size:.72rem; }
-      .divider { margin:.6rem 0 1.4rem; }
-      .para-break { height:1rem; }
-    }
-
-    @media (max-width:360px) {
-      .container { padding:.6rem .6rem; }
-      .main-title { font-size:1.35rem; }
-      .section { padding:1.2rem .95rem; }
-      .mini-cta { padding:1rem .95rem; }
-      .text-impact { font-size:1.1rem; }
-      .section-title { font-size:1.15rem; }
-    }
-
-    @media (hover:none) {
-      .section:hover { transform:none; box-shadow:none; background:rgba(255,255,255,.04); }
-      .feature-item:hover { transform:translateX(0)!important; background:rgba(255,255,255,.03); border-color:rgba(255,255,255,.05); }
-      .social-link:hover { transform:none; }
-      .mini-cta-btn:hover { transform:none; box-shadow:none; }
->>>>>>> 9fc26f484226115e33fea8d2382f8231ac5cc072
     }
   </style>
 </head>
@@ -566,7 +452,6 @@
         <div class="tw-bar-bg"><div class="tw-bar"></div></div>
         <p class="tw-msg">Claude ha perdido el contexto. <span>Tu web, a medias.</span> — ¿te suena?</p>
       </div>
-<<<<<<< HEAD
     </header>
 
     <!-- CTA HERO -->
@@ -580,22 +465,6 @@
       <button class="cta-btn" onclick="submitCta(0)">Quiero dejar de tirar tokens a la basura →</button>
       <div class="cta-msg" id="cta-msg-0"></div>
       <p class="cta-note">// 5 min de lectura · sin spam · +70 devs ya dentro</p>
-=======
-      <h1 class="main-title">Hay devs que ya saben lo que tú aún no sabes.<br>Cada semana que pasa, la distancia crece.</h1>
-    </header>
-
-    <!-- CTA PRINCIPAL — arriba del fold -->
-    <div class="mini-cta fade-in">
-      <span class="mini-cta-label">// newsletter de AkiDev</span>
-      <p class="mini-cta-title">📬 Frontend + IA aplicada. Cada semana. Gratis (de momento).</p>
-      <div class="mini-cta-fields">
-        <input type="text"  class="mini-cta-input" placeholder="Tu nombre (opcional)" data-name="0" />
-        <input type="email" class="mini-cta-input" placeholder="tu@correo.com" data-cta="0" />
-      </div>
-      <button class="mini-cta-btn" onclick="submitMiniCta(0)">Apúntame antes de que esto sea de pago →</button>
-      <div class="mini-cta-msg" id="mini-msg-0"></div>
-      <p class="mini-cta-note">// 5 minutos para leerlo · sin spam · ya dentro: +70 devs</p>
->>>>>>> 9fc26f484226115e33fea8d2382f8231ac5cc072
     </div>
 
     <!-- 01: PAIN -->
@@ -612,17 +481,11 @@
         <div class="ditem reveal-left sd5">🤷 ChatGPT te da código que "funciona" pero tú no entiendes qué hace.</div>
       </div>
 
-<<<<<<< HEAD
       <p class="impact reveal sd2">No es culpa de la IA.<br><span class="hl">Es que nadie te enseñó a hablarle.</span></p>
 
       <p class="body-text reveal sd3">
         Los tokens no son un bug, son una restricción de diseño. Cuando sabes trabajar con esa restricción en vez de contra ella, construyes webs enteras sin perder el hilo. Eso es lo que yo aprendí a base de golpes. Y lo que te voy a contar cada semana.
       </p>
-=======
-      <div class="para-break"></div>
-      <p class="text-impact">No eres tonto. Simplemente te han enseñado <span class="hl">la mitad del camino.</span></p>
-      <p class="section-text">Maquetar es el 30%. El otro 70% es desplegar, mantener, debuggear y no morir en el intento. Eso es lo que yo sí te voy a contar. Cada semana. Gratis.</p>
->>>>>>> 9fc26f484226115e33fea8d2382f8231ac5cc072
     </section>
 
     <!-- 02: QUIÉN SOY -->
@@ -633,7 +496,6 @@
 
       <p class="body-text reveal sd1">Pregunta legítima. Te la respondo sin adornos.</p>
 
-<<<<<<< HEAD
       <p class="body-text reveal sd2">
         Tengo <span class="hl-white">AkiWebs</span>, una agencia donde hago landing pages para negocios locales de Catalunya. Diseño, copy, código, deploy. Las hago en <span class="hl">30–45 minutos</span> usando IA. No porque sea un genio, sino porque llevo meses afinando exactamente qué decirle a la IA, cómo darle el contexto justo y cuándo no confiar en lo que te escupe.
       </p>
@@ -681,40 +543,6 @@
             <div class="ftitle">Cuando la IA te da código roto</div>
             <div class="fdesc">Cómo detectarlo, cómo pedirle que se corrija sin gastarte otros 1000 tokens, y cuándo es más rápido arreglarlo tú a mano.</div>
           </div>
-=======
-      <div class="social-proof">
-        <span class="social-proof-number">15.500</span>
-        <p class="social-proof-text">visitas a un vídeo sobre Git que subí sin muchas expectativas. Solo quería ayudar con algo que a mí me costó horrores. Por eso escribo esta newsletter.</p>
-      </div>
-
-      <p class="text-impact">Internet está lleno de <span class="hl">iluminados</span> que nunca han desplegado nada en producción.</p>
-
-      <p class="section-text">Yo me he comido los mocos con servidores que no respondían, con deploys que petaban un viernes a las 8, con código que funcionaba en local y en producción ardía Troya. Mi objetivo es que tú aprendas lo que importa, y que no pierdas el tiempo que yo perdí.</p>
-    </section>
-
-    <!-- SECCIÓN 3: LO QUE APRENDERÁS -->
-    <section class="section fade-in">
-      <span class="section-number">// 03 — lo que aprenderás</span>
-      <h2 class="section-title">Esto es exactamente lo que vas a saber en 3 meses:</h2>
-      <div class="divider"><div class="divider-line"></div><div class="divider-dot"></div><div class="divider-line"></div></div>
-
-      <div class="feature-list">
-        <div class="feature-item">
-          <div class="feature-icon">🤖</div>
-          <div><div class="feature-title">Que la IA haga el trabajo pesado mientras tú te llevas el mérito</div><div class="feature-desc">Los prompts que uso a diario. Cuándo confiar en ChatGPT y cuándo NO. Cómo usarla para debuggear más rápido y escribir código que funciona de verdad.</div></div>
-        </div>
-        <div class="feature-item">
-          <div class="feature-icon">⚛️</div>
-          <div><div class="feature-title">Entender lo que otros no entienden cuando hablan de React en una entrevista</div><div class="feature-desc">HTML, CSS, JavaScript, React… explicado como persona humana, no como si estudiaras para un examen que no sirve para nada.</div></div>
-        </div>
-        <div class="feature-item">
-          <div class="feature-icon">🐛</div>
-          <div><div class="feature-title">Saber qué hacer cuando algo peta, en vez de entrar en pánico y googlear dos horas</div><div class="feature-desc">Los errores reales que me encuentro currando y cómo los soluciono. Para que cuando te pasen a ti, no te pillen en bragas.</div></div>
-        </div>
-        <div class="feature-item">
-          <div class="feature-icon">📦</div>
-          <div><div class="feature-title">Servidores y despliegues (más adelante)</div><div class="feature-desc">Por ahora el foco es frontend + IA. Cuando llegue la parte de VPS y producción, llegará bien explicada. Sin saltar pasos.</div></div>
->>>>>>> 9fc26f484226115e33fea8d2382f8231ac5cc072
         </div>
       </div>
 
@@ -722,17 +550,10 @@
       <div class="callout">El dev que sabe hablarle a la IA le quita el trabajo al que no.</div>
     </section>
 
-<<<<<<< HEAD
     <!-- 04: TEST PROMPTS -->
     <section class="reveal">
       <span class="sec-tag reveal-left sd1">// 04 — ¿prompts o intuición?</span>
       <h2 class="sec-title">¿Tú harías estos prompts así?<span class="sec-title-line"></span></h2>
-=======
-    <!-- SECCIÓN 4: TEST RÁPIDO -->
-    <section class="section fade-in">
-      <span class="section-number">// 04 — test de 10 segundos</span>
-      <h2 class="section-title">¿Esto te suena a chino o te parece obvio?</h2>
->>>>>>> 9fc26f484226115e33fea8d2382f8231ac5cc072
       <div class="divider"><div class="divider-line"></div><div class="divider-dot"></div><div class="divider-line"></div></div>
 
       <div class="code code-reveal sd1">
@@ -752,7 +573,6 @@
         <div class="code-body"><span class="typed" data-text='✅ Dile qué NO tocar. "Solo modifica el padding del .hero, no cambies nada más."'></span></div>
       </div>
 
-<<<<<<< HEAD
       <p class="impact reveal sd2">Si lees los ❌ y piensas <span class="hl">"yo hago eso"</span> → perfecto.</p>
       <div class="callout">Para eso estás aquí. En 3 meses eso te parecerá una chorrada obvia.</div>
     </section>
@@ -784,62 +604,19 @@
             <div class="spinner"></div>
           </button>
           <p class="spam-note">// Odio el spam más que un error 500 en producción · sin sorpresas · puedes darte de baja cuando quieras</p>
-=======
-      <div class="para-break"></div>
-
-      <p class="text-impact">Si lees esto y piensas <span class="hl">"¿de qué coño habla este tío?"</span> → 🎯 perfecto.</p>
-      <p class="text-callout">Para eso estoy aquí. Para que dentro de 3 meses leas esto y te parezca una chorrada.</p>
-    </section>
-
-    <!-- SECCIÓN 5: NEWSLETTER PRINCIPAL -->
-    <section class="section fade-in">
-      <span class="section-number">// 05 — la comunidad</span>
-      <h2 class="section-title">Devs que dejaron de tener miedo al código real</h2>
-      <div class="divider"><div class="divider-line"></div><div class="divider-dot"></div><div class="divider-line"></div></div>
-
-      <p class="text-impact">Tú eliges el camino:</p>
-
-      <div class="dialog-list">
-        <div class="dialog-item" style="border-left-color:rgba(255,95,87,.5);color:rgba(160,180,192,.65)">❌ Seguir viendo tutoriales infinitos que no te enseñan a currar</div>
-        <div class="dialog-item" style="border-left-color:rgba(255,95,87,.5);color:rgba(160,180,192,.65)">❌ Preguntarle a ChatGPT y no saber si te está mintiendo</div>
-        <div class="dialog-item" style="border-left-color:rgba(255,95,87,.5);color:rgba(160,180,192,.65)">❌ Perder horas arreglando código que la IA te dio mal</div>
-        <div class="dialog-item" style="border-left-color:rgba(74,144,226,.7);color:var(--text-light);background:rgba(74,144,226,.07)">✅ 5 minutos cada semana. Gratis. Contenido que funciona en el mundo real.</div>
-      </div>
-
-      <div id="message-main" class="message"></div>
-      <form id="mainNewsletterForm" method="post" action="https://listmonk.akidojo.dev/subscription/form" class="listmonk-form">
-        <div class="newsletter-form-container">
-          <h3 class="newsletter-form-title">📬 Apúntame antes de que esto sea de pago</h3>
-          <input type="hidden" name="nonce" />
-          <div class="form-group"><input type="email" name="email" required placeholder="tu@correo.com" class="form-input" /></div>
-          <div class="form-group"><input type="text" name="name" placeholder="Nombre (opcional)" class="form-input" /></div>
-
-          <button type="submit" class="form-submit">
-            <span class="btn-text">Apúntame antes de que esto sea de pago</span>
-            <div class="loading"><div class="loading-spinner"></div></div>
-          </button>
-          <p class="spam-note">// Odio el spam más que un error 500 en producción. Cada semana. Sin sorpresas.</p>
->>>>>>> 9fc26f484226115e33fea8d2382f8231ac5cc072
         </div>
       </form>
     </section>
 
   </div>
 
-<<<<<<< HEAD
   <footer>
     <p><a href="https://github.com/Electrum10/LinkTree-Casero-AkiDev">→ Repositorio en GitHub</a></p>
     <p id="yr" style="margin-top:.4rem;opacity:.3;font-family:var(--font-mono);font-size:.7rem"></p>
-=======
-  <footer class="footer">
-    <p style="margin-top:.5rem"><a href="https://github.com/Electrum10/LinkTree-Casero-AkiDev">→ Link al repositorio</a></p>
-    <p id="fecha" style="margin-top:.5rem;opacity:.4;font-family:'JetBrains Mono',monospace;font-size:.72rem"></p>
->>>>>>> 9fc26f484226115e33fea8d2382f8231ac5cc072
   </footer>
 
   <script>
     /* CURSOR */
-<<<<<<< HEAD
     const cur=document.getElementById('cursor'), ring=document.getElementById('ring');
     let mx=0,my=0,rx=0,ry=0;
     document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
@@ -847,15 +624,6 @@
     document.querySelectorAll('a,button,section,.cta-hero,.fitem,.ditem').forEach(el=>{
       el.addEventListener('mouseenter',()=>ring.classList.add('hover'));
       el.addEventListener('mouseleave',()=>ring.classList.remove('hover'));
-=======
-    const cursor=document.getElementById('cursor'),cf=document.getElementById('cursorFollower');
-    let mx=0,my=0,fx=0,fy=0;
-    document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px';});
-    (function ac(){fx+=(mx-fx)*.12;fy+=(my-fy)*.12;cf.style.left=fx+'px';cf.style.top=fy+'px';requestAnimationFrame(ac);})();
-    document.querySelectorAll('a,button,.section,.feature-item,.social-link,.mini-cta').forEach(el=>{
-      el.addEventListener('mouseenter',()=>cf.classList.add('hover'));
-      el.addEventListener('mouseleave',()=>cf.classList.remove('hover'));
->>>>>>> 9fc26f484226115e33fea8d2382f8231ac5cc072
     });
 
     /* TYPEWRITER */
@@ -956,7 +724,6 @@
     },{threshold:.5});
     document.querySelectorAll('.proof-num').forEach(el=>proofObs.observe(el));
 
-<<<<<<< HEAD
     /* PARALLAX SUAVE en header */
     window.addEventListener('scroll', ()=>{
       const y = window.scrollY;
@@ -972,13 +739,6 @@
     const LISTMONK = 'https://listmonk.akidojo.dev/subscription/form';
     const LIST_UUID = 'b4f01952-65a2-4460-92e7-c058ae2775de';
     const isEmail = e=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
-=======
-    /* SCROLL ANIMATIONS */
-    const fadeObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:.07,rootMargin:'0px 0px -40px 0px'});
-    document.querySelectorAll('.fade-in').forEach(el=>fadeObs.observe(el));
-    const ftObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.querySelectorAll('.feature-item').forEach((it,i)=>setTimeout(()=>it.classList.add('visible'),i*110));ftObs.unobserve(e.target);}});},{threshold:.1});
-    document.querySelectorAll('.feature-list').forEach(el=>ftObs.observe(el));
->>>>>>> 9fc26f484226115e33fea8d2382f8231ac5cc072
 
     function submitToListmonk(email, name){
       const f=document.createElement('form');
